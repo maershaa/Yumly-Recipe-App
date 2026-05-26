@@ -1,0 +1,1 @@
+import{r as e}from"./index-OMnepukl.js";var t=e(),n=()=>(0,t.jsx)(`div`,{children:`EditRecipePage`});export{n as default};

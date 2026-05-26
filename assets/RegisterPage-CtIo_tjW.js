@@ -1,0 +1,1 @@
+import{i as e,r as t}from"./index-OMnepukl.js";e();var n=t(),r=()=>(0,n.jsx)(`div`,{children:`RegisterPage`});export{r as default};
