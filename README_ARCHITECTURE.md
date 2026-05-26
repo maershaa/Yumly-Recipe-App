@@ -109,38 +109,45 @@
 
 ```
 src/
-  app/
-    store.ts
-    api/
-      recipesApi.ts
-
-  features/
-    auth/
-      authSlice.ts
-      LoginForm.tsx
-      RegisterForm.tsx
-
-    recipes/
-      RecipeCard.tsx
-      RecipeList.tsx
-      RecipeForm.tsx
-
-  pages/
-    RecipesPage.tsx
-    RecipeDetailsPage.tsx
-    MyRecipesPage.tsx
-    CreateRecipePage.tsx
-    LoginPage.tsx
-    RegisterPage.tsx
-
-  components/
-    Header.tsx
-    Layout.tsx
-    ProtectedRoute.tsx
-    Modal.tsx
-
-  routes/
-    AppRouter.tsx
+│
+├── app/
+│
+├── assets/
+│   ├── images/
+│   ├── icons/
+│   └── fonts/
+│
+├── components/
+│   ├── Header/
+│   ├── Footer/
+│   ├── Layout/
+│   ├── Loader/
+│   ├── Logo/
+│   ├── Button/
+│   └── Modal/
+│
+├── features/
+│   ├── auth/
+│   │   ├── api/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   └── redux/
+│   │
+│   └── recipes/
+│       ├── api/
+│       ├── components/
+│       ├── hooks/
+│       └── redux/
+│
+├── hooks/
+│
+├── pages/
+│
+├── services/
+│
+├── styles/
+│
+└── utils/
 ```
 
 ---
