@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { PageTitle } from '@/components';
-import { Form, Label, Input, SubmitBtn } from './LogInForm.styled';
+import { Form } from '@/components';
 
 const LogInForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleFormChange = (e) => {
-    const { name, value } = e.target;
+  const handleFormChange = (evt) => {
+    const { name, value } = evt.target;
     if (name === 'email') {
       setEmail(value);
     } else if (name === 'password') {
@@ -31,12 +30,10 @@ const LogInForm = () => {
     setPassword('');
   };
   return (
-    <Form autoComplete="on" onSubmit={handleSubmit}>
-      <PageTitle title={'Sign in to Yumly'} />
-
-      <Label>
+    <Form title={'Sign in to Yumly'} handleSubmit={handleSubmit}>
+      <label>
         Email
-        <Input
+        <input
           type="email"
           name="email"
           placeholder="example@gmail.com"
@@ -44,10 +41,10 @@ const LogInForm = () => {
           value={email}
           required
         />
-      </Label>
-      <Label>
+      </label>
+      <label>
         Password
-        <Input
+        <input
           type="password"
           name="password"
           onChange={handleFormChange}
@@ -55,8 +52,8 @@ const LogInForm = () => {
           required
           minLength={4}
         />
-      </Label>
-      <SubmitBtn type="submit">Sign in</SubmitBtn>
+      </label>
+      <button type="submit">Sign in</button>
     </Form>
   );
 };

@@ -1,55 +1,62 @@
-import { Logo } from '@/components/Logo/Logo';
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Header, UserMenu, UserAvatarWrapper } from './Header.styled';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import { ThemeContext } from '@/context';
-import { useContext } from 'react';
+import { Logo } from '@/components/Logo/Logo';
+import {
+  Header,
+  NavMenu,
+  UserMenu,
+  UserAvatarWrapper,
+  ThemeButton,
+} from './Header.styled';
 
 const HeaderComponent = () => {
-  const context = useContext(ThemeContext); //Достаем данные из Context (theme, toggleTheme)
-  // ❗ ручная защита от неправильного использования Context. если ты забыл обернуть приложение в <ThemeProvider>, то useContext(ThemeContext) вернёт null
-  if (!context) {
-    throw new Error('ThemeSwitcher must be used within ThemeProvider');
-  }
+  const context = useContext(ThemeContext);
+  if (!context)
+    throw new Error('HeaderComponent must be used within ThemeProvider');
+
   const { theme, toggleTheme } = context;
+
+  const navLinks = [
+    { to: 'recipes', label: 'Recipes' },
+    { to: 'my-recipes', label: 'My recipes' },
+    { to: 'new', label: 'Create recipe' },
+  ];
 
   return (
     <Header>
       <Logo />
-      <nav>
+
+      <NavMenu>
         <ul>
-          <li>
-            <NavLink to={'recipes'}>Recipes</NavLink>{' '}
-          </li>
-          <li>
-            <NavLink to={'my-recipes'}>My recipes</NavLink>{' '}
-          </li>
-          <li>
-            <NavLink to={'new'}>Create recipe</NavLink>{' '}
-          </li>
+          {navLinks.map(({ to, label }) => (
+            <li key={to}>
+              <NavLink
+                to={to}
+                className={({ isActive }) => (isActive ? 'active' : '')}
+              >
+                {label}
+              </NavLink>
+            </li>
+          ))}
         </ul>
-      </nav>
+      </NavMenu>
 
       <UserMenu>
-        <button>
-          <NavLink to={'auth/login'}>Login</NavLink>
-        </button>
-        <button>
-          <NavLink to={'auth/register'}>Register</NavLink>
-        </button>
+        <NavLink to="auth/login">Login</NavLink>
+        <NavLink to="auth/register" className="accent">
+          Register
+        </NavLink>
       </UserMenu>
 
       <UserAvatarWrapper>
-        <img src="" alt="" />
+        <span>U</span>
       </UserAvatarWrapper>
 
-      <button onClick={toggleTheme}>
-        {theme === 'dark' ? (
-          <FaSun className="light" />
-        ) : (
-          <FaMoon className="dark" />
-        )}
-      </button>
+      <ThemeButton onClick={toggleTheme} aria-label="Toggle theme">
+        {theme === 'dark' ? <FaSun /> : <FaMoon />}
+      </ThemeButton>
     </Header>
   );
 };
