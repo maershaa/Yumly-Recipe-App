@@ -1,1 +1,0 @@
-import{i as e}from"./index-C299IeAm.js";var t=e(),n=()=>(0,t.jsx)(`div`,{children:`HomePage`});export{n as default};
