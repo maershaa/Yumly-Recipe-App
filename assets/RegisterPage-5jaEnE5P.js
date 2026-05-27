@@ -1,0 +1,1 @@
+import{a as e,i as t}from"./index-C299IeAm.js";e();var n=t(),r=()=>(0,n.jsx)(`div`,{children:`RegisterPage`});export{r as default};
