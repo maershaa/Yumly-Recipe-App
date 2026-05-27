@@ -1,36 +1,44 @@
 export const theme = Object.freeze({
-  colors: Object.freeze({
+  colors: {
     background: 'var(--bg-color)',
     surface: 'var(--surface-color)',
-    card: 'var(--card-color)',
     cardSecondary: 'var(--card-secondary-color)',
-    accent: 'var(--accent-color)',
-    text: 'var(--text-color)',
-    textSecondary: 'var(--text-secondary)',
-    icon: 'var(--theme-icon-color)',
-    border: 'var(--border-color)',
-    inputBg: 'var(--input-bg)',
-  }),
 
-  fonts: Object.freeze({
+    accent: 'var(--accent-color)',
+    accentSecondary: 'var(--accent-secondary)',
+
+    textPrimary: 'var(--text-primary)',
+    textSecondary: 'var(--text-secondary)',
+
+    icon: 'var(--theme-icon-color)',
+
+    border: 'var(--border-color)',
+
+    hoverBorderAccent: 'var(--hover-border-accent)',
+    hoverShadowAccent: 'var(--hover-shadow-accent)',
+
+    hoverBorderSecondary: 'var(--hover-border-secondary)',
+    hoverShadowSecondary: 'var(--hover-shadow-secondary)',
+  },
+
+  fonts: {
     main: 'var(--font-main)',
     logo: 'var(--font-logo)',
-  }),
+  },
 
-  shadows: Object.freeze({
-    mainShadow: 'var(--shadow)',
-  }),
+  shadows: {
+    main: 'var(--shadow)',
+  },
 
-  radii: Object.freeze({
+  radii: {
     md: '12px',
     lg: '16px',
     rounded: '50%',
-  }),
+  },
 
-  // Настройки сетки и адаптива для медиа-запросов (Mobile-first)
-  breakpoints: Object.freeze({
+  breakpoints: {
     mobile: '320px',
     tablet: '768px',
     desktop: '1200px',
-  }),
+  },
 });

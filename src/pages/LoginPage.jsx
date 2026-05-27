@@ -1,5 +1,11 @@
+import { LogInForm } from '@/features/auth/components';
+
 const LoginPage = () => {
-  return <div>LoginPage</div>;
+  return (
+    <div>
+      <LogInForm />
+    </div>
+  );
 };
 
 export default LoginPage;

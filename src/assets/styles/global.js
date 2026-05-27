@@ -1,13 +1,102 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
-  /* 1. Reset (Сброс стилей) */
   *,
   *::before,
   *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  :root {
+    color-scheme: dark;
+
+    /* DARK THEME */
+
+    --bg-color: #121418;
+    --surface-color: #1A1D24;
+    --card-secondary-color: #2D323C;
+
+    --accent-color: #5EE0A3;
+    --accent-secondary: #F8B862;
+
+    --text-primary: #F5F6F8;
+    --text-secondary: #9BA1A6;
+
+    --border-color: #383E49;
+
+    --shadow-color: rgba(94, 224, 163, 0.2);
+
+    --shadow: 0 16px 40px var(--shadow-color);
+
+    --theme-icon-color: #5EE0A3;
+
+    --hover-border-accent: 1px solid var(--accent-color);
+
+    --hover-shadow-accent: 0 0 15px rgba(94, 224, 163, 0.4);
+
+    --hover-border-secondary: 1px solid var(--accent-secondary);
+
+    --hover-shadow-secondary: 0 0 15px rgba(248, 184, 98, 0.4);
+
+    --font-main: 'Inter', sans-serif;
+
+    --font-logo: 'Pacifico', cursive;
+  }
+
+  [data-theme='light'] {
+    color-scheme: light;
+
+    /* LIGHT THEME */
+
+    --bg-color: #F8F9FA;
+    --surface-color: #FFFFFF;
+    --card-secondary-color: #EDEFF2;
+
+    --accent-color: #3AA674;
+    --accent-secondary: #E0942F;
+
+    --text-primary: #1A1D24;
+    --text-secondary: #6A7077;
+
+    --border-color: #D1D5DB;
+
+    --shadow-color: rgba(0, 0, 0, 0.08);
+
+    --shadow: 0 16px 40px var(--shadow-color);
+
+    --theme-icon-color: #3AA674;
+
+    --hover-border-accent: 1px solid var(--accent-color);
+
+    --hover-shadow-accent: 0 0 15px rgba(58, 166, 116, 0.3);
+
+    --hover-border-secondary: 1px solid var(--accent-secondary);
+
+    --hover-shadow-secondary: 0 0 15px rgba(224, 148, 47, 0.3);
+  }
+
+  body {
+    min-height: 100vh;
+
+    font-family: var(--font-main);
+
+    background-color: var(--bg-color);
+
+    color: var(--text-primary);
+
+    line-height: 1.5;
+
+    -webkit-font-smoothing: antialiased;
+
+    -moz-osx-font-smoothing: grayscale;
   }
 
   ul,
@@ -20,89 +109,9 @@ export const GlobalStyle = createGlobalStyle`
     color: inherit;
   }
 
-  input,
-  button,
-  textarea,
-  select {
-    font: inherit;
-  }
-
   button {
     cursor: pointer;
     border: none;
     background: none;
-  }
-
-  /* 2. Дизайн-токены (CSS-переменные) */
-  :root {
-    color-scheme: light dark;
-
-    /* Light Theme Tokens */
-    --bg-color: #f5f5f7;
-    --surface-color: #ffffff;
-    --card-color: #ffffff;
-    --card-secondary-color: #f2f2f7;
-    --accent-color: #ff824d; 
-    --text-color: #1d1d1f;
-    --text-secondary: #86868b;
-    --theme-icon-color: #3671c8;
-    --border-color: #d2d2d7;
-    --shadow-color: rgba(0, 0, 0, 0.04);
-    --shadow: 0 10px 30px var(--shadow-color);
-    --input-bg: #ffffff;
-
-    /* Шрифтовые переменные (не зависят от темы) */
-    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-logo: 'Pacifico', cursive;
-  }
-
-  [data-theme='dark'] {
-    /* Dark Theme Tokens */
-    --bg-color: #0b0b0c; 
-    --surface-color: #16171a; 
-    --card-color: #212329; 
-    --card-secondary-color: #2a2d34;
-    --accent-color: #f07b4a; 
-    --text-color: #f5f5f7;
-    --text-secondary: #a1a1a6;
-    --theme-icon-color: #ffd700;
-    --border-color: #333438;
-    --shadow-color: rgba(0, 0, 0, 0.4);
-    --shadow: 0 10px 30px var(--shadow-color);
-    --input-bg: #2a2a2e;
-  }
-
-  /* 3. Глобальные стили для базовых элементов */
-  body {
-    min-height: 100vh;
-    scroll-behavior: smooth;
-    text-rendering: optimizeSpeed;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-
-    font-family: var(--font-main);
-    background-color: var(--bg-color);
-    color: var(--text-color);
-
-    /* Эффект мягкого перетекания цветов при смене темы */
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  }
-
-  /* Наследуем шрифт переменной для всех текстовых элементов и заголовков */
-  p,
-  li,
-  span,
-  a,
-  input,
-  textarea,
-  button,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: var(--font-main);
   }
 `;
