@@ -21,7 +21,7 @@ const HeaderComponent = () => {
   const navLinks = [
     { to: 'recipes', label: 'Recipes' },
     { to: 'my-recipes', label: 'My recipes' },
-    { to: 'new', label: 'Create recipe' },
+    { to: 'my-recipes/new', label: 'Create recipe' },
   ];
 
   return (
