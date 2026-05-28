@@ -1,1 +1,0 @@
-import{i as e}from"./index-CGpsu9Em.js";var t=e(),n=()=>(0,t.jsx)(`div`,{children:`CreateRecipePage`});export{n as default};
