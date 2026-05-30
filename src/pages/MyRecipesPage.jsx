@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectRecipes } from '@/app/redux/selectors.js';
+import { selectRecipes } from '@/app/redux/recipes/selectors.js';
 import { useEffect } from 'react';
-import { fetchRecipes } from '@/app/redux/operations';
+import { fetchRecipes } from '@/app/redux/recipes/operations';
 
 const MyRecipesPage = () => {
   const dispatch = useDispatch();

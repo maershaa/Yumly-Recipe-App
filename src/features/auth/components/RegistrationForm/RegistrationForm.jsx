@@ -1,11 +1,15 @@
 import { useState } from 'react';
 import { Form } from '@/components';
+import { registerNewUser } from '@/app/redux/auth/operations';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const RegistrationForm = () => {
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const dispatch = useDispatch();
   const handleFormChange = (evt) => {
     const { name, value } = evt.target;
     if (name === 'userName') {
@@ -28,7 +32,14 @@ const RegistrationForm = () => {
 
     if (!userName || !email || !password) return;
 
-    console.log('🚀 ~ handleSubmit ~ userInfo:', userInfo);
+    dispatch(registerNewUser(userInfo));
+
+    // !Сделать страничку или модалку лучше для ситуации этой?
+    alert('Please check yout email to varify your account. Then Login');
+
+    setUserName('');
+    setEmail('');
+    setPassword('');
   };
 
   return (
@@ -69,6 +80,11 @@ const RegistrationForm = () => {
       </label>
 
       <button type="submit">Sign in</button>
+
+      <p>
+        ЕУже есть аккаунт?
+        <Link to={'auth/login'}>Жми вход..</Link>{' '}
+      </p>
     </Form>
   );
 };

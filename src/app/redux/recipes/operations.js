@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-// import axios from 'axios';
-import { supabase } from '../../../supabaseClient';
+import { supabase } from '../../../../supabaseClient';
 
-// const BaseUrl = 'https://65e95c314bb72f0a9c513d32.mockapi.io/recipes';
+// .select(*) - отдай все столбцы
+// .select('recipe_name, ingredients' ) - отдай перечисленные столбцы
 
 const fetchRecipes = createAsyncThunk(
   'recipes/getRecipes',

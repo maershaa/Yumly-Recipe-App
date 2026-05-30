@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectRecipes } from '@/app/redux/selectors.js';
-import { fetchRecipes } from '@/app/redux/operations';
+import { selectRecipes } from '@/app/redux/recipes/selectors.js';
+import { fetchRecipes } from '@/app/redux/recipes/operations';
 import { RecipesList } from '@/features/recipes/components';
 
 /* created_at: '2026-05-28T13:52:10.752538+00:00';

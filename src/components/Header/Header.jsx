@@ -10,19 +10,28 @@ import {
   UserAvatarWrapper,
   ThemeButton,
 } from './Header.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { logOutUser } from '@/app/redux/auth/operations';
+import { selectIsLoggedIn } from '@/app/redux/auth/selectors';
 
 const HeaderComponent = () => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   const context = useContext(ThemeContext);
   if (!context)
     throw new Error('HeaderComponent must be used within ThemeProvider');
 
   const { theme, toggleTheme } = context;
-
+  const dispatch = useDispatch;
   const navLinks = [
     { to: 'recipes', label: 'Recipes' },
     { to: 'my-recipes', label: 'My recipes' },
     { to: 'my-recipes/new', label: 'Create recipe' },
   ];
+
+  const onLogOutClick = () => {
+    dispatch(logOutUser);
+  };
 
   return (
     <Header>
@@ -43,12 +52,23 @@ const HeaderComponent = () => {
         </ul>
       </NavMenu>
 
-      <UserMenu>
-        <NavLink to="auth/login">Login</NavLink>
-        <NavLink to="auth/register" className="accent">
-          Register
-        </NavLink>
-      </UserMenu>
+      {!isLoggedIn ? (
+        <UserMenu>
+          <NavLink to="auth/login">Login</NavLink>
+          <NavLink
+            to="auth/register"
+            // className="accent"
+          >
+            Register
+          </NavLink>
+        </UserMenu>
+      ) : (
+        <UserMenu>
+          <NavLink to="/" onClick={onLogOutClick}>
+            Logout
+          </NavLink>
+        </UserMenu>
+      )}
 
       <UserAvatarWrapper>
         <span>U</span>
