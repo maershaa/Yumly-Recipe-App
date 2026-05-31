@@ -3,12 +3,12 @@ import {
   registerNewUser,
   loginUser,
   logOutUser,
-  // refreshUser,
+  refreshUser,
 } from './operations';
 
 const initialState = {
   user: { name: '', email: '' },
-  token: null,
+  token: null, //! на самом деле он тут не нужен так как supabase.auth.getSession() - сам достанет токен. это чисто для примера что обычно нужно.
 
   isLoggedIn: false,
   isRefreshing: false,
@@ -29,6 +29,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(registerNewUser.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.payload;
       })
       .addCase(registerNewUser.fulfilled, (state, action) => {
@@ -54,39 +55,43 @@ const authSlice = createSlice({
         state.token = action.payload.session.access_token;
         state.isLoggedIn = true;
       })
+
       // logOutUser
       .addCase(logOutUser.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(logOutUser.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.payload;
       })
       .addCase(logOutUser.fulfilled, (state, action) => {
         console.log('action в loginUser fulfilled', action); //его нету
         state.loading = false;
         state.user = { name: null, email: null };
-
         state.token = null;
         state.isLoggedIn = false;
-      });
+      })
 
-    // refreshUser
-    /*       .addCase(refreshUser.pending, (state) => {
+      // refreshUser
+      .addCase(refreshUser.pending, (state) => {
         state.isRefreshing = true;
       })
-      .addCase(refreshUser.rejected, (state) => {
+      .addCase(refreshUser.rejected, (state, action) => {
         state.isRefreshing = false;
+        state.loading = false;
+        state.error = action.payload;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
-        console.log('🚀 refreshUser ~ action:', action);
+        state.isRefreshing = false;
+        if (!action.payload) {
+          return;
+        }
         state.user.name = action.payload.user.user_metadata.userName;
         state.user.email = action.payload.user.email;
-        state.token = action.payload.session.access_token;
-
+        state.token = action.payload.access_token;
         state.isLoggedIn = true;
-        state.isRefreshing = false;
-      }); */
+      });
   },
 });
 

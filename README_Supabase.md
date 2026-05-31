@@ -1,104 +1,469 @@
-1.  Заходим на сайт документации https://supabase.com/docs/guides/getting-started
-    выбираем фреймфорк React
+# Supabase + React. Полный алгоритм настройки проекта и авторизации
 
-Заходим на сайт: https://supabase.com/ => в правом верзнем углу dashboard => выбираем нашу организацию => жмем кнопку +New project
-указываем Project name, Database password
-Create new project
+# 1. Создание проекта Supabase
 
-чтобы зайти в наш проект => Заходим на сайт: https://supabase.com/ => в правом верзнем углу dashboard => выбираем нашу организацию => выбираем наш проект
+Переходим на сайт:
 
-Когда ваш проект будет запущен и начнет работать, перейдите в раздел Table Editor на панели управления слева. создайте новую таблицу и добавьте данные.
+[Supabase](https://supabase.com?utm_source=chatgpt.com)
 
-//не понимаю что это и зачем -> Затем в разделе Integrations > Data API на панели управления откройте доступ к нужным таблицам или функциям. Чтобы автоматически предоставлять доступ для новых таблиц и функций в публичном режиме, включите функцию Default privileges for new entities.
+Далее:
 
-В качестве альтернативы вы можете написать код для создания таблиц в редакторе SQL вашего проекта. для этого заходим в SQL Editor на панели управления слева.
+1. Dashboard
+2. Выбираем организацию
+3. New Project
+4. Указываем:
 
-пример:
-insert into recipes (
-recipe_name,
-ingredients,
+- Project Name
+- Database Password
+- Region
+
+5. Нажимаем Create Project
+
+После создания проекта открываем его через Dashboard.
+
+---
+
+# 2. Создание таблиц
+
+После запуска проекта:
+
+```text
+Table Editor
+↓
+New Table
+```
+
+Создаем необходимые таблицы.
+
+Например:
+
+```text
+recipes
+```
+
+Поля:
+
+```text
+id
+title
+ingredients
 instructions
+created_at
+```
+
+---
+
+## Создание таблиц через SQL
+
+Вместо ручного создания можно использовать:
+
+```text
+SQL Editor
+```
+
+Пример добавления данных:
+
+```sql
+insert into recipes (
+  recipe_name,
+  ingredients,
+  instructions
 )
 values
-
 (
-'Chicken Pasta',
-'["Chicken fillet", "Pasta", "Cream", "Cheese", "Garlic"]'::jsonb,
-'Boil pasta. Fry chicken with garlic. Add cream and cheese.'
-),
-
-(
-'Avocado Toast',
-'["Bread", "Avocado", "Egg", "Lemon juice"]'::jsonb,
-'Toast bread. Mash avocado. Add fried egg on top.'
+  'Chicken Pasta',
+  '["Chicken fillet","Pasta","Cream"]'::jsonb,
+  'Boil pasta and cook chicken.'
 );
--- Create a policy to allow the anon role to read from the recipes table
+```
+
+---
+
+# 3. Настройка доступа к таблицам (RLS)
+
+По умолчанию Supabase использует:
+
+```text
+Row Level Security (RLS)
+```
+
+Без политик запросы часто не работают.
+
+Пример разрешения чтения:
+
+```sql
 create policy "public can read recipes"
 on public.recipes
-for select to anon
+for select
+to anon
 using (true);
+```
 
-2. Создаем проект на Vite (как обычно) npm create vite@latest my-app -- --template react
+Это означает:
 
-Устанавливаем библиотеку Supabase => cd my-app && npm install @supabase/supabase-js
+```text
+Любой пользователь может читать данные.
+```
 
-3.  В корне проекта создаем файл .env
-    VITE_SUPABASE_URL=вставляем без кавычек.
-    VITE_SUPABASE_PUBLISHABLE_KEY=вставляем без кавычек
+⚠️ Для production-проектов доступ обычно ограничивают.
 
-если вы движетесь по алгоритму начала работы из документации то можно прямо с него скопирвоать и то и другое на шаге 4 Declare Supabase Environment Variables
+---
 
-если нет то =>
-SUPABASE_URL можно найти:
-наш проект => в менюс слева Integrations => Data API => API URL
-(почемуто он тут выглядит как "https://tohghzxxwkgogeahlsho.supabase.co/rest/v1/")
+# 4. Создание React-проекта
 
-SUPABASE_PUBLISHABLE_KEY можно найти:
-наш проект => в менюс слева project settings => API Keys => Publishable key
+```bash
+npm create vite@latest my-app -- --template react
+```
 
-2 вариант:
-гдето еще онопрм
+Устанавливаем зависимости:
 
-4. В корне проекта создаем файл supabaseClient.js
-   import { createClient } from '@supabase/supabase-js';
+```bash
+cd my-app
+
+npm install
+npm install @supabase/supabase-js
+```
+
+---
+
+# 6. Настройка переменных окружения
+
+Создаем файл: .env
+
+Содержимое:
+
+VITE_SUPABASE_URL=https://your-project.supabase.co
+
+VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
+
+---
+
+## Где взять URL
+
+Project Settings
+↓
+API
+↓
+Project URL
+
+Пример: https://xxxxxxxx.supabase.co
+
+⚠️ Используем именно Project URL.
+Не нужно брать: https://xxxxxxxx.supabase.co/rest/v1/
+SDK сам формирует нужные маршруты.
+
+---
+
+## Где взять ключ
+
+Project Settings
+↓
+API Keys
+↓
+Publishable Key
+
+---
+
+# 7. Создание Supabase Client
+
+Создаем: src/api/supabaseClient.js
+
+```js
+import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
+```
 
-5. Чтобы достать данные с теблиц (то есть с базы данных -
+---
 
-const { data, error } = await supabase.from("instruments").select();
-)
+# 8. Получение данных из базы
 
-from("instruments") - указываем с какой таблицы достаем
-.select() - сюда прописываем что именно достаем
-// .select(\*) - отдай все столбцы
-// .select('recipe_name, ingredients' ) - отдай перечисленные столбцы
+Получить все поля:
 
-6. Регистрация нового пользователя. Он ввел в форму логин, пароль =>
-   const { data, error } = await supabase.auth.signUp({
-   email: 'example@email.com',
-   password: 'example-password',
-   })
+```js
+const { data, error } = await supabase.from('recipes').select('*');
+```
 
-Регисорация пользователя если м ыхотим с формы сохранить еще какието данные то мы их сохраняем в options.data=>
+---
+
+Получить конкретные поля:
+
+```js
+const { data, error } = await supabase
+  .from('recipes')
+  .select('recipe_name, ingredients');
+```
+
+---
+
+Где:
+.from('recipes') - указывает таблицу.
+
+.select() - указывает столбцы.
+
+---
+
+# 9. Регистрация пользователя
+
+Простейшая регистрация:
+
+```js
 const { data, error } = await supabase.auth.signUp({
-email: 'example@email.com',
-password: 'example-password',
+  email,
+  password,
+});
+```
 
-options: {
-data: {
-userName,
-},
-},
+---
 
-})
+## Сохранение дополнительных данных пользователя
 
-Логинизация
+```js
+const { data, error } = await supabase.auth.signUp({
+  email,
+  password,
 
+  options: {
+    data: {
+      userName,
+    },
+  },
+});
+```
+
+Эти данные попадут в:
+
+```js
+user.user_metadata;
+```
+
+---
+
+## Подтверждение email
+
+!!!Во время разработки можно отключить подтверждение почты:
+
+```text
+Authentication
+↓
+Providers
+↓
+Email
+↓
+Confirm email
+```
+
+Но для production подтверждение лучше оставить включенным.
+
+---
+
+# 10. Авторизация пользователя
+
+```js
 const { data, error } = await supabase.auth.signInWithPassword({
-email: 'example@email.com',
-password: 'example-password',
-})
+  email,
+  password,
+});
+```
+
+После успешного входа Supabase вернет:
+
+```js
+data.user;
+data.session;
+```
+
+---
+
+# 11. Выход из системы
+
+```js
+const { error } = await supabase.auth.signOut();
+```
+
+После выхода:
+
+```js
+session = null;
+user = null;
+```
+
+---
+
+# 12. Восстановление сессии после перезагрузки
+
+При запуске приложения проверяем:
+
+```js
+const {
+  data: { session },
+} = await supabase.auth.getSession();
+```
+
+Если:
+
+```js
+session !== null;
+```
+
+то пользователь уже авторизован.
+
+---
+
+# 13. Отслеживание изменений авторизации
+
+Для React используется:
+
+```js
+const {
+  data: { subscription },
+} = supabase.auth.onAuthStateChange((event, session) => {
+  console.log(event);
+  console.log(session);
+});
+```
+
+Очистка:
+
+```js
+return () => {
+  subscription.unsubscribe();
+};
+```
+
+---
+
+## Возможные события
+
+```text
+SIGNED_IN
+SIGNED_OUT
+TOKEN_REFRESHED
+USER_UPDATED
+INITIAL_SESSION
+```
+
+---
+
+# 14. Refresh Token
+
+Дополнительно реализовывать refresh token не нужно.
+
+Supabase автоматически:
+
+1. Хранит сессию.
+2. Обновляет access token.
+3. Использует refresh token.
+4. Восстанавливает сессию после перезагрузки страницы.
+
+Поэтому обычно не нужно:
+
+```js
+localStorage.setItem(...)
+localStorage.getItem(...)
+```
+
+для хранения токенов вручную.
+
+---
+
+# 15. Redux Toolkit + createAsyncThunk
+
+Регистрация:
+
+```js
+export const registerUser = createAsyncThunk(
+  'auth/register',
+  async (credentials, thunkAPI) => {
+    try {
+      const { data, error } = await supabase.auth.signUp(credentials);
+
+      if (error) throw error;
+
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+);
+```
+
+---
+
+Авторизация:
+
+```js
+export const loginUser = createAsyncThunk(
+  'auth/login',
+  async (credentials, thunkAPI) => {
+    try {
+      const { data, error } =
+        await supabase.auth.signInWithPassword(credentials);
+
+      if (error) throw error;
+
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+);
+```
+
+---
+
+# 16. Protected Routes
+
+Пример:
+
+```jsx
+<Route
+  path="/profile"
+  element={isAuthenticated ? <ProfilePage /> : <Navigate to="/login" replace />}
+/>
+```
+
+Или через отдельный компонент:
+
+```jsx
+<PrivateRoute>
+  <ProfilePage />
+</PrivateRoute>
+```
+
+---
+
+# Что происходит под капотом
+
+Когда пользователь входит:
+
+```text
+email + password
+        ↓
+Supabase Auth
+        ↓
+создает session
+        ↓
+выдает access token
+        ↓
+выдает refresh token
+        ↓
+сохраняет сессию
+        ↓
+восстанавливает её после перезагрузки
+```
+
+При истечении access token:
+
+```text
+refresh token
+        ↓
+получение нового access token
+        ↓
+пользователь остается авторизованным
+```
+
+---

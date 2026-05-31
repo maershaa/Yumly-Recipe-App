@@ -1,7 +1,10 @@
 import { Layout } from '@/components/Layout/Layout';
 import { Route, Routes } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Loader } from '@/components/Loader/Loader';
+import { PrivateRoute } from '@/components';
+import { useDispatch } from 'react-redux';
+import { refreshUser } from '@/app/redux/auth/operations';
 
 const HomePage = lazy(() => import('@/pages/HomePage'));
 const RecipesPage = lazy(() => import('@/pages/RecipesPage.jsx'));
@@ -14,6 +17,11 @@ const EditRecipePage = lazy(() => import('@/pages/EditRecipePage'));
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
   return (
     <>
       <Suspense fallback={<Loader />}>
@@ -33,8 +41,8 @@ function App() {
               <Route path="register" element={<RegisterPage />} />
             </Route>
 
-            {/* Private routes */}
-            <Route path="my-recipes">
+            {/* Private Routes Group */}
+            <Route path="my-recipes" element={<PrivateRoute />}>
               <Route index element={<MyRecipesPage />} />
               <Route path="new" element={<CreateRecipePage />} />
               <Route path=":recipeId/edit" element={<EditRecipePage />} />

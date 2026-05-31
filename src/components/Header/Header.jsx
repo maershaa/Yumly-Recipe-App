@@ -12,17 +12,19 @@ import {
 } from './Header.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOutUser } from '@/app/redux/auth/operations';
-import { selectIsLoggedIn } from '@/app/redux/auth/selectors';
+import { selectIsLoggedIn, selectUser } from '@/app/redux/auth/selectors';
 
 const HeaderComponent = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const { name } = useSelector(selectUser);
 
   const context = useContext(ThemeContext);
   if (!context)
     throw new Error('HeaderComponent must be used within ThemeProvider');
 
   const { theme, toggleTheme } = context;
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
+
   const navLinks = [
     { to: 'recipes', label: 'Recipes' },
     { to: 'my-recipes', label: 'My recipes' },
@@ -30,7 +32,7 @@ const HeaderComponent = () => {
   ];
 
   const onLogOutClick = () => {
-    dispatch(logOutUser);
+    dispatch(logOutUser());
   };
 
   return (
@@ -67,12 +69,12 @@ const HeaderComponent = () => {
           <NavLink to="/" onClick={onLogOutClick}>
             Logout
           </NavLink>
+
+          <UserAvatarWrapper>
+            <span>{name.slice(0, 1)}</span>
+          </UserAvatarWrapper>
         </UserMenu>
       )}
-
-      <UserAvatarWrapper>
-        <span>U</span>
-      </UserAvatarWrapper>
 
       <ThemeButton onClick={toggleTheme} aria-label="Toggle theme">
         {theme === 'dark' ? <FaSun /> : <FaMoon />}

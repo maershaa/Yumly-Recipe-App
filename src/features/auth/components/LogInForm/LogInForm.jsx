@@ -1,15 +1,12 @@
 import { useState } from 'react';
 import { Form } from '@/components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { loginUser } from '@/app/redux/auth/operations';
 import { Link, useNavigate } from 'react-router-dom';
-// import { selectToken } from '@/app/redux/auth/selectors';
 
 const LogInForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  // const token = useSelector(selectToken);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,9 +34,6 @@ const LogInForm = () => {
 
     setEmail('');
     setPassword('');
-
-    // token;
-    // dispatch(selectToken);
 
     navigate('/my-recipes');
   };
