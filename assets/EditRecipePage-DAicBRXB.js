@@ -1,0 +1,1 @@
+import{p as e}from"./index-DRkuNqqO.js";var t=e(),n=()=>(0,t.jsxs)(`div`,{children:[`EditRecipePage`,(0,t.jsx)(`p`,{children:`Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero quae est magnam, obcaecati non ex harum mollitia quo veritatis minus unde placeat, labore asperiores quia accusamus dicta consectetur, tempore enim?`})]});export{n as default};

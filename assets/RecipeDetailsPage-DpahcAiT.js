@@ -1,1 +1,0 @@
-import{f as e}from"./index-CSl1n7XI.js";var t=e(),n=()=>(0,t.jsx)(`div`,{children:`RecipeDetailsPage`});export{n as default};
