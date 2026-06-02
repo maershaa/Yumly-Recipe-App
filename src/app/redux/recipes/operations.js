@@ -17,4 +17,14 @@ const fetchRecipes = createAsyncThunk(
   },
 );
 
-export { fetchRecipes };
+//! разобраться целесообразно ли оно?
+const fetchTags = createAsyncThunk('recipes/getTags', async (_, thunkApi) => {
+  try {
+    const response = await supabase.from('recipes').select('tags');
+    return response.data;
+  } catch (error) {
+    return thunkApi.rejectWithValue(error.message);
+  }
+});
+
+export { fetchRecipes, fetchTags };

@@ -24,9 +24,7 @@ import { useEffect } from 'react';
 
 const RecipeItemCard = ({ recipe }) => {
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log(`Карточка ${recipe.id} была перерисована!`);
-  });
+
   const {
     id,
     recipe_name,
