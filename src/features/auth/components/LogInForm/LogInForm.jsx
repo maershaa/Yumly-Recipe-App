@@ -3,6 +3,7 @@ import { Form } from '@/components';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '@/app/redux/auth/operations';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthRedirect } from './LogInForm.styled';
 
 const LogInForm = () => {
   const [email, setEmail] = useState('');
@@ -30,12 +31,16 @@ const LogInForm = () => {
       password,
     };
 
-    dispatch(loginUser(authInfo));
-
-    setEmail('');
-    setPassword('');
-
-    navigate('/my-recipes');
+    try {
+      await dispatch(loginUser(authInfo)).unwrap();
+      // dispatch()→ возвращает action
+      // dispatch().unwrap() → возвращает данные или бросает ошибку
+      setEmail('');
+      setPassword('');
+      navigate('/my-recipes');
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <Form title={'Sign in to Yumly'} handleSubmit={handleSignIn}>
@@ -63,10 +68,10 @@ const LogInForm = () => {
       </label>
       <button type="submit">Sign in</button>
 
-      <p>
-        Еще нет аккаунта?
-        <Link to={'auth/register'}>Зрегистрируйся.</Link>
-      </p>
+      <AuthRedirect>
+        <span>New to Yumly?</span>
+        <Link to="/auth/register">Create an account</Link>
+      </AuthRedirect>
     </Form>
   );
 };

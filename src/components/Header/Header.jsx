@@ -28,7 +28,7 @@ const HeaderComponent = () => {
   const navLinks = [
     { to: 'recipes', label: 'Recipes' },
     { to: 'my-recipes', label: 'My recipes' },
-    { to: 'my-recipes/new', label: 'Create recipe' },
+    // { to: 'my-recipes/new', label: 'Create recipe' },
   ];
 
   const onLogOutClick = () => {
@@ -56,19 +56,24 @@ const HeaderComponent = () => {
 
       {!isLoggedIn ? (
         <UserMenu>
-          <NavLink to="auth/login">Login</NavLink>
+          <NavLink
+            to="auth/login"
+            className={({ isActive }) => (isActive ? 'accent' : '')}
+          >
+            Login
+          </NavLink>
           <NavLink
             to="auth/register"
-            // className="accent"
+            className={({ isActive }) => (isActive ? 'accent' : '')}
           >
             Register
           </NavLink>
         </UserMenu>
       ) : (
         <UserMenu>
-          <NavLink to="/" onClick={onLogOutClick}>
+          <button to="/" onClick={onLogOutClick}>
             Logout
-          </NavLink>
+          </button>
 
           <UserAvatarWrapper>
             <span>{name.slice(0, 1)}</span>

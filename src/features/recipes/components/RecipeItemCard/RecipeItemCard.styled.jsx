@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 const RecipeItem = styled.li`
+  cursor: pointer;
+
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -20,6 +22,9 @@ const RecipeItem = styled.li`
   }
 
   img {
+    display: block;
+    height: 220px;
+
     width: 100%;
     aspect-ratio: 16 / 10;
     object-fit: cover;

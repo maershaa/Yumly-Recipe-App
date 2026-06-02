@@ -2,18 +2,22 @@ import { Layout } from '@/components/Layout/Layout';
 import { Route, Routes } from 'react-router-dom';
 import { lazy, Suspense, useEffect } from 'react';
 import { Loader } from '@/components/Loader/Loader';
-import { PrivateRoute } from '@/components';
+import { PrivateRoute, PublicRoute } from '@/components';
 import { useDispatch } from 'react-redux';
 import { refreshUser } from '@/app/redux/auth/operations';
 
 const HomePage = lazy(() => import('@/pages/HomePage'));
-const RecipesPage = lazy(() => import('@/pages/RecipesPage.jsx'));
-const RecipeDetailsPage = lazy(() => import('@/pages/RecipeDetailsPage'));
 const RegisterPage = lazy(() => import('@/pages/RegisterPage'));
 const LoginPage = lazy(() => import('@/pages/LoginPage'));
+const CheckEmailPage = lazy(() => import('@/pages/CheckEmailPage'));
+
+const RecipesPage = lazy(() => import('@/pages/RecipesPage.jsx'));
+const RecipeDetailsPage = lazy(() => import('@/pages/RecipeDetailsPage'));
+
 const MyRecipesPage = lazy(() => import('@/pages/MyRecipesPage'));
 const CreateRecipePage = lazy(() => import('@/pages/CreateRecipePage'));
 const EditRecipePage = lazy(() => import('@/pages/EditRecipePage'));
+
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
 function App() {
@@ -36,7 +40,7 @@ function App() {
             </Route>
 
             {/* Auth */}
-            <Route path="auth">
+            <Route path="auth" element={<PublicRoute />}>
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
             </Route>
