@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchRecipes, fetchTags } from './operations';
+import { fetchRecipes } from './operations';
 
 const initialState = {
   items: [],
-  tags: [],
+  totalCount: 0,
   loading: false,
   error: null,
 };
@@ -23,19 +23,7 @@ const recipesSlice = createSlice({
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload;
-      })
-
-      //! fetchTags
-      .addCase(fetchTags.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchTags.rejected, (state, action) => {
-        state.error = action.payload;
-      })
-      .addCase(fetchTags.fulfilled, (state, action) => {
-        state.loading = false;
-        state.tags = action.payload;
+        state.totalCount = action.payload.length;
       });
   },
 });

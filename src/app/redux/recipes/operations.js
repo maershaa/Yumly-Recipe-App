@@ -1,30 +1,28 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { supabase } from '../../../../supabaseClient';
 
-// .select(*) - отдай все столбцы
-// .select('recipe_name, ingredients' ) - отдай перечисленные столбцы
-
 const fetchRecipes = createAsyncThunk(
   'recipes/getRecipes',
   async (_, thunkApi) => {
     try {
-      // const response = await axios.get(BaseUrl);
-      const response = await supabase.from('recipes').select();
-      return response.data;
+      const { data, error } = await supabase
+        .from('recipes')
+        .select('*')
+        .order('image_url', {
+          //отсортируй строки по колонке image_url
+          nullsFirst: false, //NULL значения ставь НЕ в начало, а в конец
+        })
+        .range(0, 30); //ограничивает результат 30-ю элементами
+
+      if (error) {
+        return thunkApi.rejectWithValue(error.message);
+      }
+
+      return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }
   },
 );
 
-//! разобраться целесообразно ли оно?
-const fetchTags = createAsyncThunk('recipes/getTags', async (_, thunkApi) => {
-  try {
-    const response = await supabase.from('recipes').select('tags');
-    return response.data;
-  } catch (error) {
-    return thunkApi.rejectWithValue(error.message);
-  }
-});
-
-export { fetchRecipes, fetchTags };
+export { fetchRecipes };
