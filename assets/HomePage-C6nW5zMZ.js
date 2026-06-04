@@ -1,1 +1,0 @@
-import{g as e,h as t}from"./index-BDajHPR8.js";import"./components-DquSTvE3.js";e();var n=t(),r=()=>(0,n.jsx)(`div`,{style:{margin:`20px 50px`},children:(0,n.jsx)(`h1`,{children:`Home Page`})});export{r as default};
