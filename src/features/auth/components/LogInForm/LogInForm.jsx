@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { Form } from '@/components';
+import { Form, RedirectComponent } from '@/components';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '@/app/redux/auth/operations';
-import { Link, useNavigate } from 'react-router-dom';
-import { AuthRedirect } from './LogInForm.styled';
+import { useNavigate } from 'react-router-dom';
 
 const LogInForm = () => {
   const [email, setEmail] = useState('');
@@ -68,10 +67,11 @@ const LogInForm = () => {
       </label>
       <button type="submit">Sign in</button>
 
-      <AuthRedirect>
-        <span>New to Yumly?</span>
-        <Link to="/auth/register">Create an account</Link>
-      </AuthRedirect>
+      <RedirectComponent
+        spanText={'New to Yumly?'}
+        linkText={'Create an account'}
+        to={'/auth/register'}
+      ></RedirectComponent>
     </Form>
   );
 };

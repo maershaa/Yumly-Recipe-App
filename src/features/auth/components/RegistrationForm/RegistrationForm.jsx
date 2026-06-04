@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { Form } from '@/components';
+import { Form, RedirectComponent } from '@/components';
 import { registerNewUser } from '@/app/redux/auth/operations';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { AuthRedirect } from './RegistrationForm.styled.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const RegistrationForm = () => {
   const [userName, setUserName] = useState('');
@@ -86,10 +85,11 @@ const RegistrationForm = () => {
 
       <button type="submit">Sign in</button>
 
-      <AuthRedirect>
-        <span>Already have an account?</span>
-        <Link to="/auth/login">Sign in</Link>
-      </AuthRedirect>
+      <RedirectComponent
+        spanText={'Already have an account?'}
+        linkText={'Sign in'}
+        to={'/auth/login'}
+      ></RedirectComponent>
     </Form>
   );
 };
