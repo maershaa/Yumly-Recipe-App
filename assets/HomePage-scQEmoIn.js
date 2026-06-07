@@ -1,1 +1,0 @@
-import{b as e,y as t}from"./index-f52xWSV9.js";import"./components-tEagk-cQ.js";e();var n=t(),r=()=>(0,n.jsx)(`div`,{style:{margin:`20px 50px`},children:(0,n.jsx)(`h1`,{children:`Home Page`})});export{r as default};
