@@ -1,6 +1,5 @@
 const RecipeInfo = ({ values, onChange }) => {
   const cuisines = [
-    '',
     'Ukrainian',
     'American',
     'British',
@@ -41,12 +40,16 @@ const RecipeInfo = ({ values, onChange }) => {
           name="recipe_name"
           onChange={onChange}
           value={recipe_name}
+          placeholder="Recipe title"
         />
       </label>
-      <br />
       <label>
         Choose a Cuisine
         <select name="cuisine" value={cuisineValue} onChange={onChange}>
+          <option value="" disabled>
+            Cuisine...
+          </option>
+
           {cuisines.map((cuisine) => (
             <option key={cuisine} value={cuisine}>
               {cuisine}

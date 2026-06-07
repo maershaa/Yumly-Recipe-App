@@ -1,4 +1,10 @@
 import styled from 'styled-components';
+import { Tooltip } from '@/components';
+
+export const StyledTooltip = styled(Tooltip)`
+  /* Здесь можно добавить специфичные отступы, если нужно */
+  /* Не трогать. нужно чтобы при ховере всплывало имя пользователя */
+`;
 
 const Header = styled.header`
   display: flex;
@@ -66,6 +72,8 @@ const ThemeButton = styled.button`
 `;
 
 const UserAvatarWrapper = styled.div`
+  position: relative;
+
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -77,11 +85,18 @@ const UserAvatarWrapper = styled.div`
   background: ${({ theme }) => theme.colors.cardSecondary};
   color: #fff;
 
-  span {
+  .userName {
     font-size: 1.2rem;
     font-weight: 600;
     font-family: ${({ theme }) => theme.fonts.main};
     text-transform: uppercase;
+  }
+
+  /*  наводим на UserAvatarWrapper -> меняем состояние StyledTooltip */
+  &:hover ${StyledTooltip} {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
   }
 `;
 

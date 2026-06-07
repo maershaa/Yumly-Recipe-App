@@ -2,13 +2,14 @@ import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import { ThemeContext } from '@/context';
-import { Logo } from '@/components/Logo/Logo';
+import { Logo } from '@/components';
 import {
   Header,
   NavMenu,
   UserMenu,
   UserAvatarWrapper,
   ThemeButton,
+  StyledTooltip,
 } from './Header.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOutUser } from '@/app/redux/auth/operations';
@@ -76,7 +77,8 @@ const HeaderComponent = () => {
           </button>
 
           <UserAvatarWrapper>
-            <span>{name.slice(0, 1)}</span>
+            <span className="userName">{name.slice(0, 1)}</span>
+            <StyledTooltip text={name} />
           </UserAvatarWrapper>
         </UserMenu>
       )}

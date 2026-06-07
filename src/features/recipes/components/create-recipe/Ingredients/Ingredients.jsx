@@ -1,4 +1,6 @@
-import { AddBtn } from '@/components';
+import { FaPlus, FaTrash } from 'react-icons/fa';
+import { IngredientRow } from './Ingredients.styled';
+import { GeneralBtn } from '@/components';
 
 const Ingredients = ({
   ingredients,
@@ -11,40 +13,47 @@ const Ingredients = ({
   return (
     <>
       <h2>Ingredients</h2>
-      {/*!!  Как реализовать 3 поля по умолчанию и при нажатии на кнопку авто добавление еще полей*/}
       {ingredients.map(({ id, name, amount }) => (
-        <div key={id}>
+        <IngredientRow key={id}>
           <label>
             <input
               type="text"
               name={'name'}
               onChange={(e) => onChange(id, e)}
               value={name}
+              placeholder="Ingredient name"
             />{' '}
             <input
               type="number"
               name="amount"
               min={1}
-              max={1000}
-              step={1}
               onChange={(e) => onChange(id, e)}
               value={amount}
+              placeholder="Amount"
             />
             <select name="unit" onChange={(e) => onChange(id, e)}>
-              {units.map((unit) => (
-                <option key={unit} value={unit}>
-                  {unit}
+              {units.map((unitOption) => (
+                <option key={unitOption} value={unitOption}>
+                  {unitOption}
                 </option>
               ))}
             </select>
           </label>
-          <button type="button" onClick={() => removeIngredient(id)}>
-            Delete
-          </button>
-        </div>
+
+          <GeneralBtn
+            variant="delete"
+            onClick={() => removeIngredient(id)}
+            disabled={ingredients.length <= 3}
+          >
+            <FaTrash />
+          </GeneralBtn>
+        </IngredientRow>
       ))}
 
-      <AddBtn onClick={addIngredient} btnText={'Add new ingredient'} />
+      <GeneralBtn variant="add" onClick={addIngredient}>
+        <FaPlus />
+        Add Ingredient
+      </GeneralBtn>
     </>
   );
 };

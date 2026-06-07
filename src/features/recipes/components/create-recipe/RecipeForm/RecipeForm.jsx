@@ -4,7 +4,15 @@ import {
   CookingSteps,
 } from '@/features/recipes/components/create-recipe';
 import { useState } from 'react';
-
+import {
+  Form,
+  FormSectionWrapper,
+  FormMainSection,
+  FormStepsSection,
+  PreviewImgWrapper,
+} from './RecipeForm.styled';
+import { GeneralBtn } from '@/components';
+import { FaUtensils } from 'react-icons/fa';
 const createIngredient = () => ({
   id: crypto.randomUUID(),
   name: '',
@@ -19,16 +27,9 @@ const RecipeForm = () => {
     cuisine: '',
     cooking_time: '',
 
-    ingredients: [
-      {
-        id: crypto.randomUUID(),
-        name: '',
-        amount: '',
-        unit: 'g',
-      },
-    ],
+    ingredients: [createIngredient(), createIngredient(), createIngredient()],
 
-    instructions: [{ id: crypto.randomUUID(), text: '' }],
+    instructions: [createStep(), createStep(), createStep()],
 
     image_url: '',
   });
@@ -97,27 +98,46 @@ const RecipeForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>RecipeForm</h2>
+    <Form onSubmit={handleSubmit}>
+      <FormMainSection>
+        <FormSectionWrapper>
+          <RecipeInfo values={recipeForm} onChange={handleInfoChange} />
+        </FormSectionWrapper>
+        <FormSectionWrapper>
+          <Ingredients
+            ingredients={recipeForm.ingredients}
+            onChange={handleIngredientChange}
+            addIngredient={addIngredient}
+            removeIngredient={removeIngredient}
+          />
+        </FormSectionWrapper>
+      </FormMainSection>
 
-      <RecipeInfo values={recipeForm} onChange={handleInfoChange} />
+      <FormStepsSection>
+        <FormSectionWrapper>
+          <CookingSteps
+            instructions={recipeForm.instructions}
+            onChange={handleStepChange}
+            addStep={addStep}
+            removeStep={removeStep}
+          />
 
-      <Ingredients
-        ingredients={recipeForm.ingredients}
-        onChange={handleIngredientChange}
-        addIngredient={addIngredient}
-        removeIngredient={removeIngredient}
-      />
+          {recipeForm.image_url && (
+            <PreviewImgWrapper>
+              <img
+                src={recipeForm.image_url}
+                alt={`${recipeForm.recipe_name} image`}
+              />
+            </PreviewImgWrapper>
+          )}
+        </FormSectionWrapper>
 
-      <CookingSteps
-        instructions={recipeForm.instructions}
-        onChange={handleStepChange}
-        addStep={addStep}
-        removeStep={removeStep}
-      />
-
-      <button type="submit">Add new recipe</button>
-    </form>
+        <GeneralBtn type="submit" variant="submit">
+          <FaUtensils />
+          Create Recipe
+        </GeneralBtn>
+      </FormStepsSection>
+    </Form>
   );
 };
 

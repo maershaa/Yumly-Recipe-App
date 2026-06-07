@@ -9,11 +9,7 @@ import { RecipesList, TagsFilter } from '@/features/recipes/components';
 
 const HomePage = () => {
   return (
-    <div
-      style={{
-        margin: '20px 50px',
-      }}
-    >
+    <div>
       <h1>Home Page</h1>
     </div>
   );
