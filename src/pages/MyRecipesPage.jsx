@@ -8,7 +8,7 @@ import {
   PageHeader,
   InputFilter,
 } from '@/features/recipes/components';
-import { CreateNewRecipeBtn, RedirectComponent } from '@/components';
+import { AddBtn, RedirectComponent } from '@/components';
 
 const MyRecipesPage = () => {
   const [filter, setFilter] = useState('');
@@ -30,7 +30,7 @@ const MyRecipesPage = () => {
       }}
     >
       <PageHeader title={'Recipes'}>
-        <CreateNewRecipeBtn
+        <AddBtn
           onClick={onCreateNewRecipeBtnClick}
           btnText={'Add new recipe'}
         />

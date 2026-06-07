@@ -1,11 +1,11 @@
 import { FiPlus } from 'react-icons/fi';
-import { Button, Tooltip, Wrapper } from './CreateNewRecipeBtn.styled';
+import { Button, Tooltip, Wrapper } from './AddBtn.styled';
 
-const CreateNewRecipeBtn = ({ onClick, btnText }) => {
+const AddBtn = ({ onClick, btnText, size = 22 }) => {
   return (
     <Wrapper>
       <Button type="button" aria-label={btnText} onClick={onClick}>
-        <FiPlus size={22} />
+        <FiPlus size={size} />
       </Button>
 
       <Tooltip>{btnText}</Tooltip>
@@ -13,4 +13,4 @@ const CreateNewRecipeBtn = ({ onClick, btnText }) => {
   );
 };
 
-export { CreateNewRecipeBtn };
+export { AddBtn };
