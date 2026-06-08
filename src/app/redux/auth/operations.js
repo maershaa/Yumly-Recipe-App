@@ -50,7 +50,6 @@ const loginUser = createAsyncThunk('auth/login', async (user, thunkApi) => {
 const logOutUser = createAsyncThunk('auth/logout', async (_, thunkApi) => {
   try {
     const response = await supabase.auth.signOut();
-    console.log('🚀 logOutUser ~ response:', response);
     return response.data;
   } catch (error) {
     return thunkApi.rejectWithValue(error.message);
@@ -62,7 +61,6 @@ const refreshUser = createAsyncThunk('auth/refresh', async (_, thunkApi) => {
     const {
       data: { session },
     } = await supabase.auth.getSession();
-
     return session;
   } catch (error) {
     return thunkApi.rejectWithValue(error.message);

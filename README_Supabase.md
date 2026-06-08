@@ -467,3 +467,113 @@ refresh token
 ```
 
 ---
+
+Для того чтобы ваша база данных была полностью рабочей, безопасной и «профессионально настроенной» (как мы и сделали в процессе вашего обучения), я добавил важные разделы по работе с целостностью данных (`user_id`, `Foreign Key`) прямо в ваш алгоритм.
+
+Вот дополненный блок для вашего `README.md`:
+
+---
+
+# 17. Настройка целостности данных (Обязательный этап)
+
+Чтобы таблица корректно работала с пользователями, важно привязать каждый рецепт к конкретному автору.
+
+### 1. Привязка `user_id` к пользователю
+
+Добавьте колонку `user_id` в таблицу (тип `uuid`). Установите для неё значение по умолчанию `auth.uid()`, чтобы при вставке данных ID пользователя подставлялся автоматически:
+
+```sql
+-- 1. Установка значения по умолчанию
+ALTER TABLE recipes
+ALTER COLUMN user_id SET DEFAULT auth.uid();
+
+-- 2. Делаем поле обязательным
+ALTER TABLE recipes
+ALTER COLUMN user_id SET NOT NULL;
+
+```
+
+### 2. Создание внешнего ключа (Foreign Key)
+
+Это гарантирует, что рецепт не может существовать без реального пользователя (целостность данных):
+
+```sql
+ALTER TABLE recipes
+ADD CONSTRAINT fk_recipes_user_id
+FOREIGN KEY (user_id) REFERENCES auth.users(id)
+ON DELETE CASCADE;
+
+```
+
+_Примечание: Если у вас уже есть записи, сначала обновите `NULL` значения на существующий UUID пользователя._
+
+---
+
+# 18. Политики безопасности (RLS) для CRUD
+
+После включения RLS в таблице, вам нужно явно разрешить операции.
+
+### Публичное чтение
+
+```sql
+create policy "Anyone can read recipes"
+on recipes
+for select
+using (true);
+
+```
+
+### Создание рецепта (только для своих)
+
+```sql
+create policy "Authenticated users can create recipes"
+on recipes
+for insert
+to authenticated
+with check (auth.uid() = user_id);
+
+```
+
+### Редактирование и удаление (только владельцем)
+
+```sql
+create policy "Users can update own recipes"
+on recipes
+for update
+to authenticated
+using (auth.uid() = user_id);
+
+create policy "Users can delete own recipes"
+on recipes
+for delete
+to authenticated
+using (auth.uid() = user_id);
+
+```
+
+---
+
+# 19. Принцип работы RLS "под капотом"
+
+Когда вы делаете запрос из React, Supabase автоматически подставляет `auth.uid()` из текущего JWT-токена пользователя.
+
+- **SELECT**: Если `using (true)` — вернет все записи.
+- **INSERT/UPDATE**: Если `auth.uid() = user_id` — Supabase проверит, совпадает ли ID создателя с ID пользователя в сессии. Если не совпадает, база данных отклонит запрос с ошибкой `403 Forbidden`.
+
+---
+
+# 20. Совет: Фильтрация в приложении
+
+Теперь, когда связь `recipes -> users` жесткая, вы можете легко получать только свои рецепты на стороне React:
+
+```js
+const fetchMyRecipes = async (userId) => {
+  const { data, error } = await supabase
+    .from('recipes')
+    .select('*')
+    .eq('user_id', userId); // Безопасная фильтрация
+  return data;
+};
+```
+
+---

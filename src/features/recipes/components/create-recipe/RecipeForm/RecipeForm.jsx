@@ -13,9 +13,12 @@ import {
 } from './RecipeForm.styled';
 import { FaUtensils } from 'react-icons/fa';
 import { supabase } from '../../../../../../supabaseClient';
+import { useSelector } from 'react-redux';
+
+import { selectUserId } from '@/app/redux/auth/selectors';
 
 const createIngredient = () => ({
-  id: crypto.randomUUID(),
+  id: crypto.randomUUID(), //!Обязательно. чтобы БД знала к какому пользователю закрепить рецепт
   name: '',
   amount: '',
   unit: 'g',
@@ -24,7 +27,10 @@ const createIngredient = () => ({
 const createStep = () => ({ id: crypto.randomUUID(), text: '' });
 
 const RecipeForm = () => {
+  const currentUserId = useSelector(selectUserId);
+
   const [recipeForm, setRecipeForm] = useState({
+    user_id: currentUserId,
     recipe_name: '',
     cuisine: '',
     cooking_time: '',
@@ -36,12 +42,25 @@ const RecipeForm = () => {
     image_url: '',
   });
 
+  const createRecipe = useCallback(async (newRecipe) => {
+    try {
+      const { data, error } = await supabase
+        .from('recipes')
+        .insert(newRecipe)
+        .select();
+
+      if (error) throw error;
+      console.log('🚀 ~ Recipe successfully created:', data);
+      return data;
+    } catch (e) {
+      console.error('Error creating recipe:', e.message);
+      throw e;
+    }
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(recipeForm);
-
-    // putNewRecipe(recipeForm);
+    createRecipe(recipeForm);
   };
 
   const handleInfoChange = (e) => {
