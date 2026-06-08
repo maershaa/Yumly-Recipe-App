@@ -1,4 +1,4 @@
-import{C as e,S as t,T as n,c as r,i,l as a,o,p as s,r as c,s as l,w as u}from"./index-C58crP2e.js";var d=t.ul`
+import{C as e,S as t,T as n,c as r,i,l as a,o,p as s,r as c,s as l,w as u}from"./index-DxNfaLH0.js";var d=t.ul`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
@@ -295,7 +295,38 @@ import{C as e,S as t,T as n,c as r,i,l as a,o,p as s,r as c,s as l,w as u}from".
   &:hover {
     box-shadow: ${({theme:e})=>e.colors.hoverShadowSecondary};
   }
-`;var P=t.div``,F=()=>({id:crypto.randomUUID(),name:``,amount:``,unit:`g`}),I=()=>({id:crypto.randomUUID(),text:``}),L=()=>{let[e,t]=(0,f.useState)({recipe_name:``,cuisine:``,cooking_time:``,ingredients:[F(),F(),F()],instructions:[I(),I(),I()],image_url:``});return(0,p.jsxs)(A,{onSubmit:t=>{t.preventDefault(),console.log(e)},children:[(0,p.jsxs)(M,{children:[(0,p.jsx)(j,{children:(0,p.jsx)(R,{values:e,onChange:e=>{let{name:n,value:r}=e.target;t(e=>({...e,[n]:r}))}})}),(0,p.jsx)(j,{children:(0,p.jsx)(B,{ingredients:e.ingredients,onChange:(e,n)=>{let{name:r,value:i}=n.target;t(t=>({...t,ingredients:t.ingredients.map(t=>t.id===e?{...t,[r]:i}:t)}))},addIngredient:()=>{t(e=>({...e,ingredients:[...e.ingredients,F()]}))},removeIngredient:e=>{t(t=>({...t,ingredients:t.ingredients.filter(t=>t.id!==e)}))}})})]}),(0,p.jsxs)(N,{children:[(0,p.jsxs)(j,{children:[(0,p.jsx)(H,{instructions:e.instructions,onChange:(e,n)=>{let{value:r}=n.target;t(t=>({...t,instructions:t.instructions.map(t=>t.id===e?{...t,text:r}:t)}))},addStep:()=>{t(e=>({...e,instructions:[...e.instructions,I()]}))},removeStep:e=>{t(t=>({...t,instructions:t.instructions.filter(t=>t.id!==e)}))}}),e.image_url&&(0,p.jsx)(P,{children:(0,p.jsx)(`img`,{src:e.image_url,alt:`${e.recipe_name} image`})})]}),(0,p.jsxs)(i,{type:`submit`,variant:`submit`,children:[(0,p.jsx)(a,{}),`Create Recipe`]})]})]})},R=({values:e,onChange:t})=>{let n=[`Ukrainian`,`American`,`British`,`Chinese`,`French`,`German`,`Greek`,`Indian`,`Italian`,`Japanese`,`Jewish`,`Korean`,`Mexican`,`Spanish`,`Thai`,`Vietnamese`],{recipe_name:r,cuisine:i,cooking_time:a}=e;return(0,p.jsxs)(p.Fragment,{children:[(0,p.jsx)(`h2`,{children:`Recipe Info`}),(0,p.jsxs)(`label`,{children:[`Title`,(0,p.jsx)(`input`,{type:`text`,name:`recipe_name`,onChange:t,value:r,placeholder:`Recipe title`})]}),(0,p.jsxs)(`label`,{children:[`Choose a Cuisine`,(0,p.jsxs)(`select`,{name:`cuisine`,value:i,onChange:t,children:[(0,p.jsx)(`option`,{value:``,disabled:!0,children:`Cuisine...`}),n.map(e=>(0,p.jsx)(`option`,{value:e,children:e},e))]})]}),(0,p.jsxs)(`label`,{children:[`Cooking Time`,(0,p.jsx)(`input`,{type:`number`,name:`cooking_time`,value:a,onChange:t})]}),(0,p.jsxs)(`label`,{children:[`Add image`,(0,p.jsx)(`input`,{type:`file`,accept:`image/*`,onChange:e=>{console.log(`Сработал клик по добавлению нового изображения:`,e),console.log(`🚀 ~ handleImageUpload ~ e.target:`,e.target)}})]})]})},z=t.div`
+`;var P=()=>({id:crypto.randomUUID(),name:``,amount:``,unit:`g`}),F=()=>({id:crypto.randomUUID(),text:``}),I=()=>{let[e,t]=(0,f.useState)({recipe_name:``,cuisine:``,cooking_time:``,ingredients:[P(),P(),P()],instructions:[F(),F(),F()],image_url:``});return(0,p.jsxs)(A,{onSubmit:t=>{t.preventDefault(),console.log(e)},children:[(0,p.jsxs)(M,{children:[(0,p.jsx)(j,{children:(0,p.jsx)(R,{values:e,onChange:e=>{let{name:n,value:r}=e.target;t(e=>({...e,[n]:r}))}})}),(0,p.jsx)(j,{children:(0,p.jsx)(B,{ingredients:e.ingredients,onChange:(e,n)=>{let{name:r,value:i}=n.target;t(t=>({...t,ingredients:t.ingredients.map(t=>t.id===e?{...t,[r]:i}:t)}))},addIngredient:()=>{t(e=>({...e,ingredients:[...e.ingredients,P()]}))},removeIngredient:e=>{t(t=>({...t,ingredients:t.ingredients.filter(t=>t.id!==e)}))}})})]}),(0,p.jsxs)(N,{children:[(0,p.jsx)(j,{children:(0,p.jsx)(H,{instructions:e.instructions,onChange:(e,n)=>{let{value:r}=n.target;t(t=>({...t,instructions:t.instructions.map(t=>t.id===e?{...t,text:r}:t)}))},addStep:()=>{t(e=>({...e,instructions:[...e.instructions,F()]}))},removeStep:e=>{t(t=>({...t,instructions:t.instructions.filter(t=>t.id!==e)}))}})}),(0,p.jsxs)(i,{type:`submit`,variant:`submit`,children:[(0,p.jsx)(a,{}),`Create Recipe`]})]})]})},L=t.div`
+  position: relative;
+
+  display: flex;
+  margin: 0 auto;
+
+  background-image: url(${`/Yumly-Recipe-App/assets/AddImgPlaceholder-DDbwgLW1.png`});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  width: 250px;
+  height: 250px;
+
+  border: 2px dashed ${({theme:e})=>e.colors.border};
+  border-radius: ${({theme:e})=>e.radii.lg};
+
+  cursor: pointer;
+
+  input {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    opacity: 0;
+
+    width: 100%;
+    height: 100%;
+
+    cursor: pointer;
+  }
+`,R=({values:e,onChange:t})=>{let n=[`Ukrainian`,`American`,`British`,`Chinese`,`French`,`German`,`Greek`,`Indian`,`Italian`,`Japanese`,`Jewish`,`Korean`,`Mexican`,`Spanish`,`Thai`,`Vietnamese`],{recipe_name:r,cuisine:i,cooking_time:a,image_url:o}=e;return(0,p.jsxs)(p.Fragment,{children:[(0,p.jsx)(`h2`,{children:`Recipe Info`}),(0,p.jsxs)(`label`,{children:[`Title`,(0,p.jsx)(`input`,{type:`text`,name:`recipe_name`,onChange:t,value:r,placeholder:`Recipe title`})]}),(0,p.jsxs)(`label`,{children:[`Choose a Cuisine`,(0,p.jsxs)(`select`,{name:`cuisine`,value:i,onChange:t,children:[(0,p.jsx)(`option`,{value:``,disabled:!0,children:`Cuisine...`}),n.map(e=>(0,p.jsx)(`option`,{value:e,children:e},e))]})]}),(0,p.jsxs)(`label`,{children:[`Cooking Time`,(0,p.jsx)(`input`,{type:`number`,name:`cooking_time`,value:a,onChange:t})]}),(0,p.jsx)(L,{children:(0,p.jsx)(`label`,{children:(0,p.jsx)(`input`,{type:`file`,accept:`.jpg, .png, .jpeg`,multiple:!1,onChange:t,value:o,name:`image_url`})})})]})},z=t.div`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -319,4 +350,4 @@ import{C as e,S as t,T as n,c as r,i,l as a,o,p as s,r as c,s as l,w as u}from".
     flex-direction: row;
     align-items: center;
   }
-`,H=({instructions:e,onChange:t,addStep:n,removeStep:a})=>(0,p.jsxs)(p.Fragment,{children:[(0,p.jsx)(`h2`,{children:`Steps`}),e.map(({id:n,text:o},s)=>(0,p.jsxs)(V,{children:[(0,p.jsx)(`label`,{children:(0,p.jsx)(`textarea`,{type:`text`,name:`step`,onChange:e=>t(n,e),value:o,placeholder:`Describe step ${s+1}`,rows:3})}),(0,p.jsx)(i,{variant:`delete`,onClick:()=>a(n),disabled:e.length<=3,children:(0,p.jsx)(r,{})})]},n)),(0,p.jsxs)(i,{variant:`add`,onClick:n,children:[(0,p.jsx)(l,{}),`Add Step`]})]});export{x as a,T as i,k as n,m as o,D as r,L as t};
+`,H=({instructions:e,onChange:t,addStep:n,removeStep:a})=>(0,p.jsxs)(p.Fragment,{children:[(0,p.jsx)(`h2`,{children:`Steps`}),e.map(({id:n,text:o},s)=>(0,p.jsxs)(V,{children:[(0,p.jsx)(`label`,{children:(0,p.jsx)(`textarea`,{type:`text`,name:`step`,onChange:e=>t(n,e),value:o,placeholder:`Describe step ${s+1}`,rows:3})}),(0,p.jsx)(i,{variant:`delete`,onClick:()=>a(n),disabled:e.length<=3,children:(0,p.jsx)(r,{})})]},n)),(0,p.jsxs)(i,{variant:`add`,onClick:n,children:[(0,p.jsx)(l,{}),`Add Step`]})]});export{x as a,T as i,k as n,m as o,D as r,I as t};
