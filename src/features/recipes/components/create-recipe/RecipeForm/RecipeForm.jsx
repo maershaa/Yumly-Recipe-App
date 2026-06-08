@@ -1,24 +1,26 @@
+import { useCallback, useState } from 'react';
 import {
   RecipeInfo,
   Ingredients,
   CookingSteps,
 } from '@/features/recipes/components/create-recipe';
-import { useState } from 'react';
+import { GeneralBtn } from '@/components';
 import {
   Form,
   FormSectionWrapper,
   FormMainSection,
   FormStepsSection,
-  PreviewImgWrapper,
 } from './RecipeForm.styled';
-import { GeneralBtn } from '@/components';
 import { FaUtensils } from 'react-icons/fa';
+import { supabase } from '../../../../../../supabaseClient';
+
 const createIngredient = () => ({
   id: crypto.randomUUID(),
   name: '',
   amount: '',
   unit: 'g',
 });
+
 const createStep = () => ({ id: crypto.randomUUID(), text: '' });
 
 const RecipeForm = () => {
@@ -36,7 +38,10 @@ const RecipeForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     console.log(recipeForm);
+
+    // putNewRecipe(recipeForm);
   };
 
   const handleInfoChange = (e) => {
@@ -121,15 +126,6 @@ const RecipeForm = () => {
             addStep={addStep}
             removeStep={removeStep}
           />
-
-          {recipeForm.image_url && (
-            <PreviewImgWrapper>
-              <img
-                src={recipeForm.image_url}
-                alt={`${recipeForm.recipe_name} image`}
-              />
-            </PreviewImgWrapper>
-          )}
         </FormSectionWrapper>
 
         <GeneralBtn type="submit" variant="submit">

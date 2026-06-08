@@ -1,3 +1,5 @@
+import { ImgWrapper } from './RecipeInfo.styled';
+
 const RecipeInfo = ({ values, onChange }) => {
   const cuisines = [
     'Ukrainian',
@@ -22,13 +24,8 @@ const RecipeInfo = ({ values, onChange }) => {
     recipe_name,
     cuisine: cuisineValue,
     cooking_time,
-    // image_url,
+    image_url,
   } = values;
-
-  const handleImageUpload = (e) => {
-    console.log('Сработал клик по добавлению нового изображения:', e);
-    console.log('🚀 ~ handleImageUpload ~ e.target:', e.target);
-  };
 
   return (
     <>
@@ -66,10 +63,19 @@ const RecipeInfo = ({ values, onChange }) => {
           onChange={onChange}
         />
       </label>
-      <label>
-        Add image
-        <input type="file" accept="image/*" onChange={handleImageUpload} />
-      </label>
+
+      <ImgWrapper>
+        <label>
+          <input
+            type="file"
+            accept=".jpg, .png, .jpeg"
+            multiple={false} //если ты разрешаешь загрузку нескольких фото => true
+            onChange={onChange}
+            value={image_url}
+            name="image_url"
+          />
+        </label>
+      </ImgWrapper>
     </>
   );
 };

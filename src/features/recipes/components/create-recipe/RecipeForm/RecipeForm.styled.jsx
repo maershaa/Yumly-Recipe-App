@@ -148,5 +148,3 @@ export const SubmitButton = styled.button`
     box-shadow: ${({ theme }) => theme.colors.hoverShadowSecondary};
   }
 `;
-
-export const PreviewImgWrapper = styled.div``;
