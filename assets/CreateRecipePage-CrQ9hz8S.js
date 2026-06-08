@@ -1,0 +1,1 @@
+import{s as e,w as t}from"./index-039BVXP1.js";import{t as n}from"./components-DTxWd8yo.js";var r=t(),i=()=>(0,r.jsxs)(`div`,{children:[(0,r.jsx)(e,{title:`Add Recipe`,children:` `}),(0,r.jsx)(n,{})]});export{i as default};
