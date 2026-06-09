@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectRecipes } from '@/app/redux/recipes/selectors.js';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 // import { fetchRecipes } from '@/app/redux/recipes/operations';
 import {
   RecipesList,
@@ -12,13 +12,16 @@ import { CreateButton, RedirectComponent } from '@/components';
 
 const MyRecipesPage = () => {
   const [filter, setFilter] = useState('');
-  const dispatch = useDispatch();
   const recipes = useSelector(selectRecipes);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // dispatch(fetchRecipes());
-  }, [dispatch]);
+  const filteredRecipes = useMemo(
+    () =>
+      recipes.filter((r) =>
+        r.recipe_name.toLowerCase().includes(filter.toLowerCase()),
+      ),
+    [filter, recipes],
+  );
 
   const onCreateNewRecipeBtnClick = () => {
     navigate('new');
@@ -40,14 +43,14 @@ const MyRecipesPage = () => {
         setFilterValue={setFilter}
       />
 
-      {recipes.length > 0 ? (
-        <RecipesList recipes={recipes} />
-      ) : (
+      {recipes.length === 0 ? (
         <RedirectComponent
           spanText={'There are no recipes yet.'}
           linkText={'Add new recipe'}
           to={'new'}
         />
+      ) : (
+        <RecipesList recipes={filteredRecipes} />
       )}
 
       <Outlet />

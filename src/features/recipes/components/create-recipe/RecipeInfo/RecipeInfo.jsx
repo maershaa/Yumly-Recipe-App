@@ -1,25 +1,7 @@
 import { ImgWrapper } from './RecipeInfo.styled';
+import { cuisines } from '@/features/recipes/constants';
 
-const RecipeInfo = ({ values, onChange }) => {
-  const cuisines = [
-    'Ukrainian',
-    'American',
-    'British',
-    'Chinese',
-    'French',
-    'German',
-    'Greek',
-    'Indian',
-    'Italian',
-    'Japanese',
-    'Jewish',
-    'Korean',
-    'Mexican',
-    'Spanish',
-    'Thai',
-    'Vietnamese',
-  ];
-
+const RecipeInfo = ({ values, onChange, handleImageUpload }) => {
   const {
     recipe_name,
     cuisine: cuisineValue,
@@ -70,8 +52,7 @@ const RecipeInfo = ({ values, onChange }) => {
             type="file"
             accept=".jpg, .png, .jpeg"
             multiple={false} //если ты разрешаешь загрузку нескольких фото => true
-            onChange={onChange}
-            value={image_url}
+            onChange={handleImageUpload}
             name="image_url"
           />
         </label>

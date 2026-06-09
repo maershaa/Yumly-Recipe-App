@@ -10,4 +10,12 @@ export const StepRow = styled.div`
     flex-direction: row;
     align-items: center;
   }
+
+  label {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+
+    font-size: 1.5;
+  }
 `;

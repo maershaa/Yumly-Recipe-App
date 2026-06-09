@@ -1,6 +1,7 @@
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import { IngredientRow } from './Ingredients.styled';
 import { GeneralBtn } from '@/components';
+import { units } from '@/features/recipes/constants';
 
 const Ingredients = ({
   ingredients,
@@ -8,8 +9,6 @@ const Ingredients = ({
   addIngredient,
   removeIngredient,
 }) => {
-  const units = ['g', 'kg', 'ml', 'l', 'pcs', 'tbsp', 'tsp'];
-
   return (
     <>
       <h2>Ingredients</h2>

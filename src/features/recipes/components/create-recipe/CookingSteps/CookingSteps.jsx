@@ -9,7 +9,7 @@ const CookingSteps = ({ instructions, onChange, addStep, removeStep }) => {
       {instructions.map(({ id, text }, index) => (
         <StepRow key={id}>
           <label>
-            {/* <span className="step-number">{index + 1}</span>{' '} */}
+            <span className="step-number">{index + 1}.</span>{' '}
             <textarea
               type="text"
               name="step"
