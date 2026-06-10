@@ -1,7 +1,7 @@
-import { ImgWrapper } from './RecipeInfo.styled';
+import { ImgWrapper, ReplaceImageWrapper } from './RecipeInfo.styled';
 import { cuisines } from '@/features/recipes/constants';
-
-const RecipeInfo = ({ values, onChange, handleImageUpload }) => {
+import { GeneralBtn } from '@/components';
+const RecipeInfo = ({ values, onChange, handleImageUpload, removeImage }) => {
   const {
     recipe_name,
     cuisine: cuisineValue,
@@ -46,17 +46,26 @@ const RecipeInfo = ({ values, onChange, handleImageUpload }) => {
         />
       </label>
 
-      <ImgWrapper>
-        <label>
-          <input
-            type="file"
-            accept=".jpg, .png, .jpeg"
-            multiple={false} //если ты разрешаешь загрузку нескольких фото => true
-            onChange={handleImageUpload}
-            name="image_url"
-          />
-        </label>
-      </ImgWrapper>
+      {!image_url ? (
+        <ImgWrapper>
+          <label>
+            <input
+              type="file"
+              accept=".jpg, .png, .jpeg"
+              multiple={false} //если ты разрешаешь загрузку нескольких фото => true
+              onChange={handleImageUpload}
+              name="image_url"
+            />
+          </label>
+        </ImgWrapper>
+      ) : (
+        <ReplaceImageWrapper>
+          <img src={image_url} alt={recipe_name || 'Recipe image'} />
+          <GeneralBtn variant="delete" onClick={removeImage}>
+            Replace image
+          </GeneralBtn>
+        </ReplaceImageWrapper>
+      )}
     </>
   );
 };

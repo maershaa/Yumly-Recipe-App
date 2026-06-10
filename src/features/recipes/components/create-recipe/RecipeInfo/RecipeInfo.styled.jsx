@@ -33,3 +33,24 @@ export const ImgWrapper = styled.div`
     cursor: pointer;
   }
 `;
+
+export const ReplaceImageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  margin: 0 auto;
+  gap: 30px;
+
+  img {
+    width: 100%;
+
+    border: 2px dashed ${({ theme }) => theme.colors.border};
+    border-radius: ${({ theme }) => theme.radii.lg};
+
+    overflow: hidden;
+  }
+
+  button {
+    width: 100%;
+  }
+`;

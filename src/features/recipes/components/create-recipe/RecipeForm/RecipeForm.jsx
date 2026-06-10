@@ -1,39 +1,36 @@
-import { useCallback, useState } from 'react';
-import {
-  RecipeInfo,
-  Ingredients,
-  CookingSteps,
-} from '@/features/recipes/components/create-recipe';
-import { GeneralBtn } from '@/components';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { FaUtensils } from 'react-icons/fa';
+
 import {
   Form,
   FormSectionWrapper,
   FormMainSection,
   FormStepsSection,
 } from './RecipeForm.styled';
-import { FaUtensils } from 'react-icons/fa';
-import { supabase } from '../../../../../../supabaseClient';
-import { useSelector } from 'react-redux';
-import { selectUser } from '@/app/redux/auth/selectors';
 import {
-  calculateDifficulty,
-  generateRecipeTags,
-} from '@/features/recipes/utils';
-import { useCreateRecipe } from '@/features/recipes/api';
+  RecipeInfo,
+  Ingredients,
+  CookingSteps,
+} from '@/features/recipes/components/create-recipe';
+import { GeneralBtn } from '@/components';
 
-const createIngredient = () => ({
-  id: crypto.randomUUID(), //!Обязательно. чтобы БД знала к какому пользователю закрепить рецепт
-  name: '',
-  amount: '',
-  unit: 'g',
-});
-
-const createStep = () => ({ id: crypto.randomUUID(), text: '' });
+import { selectUser } from '@/app/redux/auth/selectors';
+import { useCreateRecipe, uploadRecipeImage } from '@/features/recipes/api';
+import {
+  createIngredient,
+  createStep,
+  prepareRecipeForSave,
+} from '@/features/recipes/helpers';
 
 const RecipeForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { id: currentUserId } = useSelector(selectUser);
 
-  const initialFormState = {
+  const createRecipe = useCreateRecipe(); // мой хук который достает функцию createRecipe которая готовит на основе формы обьект для отправки на бекенд
+
+  const createInitialFormState = () => ({
+    ///мы делаем функцию createInitialFormState а не обьект потому что После очистки формы создаются новые UUID в createIngredient и createStep
     recipe_name: '',
     cuisine: '',
     cooking_time: '',
@@ -41,52 +38,70 @@ const RecipeForm = () => {
 
     ingredients: [createIngredient(), createIngredient(), createIngredient()],
     instructions: [createStep(), createStep(), createStep()],
+  });
+
+  const [recipeForm, setRecipeForm] = useState(createInitialFormState); //Это Lazy Initial State. React сам вызовет функцию только один раз при первом рендере
+
+  const isFormValid = () => {
+    const titleValid = recipeForm.recipe_name.trim().length >= 3;
+    const cuisineValid = recipeForm.cuisine !== '';
+    const cookingTimeValid = Number(recipeForm.cooking_time) > 0;
+
+    const ingredientsValid = recipeForm.ingredients.some(
+      (ingredient) => ingredient.name.trim() && Number(ingredient.amount) > 0,
+    );
+
+    const instructionsValid = recipeForm.instructions.some(
+      (step) => step.text.trim().length > 0,
+    );
+
+    return (
+      titleValid &&
+      cuisineValid &&
+      cookingTimeValid &&
+      ingredientsValid &&
+      instructionsValid
+    );
   };
 
-  const [recipeForm, setRecipeForm] = useState(initialFormState);
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
 
-  const handleSubmit = (e) => {
+  //   const recipeToSubmit = prepareRecipeForSave(recipeForm);
+
+  //   if (recipeToSubmit) {
+  //     createRecipe(recipeToSubmit, currentUserId);
+  //     resetForm();
+  //   } else {
+  //     throw new Error('recipeToSubmit is undefined');
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
+    //!! вот тут в handleSubmit опиши логику каждого шага
     e.preventDefault();
 
-    //! сохраняем картинку пользователя сейчас!!!!
+    if (!isFormValid()) return; // !как оно понимает что форма валидна если там обьект????
 
-    const recipeToSubmit = {
-      ...recipeForm,
+    if (isSubmitting) return;
 
-      ingredients: recipeForm.ingredients.map((el) => {
-        return {
-          name: el.name.trim(),
-          amount: el.amount,
-          unit: el.unit,
-        };
-      }),
+    try {
+      setIsSubmitting(true);
 
-      instructions: recipeForm.instructions.map((el, index) => {
-        return {
-          step: index,
-          text: el.text.trim(),
-        };
-      }),
+      const recipeToSubmit = prepareRecipeForSave(recipeForm);
 
-      calories: null,
-      isHealthy: false,
-      isVegan: false,
-      difficulty: calculateDifficulty(Number(recipeForm.cooking_time)),
+      await createRecipe(recipeToSubmit, currentUserId);
 
-      tags: generateRecipeTags(
-        recipeForm.cuisine,
-        calculateDifficulty(Number(recipeForm.cooking_time)),
-        // isHealthy === true && 'healthy',
-      ),
-      likes: 0,
-    };
+      resetForm();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-    console.log('🚀 ~ handleSubmit ~ recipeToSubmit:', recipeToSubmit);
-
-    // const createRecipe = useCreateRecipe();
-    // createRecipe(recipeToSubmit,currentUserId);
-
-    // setRecipeForm(initialFormState);
+  const resetForm = () => {
+    setRecipeForm(createInitialFormState());
   };
 
   const handleInfoChange = (e) => {
@@ -108,42 +123,19 @@ const RecipeForm = () => {
       return;
     }
 
-    const filePath = `${currentUserId}/${uploadedFile.name}`; //создаем папку с id нашего пользователя в хранилище recipeImage и туда сохраняем картинку.
-    //!Картинки с русскими именами надо будет переделать так как они не загрузят и будет ошибка. Какие есть способы для решения этого?
+    const fileExtension = uploadedFile.name.split('.').pop();
+    const uniqueName = `${crypto.randomUUID()}.${fileExtension}`; //создаем рандомное имя картинке
+    const filePath = `${currentUserId}/${uniqueName}`; //создаем папку с id нашего пользователя в хранилище recipeImage и туда сохраняем картинку.
 
-    uploadRecipeImage(filePath, uploadedFile);
-  };
-
-  const uploadRecipeImage = async (filePath, uploadedFile) => {
     try {
-      const { data, error } = await supabase.storage
-        .from('recipeImage')
-        .upload(filePath, uploadedFile, {
-          cacheControl: '3600',
-          upsert: true, //upsert: true говорит Добавь эту строчку, если её еще нет, или обнови её, если она уже существует
-        });
-
-      if (error) throw error;
-      console.log('🚀 ~ Upload success ~ data:', data);
-
-      // const { fullPath, id, path } = data;
-
-      const { data: urlData } = supabase.storage
-        .from('recipeImage')
-        .getPublicUrl(filePath); // Передаем filePath, а не просто имя файла
-      // {
-      //transform: { //!На бесплатном тарифе, вызов { transform: { ... } }) то есть оптимизация и изменение размера изображений -вернет ошибку
-      //   width: 500,
-      //   height: 600,
-      // },
-      // }
+      const imageUrl = await uploadRecipeImage(filePath, uploadedFile);
+      console.log('Картинка успешно загружена:', imageUrl);
       setRecipeForm((prevValue) => ({
         ...prevValue,
-        image_url: urlData.publicUrl,
+        image_url: imageUrl,
       }));
     } catch (error) {
-      console.error('Error saving recipe:', error.message);
-      throw error;
+      console.error('Ошибка при загрузке:', error);
     }
   };
 
@@ -199,6 +191,13 @@ const RecipeForm = () => {
     }));
   };
 
+  const removeImage = () => {
+    setRecipeForm((prev) => ({
+      ...prev,
+      image_url: '',
+    }));
+  };
+
   return (
     <Form onSubmit={handleSubmit}>
       <FormMainSection>
@@ -207,6 +206,7 @@ const RecipeForm = () => {
             values={recipeForm}
             onChange={handleInfoChange}
             handleImageUpload={handleImageUpload}
+            removeImage={removeImage}
           />
         </FormSectionWrapper>
         <FormSectionWrapper>
@@ -229,7 +229,11 @@ const RecipeForm = () => {
           />
         </FormSectionWrapper>
 
-        <GeneralBtn type="submit" variant="submit">
+        <GeneralBtn
+          type="submit"
+          variant="submit"
+          disabled={!isFormValid() || isSubmitting}
+        >
           <FaUtensils />
           Create Recipe
         </GeneralBtn>
