@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { noImgPlaceholder } from '@/assets/images';
 import {
   RecipeItem,
   Title,
@@ -17,9 +18,11 @@ const RecipeItemCard = ({ recipe }) => {
 
   if (!recipe) return;
 
+  const recipeImage = image_url ? image_url : noImgPlaceholder;
+
   return (
     <RecipeItem onClick={() => onItemClick(id)}>
-      <img src={image_url} alt={recipe_name} loading="lazy" />
+      <img src={recipeImage} alt={recipe_name} loading="lazy" />
       <Title>{recipe_name}</Title>
       <RecipeInfo>
         <span>Prep time: {cooking_time}m </span>

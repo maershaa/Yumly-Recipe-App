@@ -32,7 +32,7 @@ const RecipesPage = () => {
 
   const uniqueTags = useMemo(
     () => [...new Set(tags.flatMap((el) => el.tags ?? []))], //Если el.tags равно null или undefined, то возьми пустой массив []
-    [tags],
+    [tags], //! как у меня 2 ukranian?
   );
 
   useEffect(() => {

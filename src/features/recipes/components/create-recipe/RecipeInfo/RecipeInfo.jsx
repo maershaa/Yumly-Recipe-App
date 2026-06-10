@@ -60,7 +60,11 @@ const RecipeInfo = ({ values, onChange, handleImageUpload, removeImage }) => {
         </ImgWrapper>
       ) : (
         <ReplaceImageWrapper>
-          <img src={image_url} alt={recipe_name || 'Recipe image'} />
+          <img
+            src={image_url}
+            alt={recipe_name || 'Recipe image'}
+            loading="lazy"
+          />
           <GeneralBtn variant="delete" onClick={removeImage}>
             Replace image
           </GeneralBtn>

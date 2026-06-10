@@ -11,8 +11,8 @@ const fetchRecipes = createAsyncThunk(
         .order('image_url', {
           //отсортируй строки по колонке image_url
           nullsFirst: false, //NULL значения ставь НЕ в начало, а в конец
-        })
-        .range(0, 30); //ограничивает результат 30-ю элементами
+        });
+      //.range(0, 30); //ограничивает результат 30-ю элементами
 
       if (error) {
         return thunkApi.rejectWithValue(error.message);

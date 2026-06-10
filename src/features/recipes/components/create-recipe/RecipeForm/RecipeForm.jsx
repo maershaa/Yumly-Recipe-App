@@ -47,13 +47,15 @@ const RecipeForm = () => {
     const cuisineValid = recipeForm.cuisine !== '';
     const cookingTimeValid = Number(recipeForm.cooking_time) > 0;
 
-    const ingredientsValid = recipeForm.ingredients.some(
-      (ingredient) => ingredient.name.trim() && Number(ingredient.amount) > 0,
-    );
+    const ingredientsValid =
+      recipeForm.ingredients.length >= 3 &&
+      recipeForm.ingredients.every(
+        (ingredient) => ingredient.name.trim() && Number(ingredient.amount) > 0,
+      );
 
-    const instructionsValid = recipeForm.instructions.some(
-      (step) => step.text.trim().length > 0,
-    );
+    const instructionsValid =
+      recipeForm.instructions.length >= 3 &&
+      recipeForm.instructions.every((step) => step.text.trim().length > 0);
 
     return (
       titleValid &&
@@ -64,24 +66,10 @@ const RecipeForm = () => {
     );
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   const recipeToSubmit = prepareRecipeForSave(recipeForm);
-
-  //   if (recipeToSubmit) {
-  //     createRecipe(recipeToSubmit, currentUserId);
-  //     resetForm();
-  //   } else {
-  //     throw new Error('recipeToSubmit is undefined');
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
-    //!! вот тут в handleSubmit опиши логику каждого шага
     e.preventDefault();
 
-    if (!isFormValid()) return; // !как оно понимает что форма валидна если там обьект????
+    if (!isFormValid()) return; //Если каждая переменная которая вернется из isFormValid === true то функция в целом вернет true
 
     if (isSubmitting) return;
 
@@ -111,31 +99,32 @@ const RecipeForm = () => {
   };
 
   const handleImageUpload = async (event) => {
-    console.log('Сработало нажатие на загрузить картинку');
+    const maxFileSizeInMb = 5;
     const uploadedFile = event.target.files[0];
-    console.log('🚀 ~ handleImg ~ uploadedFile:', uploadedFile);
     if (!uploadedFile) return;
 
-    const maxFileSizeInMb = 5;
-
-    if (uploadedFile.size > maxFileSizeInMb * 1024 * 1024) {
+    if (
+      uploadedFile.size >
+      maxFileSizeInMb * 1024 * 1024
+    ) // * 1024 * 1024 - перевод размера из мегабайтов в байты
+    {
       alert('Слишком большой файл. Выберите файл до 5 мб');
       return;
     }
 
-    const fileExtension = uploadedFile.name.split('.').pop();
+    const fileExtension = uploadedFile.name.split('.').pop(); //вырезаем разрешение изображения
     const uniqueName = `${crypto.randomUUID()}.${fileExtension}`; //создаем рандомное имя картинке
     const filePath = `${currentUserId}/${uniqueName}`; //создаем папку с id нашего пользователя в хранилище recipeImage и туда сохраняем картинку.
 
     try {
       const imageUrl = await uploadRecipeImage(filePath, uploadedFile);
-      console.log('Картинка успешно загружена:', imageUrl);
+      // console.log('Картинка успешно загружена:', imageUrl);
       setRecipeForm((prevValue) => ({
         ...prevValue,
         image_url: imageUrl,
       }));
     } catch (error) {
-      console.error('Ошибка при загрузке:', error);
+      console.error('Ошибка при загрузке изображения:', error);
     }
   };
 

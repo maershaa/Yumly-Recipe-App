@@ -1,4 +1,9 @@
-import { Wrapper } from './RecipeDetailsContent.styled';
+import {
+  Wrapper,
+  ImgWrapper,
+  ContentWrapper,
+} from './RecipeDetailsContent.styled';
+import { noImgPlaceholder } from '@/assets/images';
 
 const RecipeDetailsContent = ({ recipe }) => {
   const {
@@ -9,13 +14,16 @@ const RecipeDetailsContent = ({ recipe }) => {
     ingredients = [],
     instructions,
   } = recipe;
+
+  const recipeImage = image_url ? image_url : noImgPlaceholder;
+
   return (
     <Wrapper>
-      <div className="imgWrapper">
-        <img src={image_url} alt={recipe_name} loading="lazy" />
-      </div>
+      <ImgWrapper>
+        <img src={recipeImage} alt={recipe_name} loading="lazy" />
+      </ImgWrapper>
 
-      <div className="contentWrapper">
+      <ContentWrapper>
         <h2>{recipe_name}</h2>
 
         {cooking_time && <span>Prep time: {cooking_time} min</span>}
@@ -45,7 +53,7 @@ const RecipeDetailsContent = ({ recipe }) => {
             <li key={index}>{`${index + 1}. ${step}`}</li>
           ))}
         </ul>
-      </div>
+      </ContentWrapper>
     </Wrapper>
   );
 };
