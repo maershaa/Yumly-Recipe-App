@@ -1,6 +1,9 @@
 export const theme = Object.freeze({
   colors: {
     background: 'var(--bg-color)',
+    accentBgSuccess: 'var(--accent-bg-success)',
+    accentBgWarning: 'var(--accent-bg-warning)',
+
     surface: 'var(--surface-color)',
     cardSecondary: 'var(--card-secondary-color)',
 

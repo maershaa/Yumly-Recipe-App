@@ -31,23 +31,21 @@ export const GlobalStyle = createGlobalStyle`
     --text-secondary: #9BA1A6;
 
     --border-color: #383E49;
-
     --shadow-color: rgba(94, 224, 163, 0.2);
-
     --shadow: 0 16px 40px var(--shadow-color);
 
     --theme-icon-color: #5EE0A3;
 
     --hover-border-accent: 1px solid var(--accent-color);
-
     --hover-shadow-accent: 0 0 15px rgba(94, 224, 163, 0.4);
 
     --hover-border-secondary: 1px solid var(--accent-secondary);
-
     --hover-shadow-secondary: 0 0 15px rgba(248, 184, 98, 0.4);
 
-    --font-main: 'Inter', sans-serif;
+    --accent-bg-success: rgba(94, 224, 163, 0.1);
+    --accent-bg-warning: rgba(248, 184, 98, 0.1);
 
+    --font-main: 'Inter', sans-serif;
     --font-logo: 'Pacifico', cursive;
   }
 
@@ -69,7 +67,6 @@ export const GlobalStyle = createGlobalStyle`
     --border-color: #D1D5DB;
 
     --shadow-color: rgba(0, 0, 0, 0.08);
-
     --shadow: 0 16px 40px var(--shadow-color);
 
     --theme-icon-color: #3AA674;
@@ -77,10 +74,12 @@ export const GlobalStyle = createGlobalStyle`
     --hover-border-accent: 1px solid var(--accent-color);
 
     --hover-shadow-accent: 0 0 15px rgba(58, 166, 116, 0.3);
-
     --hover-border-secondary: 1px solid var(--accent-secondary);
-
     --hover-shadow-secondary: 0 0 15px rgba(224, 148, 47, 0.3);
+
+    --accent-bg-success: rgba(94, 224, 163, 0.5);
+    --accent-bg-warning: rgba(248, 184, 98, 0.5);
+
   }
 
   body {
