@@ -27,25 +27,25 @@ const ChefQuotes = () => {
 
       <ScrollContainer>
         <QuotesList>
-          {quotes.map(({ name, quote, avatar, status }) => (
-            <QuotesItem>
-              <figure class="chef-quote-card">
+          {quotes.map(({ name, quote, avatar, status }, index) => (
+            <QuotesItem key={index}>
+              <figure className="chef-quote-card">
                 <blockquote>
-                  <span class="quote-icon">“</span>
+                  <span className="quote-icon">“</span>
                   <p>{quote}</p>
-                  <span class="quote-icon"></span>
+                  <span className="quote-icon"></span>
                 </blockquote>
 
                 <figcaption>
                   <img
                     src={avatar}
                     alt={name}
-                    class="chef-avatar"
+                    className="chef-avatar"
                     loading="lazy"
                   />
-                  <div class="chef-info">
-                    <cite class="chef-name">Chef {name}</cite>
-                    <span class="chef-status">{status}</span>
+                  <div className="chef-info">
+                    <cite className="chef-name">Chef {name}</cite>
+                    <span className="chef-status">{status}</span>
                   </div>
                 </figcaption>
               </figure>

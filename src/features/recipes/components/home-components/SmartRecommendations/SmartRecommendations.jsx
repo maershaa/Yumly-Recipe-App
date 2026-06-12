@@ -18,13 +18,18 @@ const SmartRecommendations = () => {
     tag: null,
   });
 
-  const recipesToRender = useMemo(
-    () =>
-      recipes
-        .filter((recipe) => recipe.tags?.includes(datePart.tag))
-        .slice(0, 4),
-    [datePart.tag, recipes],
-  );
+  const recipesToRender = useMemo(() => {
+    if (!datePart.tag) return [];
+
+    return recipes
+      .filter(
+        //проверка на дубликаты +  чтобы нужный тег был
+        (recipe, index, arr) =>
+          arr.findIndex((r) => r.recipe_name === recipe.recipe_name) ===
+            index && recipe.tags?.includes(datePart.tag),
+      )
+      .slice(0, 3);
+  }, [datePart.tag, recipes]);
 
   useEffect(() => {
     dispatch(fetchRecipes());
@@ -56,7 +61,7 @@ const SmartRecommendations = () => {
     getPartOfDay();
   }, [dispatch]);
 
-  if (!recipesToRender.length) {
+  if (!datePart.tag || !recipes) {
     return (
       <SmartRecommendationsSection>
         <Header>
@@ -73,7 +78,6 @@ const SmartRecommendations = () => {
           <h2>Smart Recommendation</h2>
           <h3>
             {datePart.title}
-
             <span>{datePart.emoji}</span>
           </h3>
         </div>
