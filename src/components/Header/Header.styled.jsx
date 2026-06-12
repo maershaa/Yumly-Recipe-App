@@ -10,9 +10,7 @@ const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 90%;
-  max-width: 1200px;
-  padding: 20px 40px;
+  padding: 24px 40px;
   margin: 40px auto;
 
   background-color: ${({ theme }) => theme.colors.surface};

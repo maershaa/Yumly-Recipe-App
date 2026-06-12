@@ -3,10 +3,15 @@ import { HeaderComponent } from '@/components/Header/Header';
 import { Footer } from '@/components/Footer/Footer';
 import { Outlet } from 'react-router-dom';
 import { Container } from '@/components';
+import { LayoutWrapper } from './Layout.styled';
+
 const Layout = () => {
   return (
-    <>
-      <HeaderComponent />
+    <LayoutWrapper>
+      {/* блики на задний план приложения */}
+      <Container>
+        <HeaderComponent />
+      </Container>
 
       <main className="main-content">
         <Container>
@@ -14,7 +19,7 @@ const Layout = () => {
         </Container>
       </main>
       <Footer />
-    </>
+    </LayoutWrapper>
   );
 };
 
