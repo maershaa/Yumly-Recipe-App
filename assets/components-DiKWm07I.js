@@ -1,4 +1,4 @@
-import{D as e,E as t,O as n,S as r,T as i,d as a,f as o,g as s,l as c,n as l,o as u,s as d,u as f,w as p}from"./index-Cp3155xx.js";var m=i.ul`
+import{D as e,E as t,O as n,S as r,T as i,d as a,f as o,g as s,l as c,n as l,o as u,s as d,u as f,w as p}from"./index-B1urz5va.js";var m=i.ul`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 380px));
   gap: 24px;
@@ -6,7 +6,6 @@ import{D as e,E as t,O as n,S as r,T as i,d as a,f as o,g as s,l as c,n as l,o a
   justify-content: space-evenly;
 `,h=n(e(),1),g=t(),_=({recipes:e})=>(0,g.jsx)(m,{children:(0,h.useMemo)(()=>e.filter((e,t,n)=>n.findIndex(t=>t.recipe_name===e.recipe_name)===t),[e]).map(e=>(0,g.jsx)(w,{recipe:e},e.id))}),v=`/Yumly-Recipe-App/assets/AddImgPlaceholder-DDbwgLW1.png`,y=`/Yumly-Recipe-App/assets/noImgPlaceholder-DJz9WGul.png`,b=i.li`
   cursor: pointer;
-  max-width: 30vw;
 
   display: flex;
   flex-direction: column;
