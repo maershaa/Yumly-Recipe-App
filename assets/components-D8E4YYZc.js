@@ -1,4 +1,4 @@
-import{D as e,E as t,O as n,S as r,T as i,d as a,f as o,g as s,l as c,n as l,o as u,s as d,u as f,w as p}from"./index-CIsfiHJb.js";var m=i.ul`
+import{D as e,E as t,O as n,S as r,T as i,d as a,f as o,g as s,l as c,n as l,o as u,s as d,u as f,w as p}from"./index-Co1kWfGE.js";var m=i.ul`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 380px));
   gap: 24px;
@@ -17,9 +17,7 @@ import{D as e,E as t,O as n,S as r,T as i,d as a,f as o,g as s,l as c,n as l,o a
   border: 1px solid ${({theme:e})=>e.colors.border};
   border-radius: ${({theme:e})=>e.radii.lg};
 
-  transition:
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
+  transition: ${({theme:e})=>e.transitions.main};
 
   &:hover {
     border: ${({theme:e})=>e.colors.hoverBorderAccent};
@@ -137,7 +135,7 @@ import{D as e,E as t,O as n,S as r,T as i,d as a,f as o,g as s,l as c,n as l,o a
   &:focus {
     outline: none;
 
-    border-color: ${({theme:e})=>e.colors.accent};
+    border: ${({theme:e})=>e.colors.accent};
 
     box-shadow: ${({theme:e})=>e.colors.hoverShadowAccent};
   }
@@ -228,7 +226,8 @@ import{D as e,E as t,O as n,S as r,T as i,d as a,f as o,g as s,l as c,n as l,o a
     border-radius: ${({theme:e})=>e.radii.md};
     color: ${({theme:e})=>e.colors.textPrimary};
     outline: none;
-    transition: all 0.3s ease;
+
+    transition: ${({theme:e})=>e.transitions.main};
 
     @media (min-width: ${({theme:e})=>e.breakpoints.tablet}) {
       flex: 1;
