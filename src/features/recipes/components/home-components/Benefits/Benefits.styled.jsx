@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 const BenefitsSection = styled.section`
+  padding: 80px 0px;
+
   display: flex;
   flex-direction: column;
   row-gap: 20px;

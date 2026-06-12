@@ -1,23 +1,22 @@
 import {
   Hero,
-  QuickActions,
+  ChefQuotes,
   SmartRecommendations,
   Benefits,
   Statistics,
+  CallToAction,
 } from '@/features/recipes/components/home-components';
 
 const HomePage = () => {
   return (
     <div>
       <Hero />
-      <QuickActions /> //! пока мне не нравится эта секция
       <Benefits />
       <SmartRecommendations />
       <Statistics />
-      <section>
-        <p>Start building your cookbook today</p>
-        <button>Create Your First Recipe</button>
-      </section>
+      <ChefQuotes />
+
+      <CallToAction />
     </div>
   );
 };

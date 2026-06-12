@@ -5,7 +5,7 @@ export const SmartRecommendationsSection = styled.section`
   flex-direction: column;
   gap: 40px;
 
-  padding: 20px 30px;
+  padding: 80px 0px;
 
   margin: 0 auto 40px auto;
 

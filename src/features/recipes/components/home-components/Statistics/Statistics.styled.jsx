@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const StatsSection = styled.section`
   padding: 80px 0;
-  background-color: transparent;
 `;
 
 export const StatsContainer = styled.div`
