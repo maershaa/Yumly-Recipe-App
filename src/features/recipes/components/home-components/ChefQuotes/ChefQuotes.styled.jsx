@@ -39,12 +39,7 @@ export const QuotesHeader = styled.header`
   }
 
   h2 span {
-    background: linear-gradient(
-      120deg,
-      var(--text-primary) 0%,
-      var(--accent-color) 60%,
-      rgba(94, 224, 163, 0.6) 100%
-    );
+    background: ${({ theme }) => theme.gradients.textAccent};
 
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -52,34 +47,63 @@ export const QuotesHeader = styled.header`
 
   .sectionDescription {
     max-width: 650px;
-    color: var(--text-secondary);
+    color: ${({ theme }) => theme.colors.textSecondary};
     font-size: 1.1rem;
     line-height: 1.6;
   }
 `;
 
 export const ScrollContainer = styled.div`
+  /* горизонтальный скролл */
   overflow-x: auto;
+
+  /* важно: даёт "воздух", чтобы snap не прилипал к краю */
+  scroll-padding: 40px;
+
+  /* мягкий scroll (работает в большинстве браузеров) */
+  scroll-behavior: smooth;
+
+  /* карусельный snap */
+  scroll-snap-type: x mandatory;
 
   padding: 20px 40px 50px 40px;
 
+  /* визуальный индикатор "есть контент справа" */
+  box-shadow: inset -20px 0 20px -20px rgba(0, 0, 0, 0.15);
+
+  /* scrollbar styling (WebKit) */
   &::-webkit-scrollbar {
-    height: 8px;
+    height: 8px; /* толщина горизонтального скролла */
   }
 
   &::-webkit-scrollbar-thumb {
-    background: var(--card-secondary-color);
-    border-radius: 999px;
+    background-color: ${({ theme }) =>
+      theme.colors.accentSecondary}; /* ползунок */
+    border-radius: ${({ theme }) => theme.radii.pill}; /* скругление */
   }
 `;
 
 export const QuotesList = styled.ul`
   display: flex;
   gap: 24px;
+
+  /* убирает стандартные отступы UL */
+  margin: 0;
+  padding: 0;
+
+  /* важно для snap поведения */
+  list-style: none;
 `;
 
 export const QuotesItem = styled.li`
+  /* фиксированная ширина карточки для карусели */
   flex: 0 0 380px;
+
+  /* ключевой параметр snap */
+  scroll-snap-align: start;
+
+  /* делает "жёсткую остановку" при прокрутке */
+  scroll-snap-stop: always;
 
   display: flex;
   flex-direction: column;
@@ -88,8 +112,8 @@ export const QuotesItem = styled.li`
 
   padding: 28px;
 
-  background-color: var(--surface-color);
-  border: 1px solid var(--border-color);
+  background-color: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.radii.lg};
   box-shadow: ${({ theme }) => theme.shadows.main};
 
@@ -97,14 +121,12 @@ export const QuotesItem = styled.li`
 
   &:hover {
     transform: translateY(-4px);
-
-    border-color: var(--accent-color);
+    border-color: ${({ theme }) => theme.colors.accent};
   }
 
   figure {
     display: flex;
     flex-direction: column;
-
     height: 100%;
   }
 
@@ -119,7 +141,7 @@ export const QuotesItem = styled.li`
     left: -5px;
 
     font-size: 5rem;
-    color: var(--accent-color);
+    color: ${({ theme }) => theme.colors.accent};
     opacity: 0.2;
     line-height: 1;
   }
@@ -128,7 +150,7 @@ export const QuotesItem = styled.li`
     font-size: 1rem;
     line-height: 1.8;
     font-style: italic;
-    color: var(--text-primary);
+    color: ${({ theme }) => theme.colors.textPrimary};
   }
 
   figcaption {
@@ -138,7 +160,8 @@ export const QuotesItem = styled.li`
     gap: 14px;
     margin-top: 24px;
     padding-top: 20px;
-    border-top: 1px solid var(--border-color);
+
+    border-top: 1px solid ${({ theme }) => theme.colors.border};
   }
 
   .chef-avatar {
@@ -147,7 +170,7 @@ export const QuotesItem = styled.li`
 
     border-radius: ${({ theme }) => theme.radii.rounded};
     object-fit: cover;
-    border: 2px solid var(--accent-color);
+    border: 2px solid ${({ theme }) => theme.colors.hoverBorderAccent};
   }
 
   .chef-info {
@@ -158,11 +181,11 @@ export const QuotesItem = styled.li`
   .chef-name {
     font-style: normal;
     font-weight: 700;
-    color: var(--text-primary);
+    color: ${({ theme }) => theme.colors.textPrimary};
   }
 
   .chef-status {
     font-size: 0.85rem;
-    color: var(--text-secondary);
+    color: ${({ theme }) => theme.colors.textSecondary};
   }
 `;

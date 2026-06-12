@@ -21,21 +21,24 @@ const Header = styled.header`
 const NavMenu = styled.nav`
   ul {
     display: flex;
-    gap: 8px;
+    gap: 15px;
   }
+
   a {
     padding: 12px 16px;
     border-radius: ${({ theme }) => theme.radii.lg};
 
-    transition: ${({ theme }) => `
-    background-color ${theme.transitions.main},
-    color ${theme.transitions.main}
-  `};
+    font-size: 1.4rem;
+    font-weight: 500;
+    transition: ${({ theme }) => theme.transitions.main};
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.accent};
+    }
 
     &.active {
       background-color: ${({ theme }) => theme.colors.cardSecondary};
       color: ${({ theme }) => theme.colors.accent};
-      font-weight: 500;
     }
   }
 `;
@@ -45,9 +48,18 @@ const UserMenu = styled.div`
   align-items: center;
   gap: 15px;
 
-  a {
+  a,
+  button {
     padding: 8px 16px;
     border-radius: ${({ theme }) => theme.radii.md};
+
+    font-size: 1.4rem;
+    font-weight: 500;
+    transition: ${({ theme }) => theme.transitions.main};
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.accent};
+    }
   }
 
   .accent {

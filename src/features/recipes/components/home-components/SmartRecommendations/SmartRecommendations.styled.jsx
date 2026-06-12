@@ -7,7 +7,7 @@ export const SmartRecommendationsSection = styled.section`
 
   padding: 80px 0px;
 
-  margin: 0 auto 40px auto;
+  margin: 0 auto;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     gap: 60px;
@@ -27,7 +27,7 @@ export const Header = styled.header`
     letter-spacing: 0.18em;
     text-transform: uppercase;
 
-    color: var(--text-secondary);
+    color: ${({ theme }) => theme.colors.textSecondary};
     font-weight: 600;
 
     opacity: 0.8;
@@ -47,12 +47,7 @@ export const Header = styled.header`
     max-width: 540px;
 
     text-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-    background: linear-gradient(
-      120deg,
-      var(--text-primary) 0%,
-      var(--accent-color) 60%,
-      rgba(94, 224, 163, 0.6) 100%
-    );
+    background: ${({ theme }) => theme.gradients.textAccent};
 
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -86,7 +81,7 @@ export const Header = styled.header`
   }
 
   p {
-    color: var(--text-secondary);
+    color: ${({ theme }) => theme.colors.textSecondary};
 
     font-size: 2rem;
     line-height: 1.6;

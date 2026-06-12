@@ -19,13 +19,13 @@ export const StatsContainer = styled.div`
 export const SocialProof = styled.div`
   h2 {
     font-size: 2.5rem;
-    color: var(--text-primary);
+    color: ${({ theme }) => theme.colors.textPrimary};
     margin-bottom: 16px;
     font-weight: 700;
   }
 
   p {
-    color: var(--text-secondary);
+    color: ${({ theme }) => theme.colors.textSecondary};
     font-size: 1.1rem;
     line-height: 1.6;
     margin-bottom: 32px;
@@ -55,9 +55,8 @@ export const AvatarGroup = styled.div`
 
     border-radius: ${({ theme }) => theme.radii.rounded};
 
-    background: var(--card-secondary-color);
-
-    border: 2px solid var(--bg-color);
+    background: ${({ theme }) => theme.colors.cardSecondary};
+    border: 2px solid ${({ theme }) => theme.colors.background};
 
     display: flex;
     align-items: center;
@@ -66,7 +65,7 @@ export const AvatarGroup = styled.div`
     font-size: 0.85rem;
     font-weight: 600;
 
-    color: var(--accent-color);
+    color: ${({ theme }) => theme.colors.accent};
 
     margin-left: -12px;
 
@@ -80,7 +79,7 @@ export const Avatar = styled.img`
 
   border-radius: ${({ theme }) => theme.radii.rounded};
 
-  border: 2px solid var(--bg-color);
+  border: 2px solid ${({ theme }) => theme.colors.background};
 
   object-fit: cover;
 
@@ -106,10 +105,10 @@ export const Avatar = styled.img`
 
 export const ProofText = styled.span`
   font-size: 0.95rem;
-  color: var(--text-secondary);
+  color: ${({ theme }) => theme.colors.textSecondary};
 
   strong {
-    color: var(--text-primary);
+    color: ${({ theme }) => theme.colors.textPrimary};
   }
 `;
 
@@ -120,7 +119,7 @@ export const RightSide = styled.div`
 `;
 
 export const StatCard = styled.div`
-  background-color: var(--surface-color);
+  background: ${({ theme }) => theme.colors.surface};
 
   border: 1px solid transparent;
 
@@ -134,14 +133,12 @@ export const StatCard = styled.div`
   align-items: center;
   gap: 20px;
 
-  transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease,
-    transform 0.3s ease;
+  transition: ${({ theme }) => theme.transitions.main};
 
   &:hover {
-    border-color: var(--accent-color);
-    box-shadow: var(--hover-shadow-accent);
+    border: ${({ theme }) => theme.colors.hoverBorderAccent};
+
+    box-shadow: ${({ theme }) => theme.shadows.hoverShadowAccent};
 
     transform: translateY(-2px);
   }
@@ -149,13 +146,13 @@ export const StatCard = styled.div`
   h3 {
     font-size: 2rem;
     font-weight: 800;
-    color: var(--text-primary);
+    color: ${({ theme }) => theme.colors.textPrimary};
     line-height: 1.2;
   }
 
   p {
     font-size: 0.95rem;
-    color: var(--text-secondary);
+    color: ${({ theme }) => theme.colors.textSecondary};
     margin-top: 2px;
   }
 `;

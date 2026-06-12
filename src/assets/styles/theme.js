@@ -33,6 +33,18 @@ export const theme = Object.freeze({
     main: 'var(--shadow)',
   },
 
+  gradients: {
+    textAccent: `
+      linear-gradient(
+        120deg,
+        var(--text-primary) 0%,
+        var(--accent-color) 60%,
+        rgba(94, 224, 163, 0.6) 100%
+      )
+    `,
+  },
+  // background: ${({ theme }) => theme.gradients.textAccent};
+
   radii: {
     md: '12px',
     lg: '16px',

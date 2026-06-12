@@ -46,9 +46,7 @@ const Footer = () => {
         </Socials>
       </Main>
 
-      <Bottom>
-        © 2026 Yumly. Built with React, Redux Toolkit and RTK Query.
-      </Bottom>
+      <Bottom>© 2026 Yumly. Built with React, Redux Toolkit and Love.</Bottom>
     </FooterWrapper>
   );
 };

@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const RecipeItem = styled.li`
   cursor: pointer;
-  max-width: 30vw;
 
   display: flex;
   flex-direction: column;

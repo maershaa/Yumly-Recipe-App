@@ -24,7 +24,6 @@ const ChefQuotes = () => {
           think about food, creativity and cooking.
         </p>
       </QuotesHeader>
-
       <ScrollContainer>
         <QuotesList>
           {quotes.map(({ name, quote, avatar, status }, index) => (

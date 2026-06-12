@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 
 const BenefitsSection = styled.section`
-  padding: 80px 0px;
-
   display: flex;
   flex-direction: column;
   row-gap: 20px;
 
-  margin: 0 auto 40px auto;
+  margin: 0 auto;
 
   align-items: center;
 
@@ -39,12 +37,8 @@ const BenefitsSection = styled.section`
     }
     span {
       text-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-      background: linear-gradient(
-        120deg,
-        var(--text-primary) 0%,
-        var(--accent-color) 60%,
-        rgba(94, 224, 163, 0.6) 100%
-      );
+
+      background: ${({ theme }) => theme.gradients.textAccent};
 
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -57,7 +51,7 @@ const BenefitsSection = styled.section`
     max-width: 650px;
 
     font-size: 1.6rem;
-    color: var(--text-secondary);
+    color: ${({ theme }) => theme.colors.textSecondary};
     font-weight: 500;
     line-height: 1.4;
     margin-bottom: 30px;
@@ -79,7 +73,7 @@ const BenefitCard = styled.li`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background-color: var(--surface-color);
+  background: ${({ theme }) => theme.colors.surface};
   box-shadow: ${({ theme }) => theme.shadows.main};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.radii.lg};
@@ -126,7 +120,7 @@ const BenefitCard = styled.li`
     text-align: left;
 
     font-size: 2rem;
-    color: var(--text-primary);
+    color: ${({ theme }) => theme.colors.textPrimary};
     font-weight: 500;
     line-height: 1.4;
     margin-bottom: 10px;
@@ -136,7 +130,7 @@ const BenefitCard = styled.li`
     text-align: left;
 
     font-size: 1.2rem;
-    color: var(--text-secondary);
+    color: ${({ theme }) => theme.colors.textSecondary};
     font-weight: 500;
     line-height: 2;
     margin-bottom: 10px;
@@ -148,7 +142,8 @@ const BenefitCard = styled.li`
     bottom: 10px;
     right: 10px;
     font-size: 5rem;
-    color: var(--text-secondary);
+    color: ${({ theme }) => theme.colors.textSecondary};
+
     font-weight: 500;
     line-height: 1.4;
     opacity: 0.1;

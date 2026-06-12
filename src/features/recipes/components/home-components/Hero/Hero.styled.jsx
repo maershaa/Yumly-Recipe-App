@@ -33,7 +33,7 @@ export const HeroContentWrapper = styled.div`
   }
 
   p {
-    color: var(--text-secondary);
+    color: ${({ theme }) => theme.colors.textSecondary};
 
     font-size: 2rem;
     line-height: 1.6;
@@ -45,7 +45,7 @@ export const HeroContentWrapper = styled.div`
 
   h1 {
     font-size: 2.8rem;
-    color: var(--text-primary);
+    color: ${({ theme }) => theme.colors.textPrimary};
     font-weight: 800;
     line-height: 1.2;
     margin-bottom: 16px;
@@ -57,7 +57,7 @@ export const HeroContentWrapper = styled.div`
 
   h2 {
     font-size: 1.5rem;
-    color: var(--text-secondary);
+    color: ${({ theme }) => theme.colors.textSecondary};
     font-style: italic;
 
     font-weight: 400;
@@ -109,7 +109,8 @@ export const StyledLink = styled(Link)`
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: var(--hover-shadow-accent);
+
+      box-shadow: ${({ theme }) => theme.shadows.hoverShadowAccent};
     }
   }
 
@@ -118,7 +119,7 @@ export const StyledLink = styled(Link)`
     color: ${({ theme }) => theme.colors.accentSecondary};
     &:hover {
       transform: translateY(-2px);
-      box-shadow: var(--hover-shadow-secondary);
+      box-shadow: ${({ theme }) => theme.shadows.hoverShadowSecondary};
     }
   }
 `;
