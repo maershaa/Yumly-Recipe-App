@@ -22,11 +22,11 @@ export const Button = styled.button`
   width: 64px;
   height: 64px;
 
-  border-radius: 50%;
+  border-radius: ${({ theme }) => theme.radii.rounded};
   border: 2px solid ${({ theme }) => theme.colors.accent};
   color: ${({ theme }) => theme.colors.textPrimary};
 
-  transition: all 0.3s ease;
+  transition: ${({ theme }) => theme.transitions.main};
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.accent};

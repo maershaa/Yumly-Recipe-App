@@ -28,7 +28,7 @@ const FormWrapper = styled.form`
     border-radius: ${({ theme }) => theme.radii.md};
     color: ${({ theme }) => theme.colors.textPrimary};
     outline: none;
-    transition: all 0.3s ease;
+    transition: ${({ theme }) => theme.transitions.main};
 
     &:hover,
     &:focus {
@@ -48,8 +48,12 @@ const FormWrapper = styled.form`
     color: ${({ theme }) => theme.colors.background};
     border-radius: ${({ theme }) => theme.radii.md};
     font-weight: 600;
-    transition: all 0.3s ease;
 
+    transition: ${({ theme }) => `
+    background-color ${theme.transitions.main},
+    box-shadow ${theme.transitions.main},
+    border ${theme.transitions.main},
+  `};
     &:hover {
       background-color: ${({ theme }) => theme.colors.accentSecondary};
       border: ${({ theme }) => theme.colors.hoverBorderSecondary};

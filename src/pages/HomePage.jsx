@@ -11,7 +11,7 @@ const HomePage = () => {
     <div>
       <Hero />
       <QuickActions /> //! пока мне не нравится эта секция
-      <Benefits /> //! придумать как ее отобразить
+      <Benefits />
       <SmartRecommendations />
       <Statistics />
       <section>

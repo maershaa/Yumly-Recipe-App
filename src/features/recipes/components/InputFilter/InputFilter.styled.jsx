@@ -41,7 +41,7 @@ export const Input = styled.input`
   &:focus {
     outline: none;
 
-    border-color: ${({ theme }) => theme.colors.accent};
+    border: ${({ theme }) => theme.colors.accent};
 
     box-shadow: ${({ theme }) => theme.colors.hoverShadowAccent};
   }

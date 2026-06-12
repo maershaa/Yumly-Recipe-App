@@ -38,19 +38,19 @@ const SocialLink = styled.a`
 
   width: 2.25rem;
   height: 2.25rem;
-  border-radius: 50%;
 
+  border-radius: ${({ theme }) => theme.radii.rounded};
   background: var(--card-secondary-color);
   color: var(--text-color);
 
-  transition: var(--transition);
+  transition: ${({ theme }) => theme.transitions.main};
 
   svg {
     font-size: 1.25rem;
   }
 
   &:hover {
-    background: var(--primary-color);
+    background-color: var(--primary-color);
     color: var(--white);
     transform: translateY(-0.125rem);
     box-shadow: var(--glow);

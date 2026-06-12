@@ -7,7 +7,8 @@ export const Button = styled.button`
   gap: 8px;
   border-radius: ${({ theme }) => theme.radii.md};
   font-weight: 600;
-  transition: all 0.3s ease;
+
+  transition: ${({ theme }) => theme.transitions.main};
 
   &:disabled {
     opacity: 0.4;
@@ -21,6 +22,7 @@ export const Button = styled.button`
       padding: 16px;
       background-color: ${theme.colors.accent};
       color: ${theme.colors.background};
+      border: 1px solid transparent;
 
       &:hover:not(:disabled) {
         background-color: ${theme.colors.accentSecondary};
@@ -42,7 +44,7 @@ export const Button = styled.button`
 
       &:hover:not(:disabled) {
         color: ${theme.colors.accentSecondary};
-        border-color: ${theme.colors.accentSecondary};
+        border: ${theme.colors.accentSecondary};
       }
     `}
 

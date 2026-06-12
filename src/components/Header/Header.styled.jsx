@@ -28,7 +28,11 @@ const NavMenu = styled.nav`
   a {
     padding: 12px 16px;
     border-radius: ${({ theme }) => theme.radii.lg};
-    transition: background-color 0.3s ease;
+
+    transition: ${({ theme }) => `
+    background-color ${theme.transitions.main},
+    color ${theme.transitions.main}
+  `};
 
     &.active {
       background-color: ${({ theme }) => theme.colors.cardSecondary};
@@ -59,8 +63,7 @@ const ThemeButton = styled.button`
   justify-content: center;
   padding: 10px;
   color: ${({ theme }) => theme.colors.icon};
-  transition: transform 0.2s;
-
+  transition: ${({ theme }) => theme.transitions.main};
   svg {
     width: 24px;
     height: 24px;
@@ -76,7 +79,7 @@ const UserAvatarWrapper = styled.div`
 
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: ${({ theme }) => theme.radii.rounded};
 
   display: flex;
   align-items: center;

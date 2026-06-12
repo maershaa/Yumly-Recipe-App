@@ -10,6 +10,10 @@ import chefPhoto2 from './avatars/chefPhoto2.avif';
 import chefPhoto3 from './avatars/chefPhoto3.avif';
 import chefPhoto4 from './avatars/chefPhoto4.avif';
 
+import cake from './benefits/cake.png';
+import chef_hat from './benefits/chef-hat.png';
+import rice from './benefits/rice.png';
+
 export {
   girlImg,
   hero_girl_curly,
@@ -20,4 +24,7 @@ export {
   chefPhoto2,
   chefPhoto3,
   chefPhoto4,
+  cake,
+  chef_hat,
+  rice,
 };

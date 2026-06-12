@@ -24,7 +24,7 @@ export const TooltipContent = styled.span`
   opacity: 0;
   visibility: hidden;
 
-  transition: all 0.25s ease;
+  transition: ${({ theme }) => theme.transitions.main};
 
   pointer-events: none;
 `;

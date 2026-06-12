@@ -11,7 +11,7 @@ export const StatsContainer = styled.div`
   gap: 40px;
   align-items: center;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     grid-template-columns: 1.2fr 1fr;
     gap: 80px;
   }
@@ -37,9 +37,10 @@ export const AvatarGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+
   align-items: flex-start;
 
-  @media (min-width: 480px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: row;
     align-items: center;
   }
@@ -52,16 +53,24 @@ export const AvatarGroup = styled.div`
   .avatar-plus {
     width: 44px;
     height: 44px;
+
     border-radius: ${({ theme }) => theme.radii.rounded};
+
     background: var(--card-secondary-color);
+
     border: 2px solid var(--bg-color);
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     font-size: 0.85rem;
     font-weight: 600;
+
     color: var(--accent-color);
+
     margin-left: -12px;
+
     z-index: 5;
   }
 `;
@@ -69,11 +78,22 @@ export const AvatarGroup = styled.div`
 export const Avatar = styled.img`
   width: 44px;
   height: 44px;
+
   border-radius: ${({ theme }) => theme.radii.rounded};
+
   border: 2px solid var(--bg-color);
+
   object-fit: cover;
+
   margin-left: -12px;
-  transition: transform 0.3s ease;
+
+  position: relative;
+
+  z-index: 1;
+
+  transition:
+    transform 0.3s ease,
+    z-index 0.3s ease;
 
   &:first-child {
     margin-left: 0;
@@ -102,34 +122,29 @@ export const RightSide = styled.div`
 
 export const StatCard = styled.div`
   background-color: var(--surface-color);
-  box-shadow: var(--hover-shadow-accent);
+
+  border: 1px solid transparent;
+
+  box-shadow: ${({ theme }) => theme.shadows.main};
+
   border-radius: ${({ theme }) => theme.radii.lg};
+
   padding: 24px;
+
   display: flex;
   align-items: center;
   gap: 20px;
-  transition: all 0.3s ease;
+
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
 
   &:hover {
-    border: var(--hover-border-accent);
-  }
-`;
+    border-color: var(--accent-color);
+    box-shadow: var(--hover-shadow-accent);
 
-export const IconWrapper = styled.div`
-  width: 56px;
-  height: 56px;
-  border-radius: ${({ theme }) => theme.radii.lg};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-
-  &.green {
-    background-color: ${({ theme }) => theme.colors.accentBgSuccess};
-  }
-
-  &.orange {
-    background-color: ${({ theme }) => theme.colors.accentBgWarning};
+    transform: translateY(-2px);
   }
 
   h3 {
@@ -143,5 +158,28 @@ export const IconWrapper = styled.div`
     font-size: 0.95rem;
     color: var(--text-secondary);
     margin-top: 2px;
+  }
+`;
+
+export const IconWrapper = styled.div`
+  width: 56px;
+  height: 56px;
+
+  flex-shrink: 0;
+
+  border-radius: ${({ theme }) => theme.radii.lg};
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.8rem;
+
+  &.green {
+    background-color: ${({ theme }) => theme.colors.accentBgSuccess};
+  }
+
+  &.orange {
+    background-color: ${({ theme }) => theme.colors.accentBgWarning};
   }
 `;

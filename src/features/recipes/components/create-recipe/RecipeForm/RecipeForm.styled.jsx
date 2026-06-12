@@ -64,7 +64,8 @@ export const FormSectionWrapper = styled.div`
     border-radius: ${({ theme }) => theme.radii.md};
     color: ${({ theme }) => theme.colors.textPrimary};
     outline: none;
-    transition: all 0.3s ease;
+
+    transition: ${({ theme }) => theme.transitions.main};
 
     @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
       flex: 1;

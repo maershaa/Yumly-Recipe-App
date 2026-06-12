@@ -36,11 +36,20 @@ export const theme = Object.freeze({
   radii: {
     md: '12px',
     lg: '16px',
+    pill: '999px',
     rounded: '50%',
+  },
+
+  transitions: {
+    main: 'all 0.3s ease-in-out',
+    /*    
+    transition: ${({ theme }) => theme.transitions.main}; 
+    */
   },
 
   breakpoints: {
     mobile: '320px',
+    mobileLarge: '480px',
     tablet: '768px',
     desktop: '1200px',
   },

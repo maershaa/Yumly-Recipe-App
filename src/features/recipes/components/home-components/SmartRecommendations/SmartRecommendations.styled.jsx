@@ -9,7 +9,7 @@ export const SmartRecommendationsSection = styled.section`
 
   margin: 0 auto 40px auto;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     gap: 60px;
   }
 `;
@@ -60,7 +60,7 @@ export const Header = styled.header`
     letter-spacing: -0.02em;
     text-wrap: balance;
 
-    @media (min-width: 1200px) {
+    @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
       font-size: 2.7rem;
     }
   }

@@ -13,7 +13,7 @@ export const HeroSection = styled.section`
   padding: 20px 30px;
   margin-bottom: 40px;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     grid-template-columns: 1fr 0.9fr;
     gap: 60px;
   }
@@ -27,7 +27,7 @@ export const HeroContentWrapper = styled.div`
 
   text-align: center;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     align-items: flex-start;
     text-align: left;
   }
@@ -50,7 +50,7 @@ export const HeroContentWrapper = styled.div`
     line-height: 1.2;
     margin-bottom: 16px;
 
-    @media (min-width: 1200px) {
+    @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
       font-size: 3.5rem;
     }
   }
@@ -65,7 +65,7 @@ export const HeroContentWrapper = styled.div`
     margin-bottom: 35px;
     max-width: 540px;
 
-    @media (min-width: 1200px) {
+    @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
       font-size: 2rem;
     }
   }
@@ -78,7 +78,7 @@ export const ButtonsGroup = styled.div`
   gap: 16px;
   width: 100%;
 
-  @media (min-width: 480px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobileLarge}) {
     flex-direction: row;
     width: auto;
   }
@@ -94,15 +94,18 @@ export const StyledLink = styled(Link)`
   font-size: 1rem;
   padding: 14px 28px;
   border-radius: ${({ theme }) => theme.radii.lg};
-  transition: all 0.3s ease;
+
+  transition: ${({ theme }) => theme.transitions.main};
+
   width: 100%;
 
-  @media (min-width: 480px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobileLarge}) {
     width: auto;
   }
 
   &.green {
     background-color: ${({ theme }) => theme.colors.accentBgSuccess};
+    color: ${({ theme }) => theme.colors.accent};
 
     &:hover {
       transform: translateY(-2px);
@@ -112,7 +115,7 @@ export const StyledLink = styled(Link)`
 
   &.orange {
     background-color: ${({ theme }) => theme.colors.accentBgWarning};
-
+    color: ${({ theme }) => theme.colors.accentSecondary};
     &:hover {
       transform: translateY(-2px);
       box-shadow: var(--hover-shadow-secondary);

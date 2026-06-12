@@ -13,9 +13,7 @@ const RecipeItem = styled.li`
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.radii.lg};
 
-  transition:
-    border-color 0.25s ease,
-    box-shadow 0.25s ease;
+  transition: ${({ theme }) => theme.transitions.main};
 
   &:hover {
     border: ${({ theme }) => theme.colors.hoverBorderAccent};
