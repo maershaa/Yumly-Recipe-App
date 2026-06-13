@@ -65,10 +65,8 @@ const TagList = styled.ul`
     font-weight: 600;
 
     background-color: ${({ theme }) => theme.colors.cardSecondary};
-
     border: 1px solid ${({ theme }) => theme.colors.border};
     border-radius: ${({ theme }) => theme.radii.lg};
-
     color: ${({ theme }) => theme.colors.accentSecondary};
   }
 `;

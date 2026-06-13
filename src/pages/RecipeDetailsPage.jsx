@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 import { RecipeDetailsContent } from '@/features/recipes/components';
 
@@ -28,12 +28,16 @@ const RecipeDetailsPage = () => {
       fetchRecipe();
     }
   }, [recipeId]);
-
   if (!recipe) return <div>Loading...</div>;
 
   return (
     <div>
-      <h1>Recipe Details</h1>
+      <nav>
+        <Link to={'/'}>Home {' > '} </Link>
+        <Link to={'/recipes'}>Recipes {' > '} </Link>
+        <Link to={`/recipes${recipeId}`}>{recipe.recipe_name}</Link>
+      </nav>
+
       <RecipeDetailsContent recipe={recipe} />
     </div>
   );
