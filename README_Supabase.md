@@ -577,3 +577,14 @@ const fetchMyRecipes = async (userId) => {
 ```
 
 ---
+Пример работі с SQL
+
+select * from recipes limit 1; - Покажи один реальный рецепт из своей БД.
+
+DELETE FROM recipes; - отчищает всю БД таблицу с рецептми
+
+
+Сбросить автоинкремент ID. Так новые рецепты снова начнутся с id = 1.
+Необходимо Если id создан через GENERATED AS IDENTITY, выполни:
+ALTER TABLE recipes
+ALTER COLUMN id RESTART WITH 1;

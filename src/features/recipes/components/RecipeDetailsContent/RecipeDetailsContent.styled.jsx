@@ -55,16 +55,22 @@ export const ImgWrapper = styled.div`
     cursor: pointer;
   }
 
-  .cookingTimeBadge {
+  .badgesWrapper {
     position: absolute;
     bottom: 10px;
     left: 10px;
 
     display: flex;
     flex-direction: row;
+    gap: 10px;
+  }
+
+  .badge {
+    display: flex;
+    flex-direction: row;
     gap: 5px;
 
-    padding: 6px;
+    padding: 6px 9px;
     border: 1px solid ${({ theme }) => theme.colors.border};
     border-radius: ${({ theme }) => theme.radii.pill};
     background-color: ${({ theme }) => theme.colors.cardSecondary};
@@ -102,7 +108,7 @@ export const ContentWrapper = styled.div`
   }
 
   .description {
-    font-size: 1.2;
+    font-size: 1.2rem;
     font-weight: 400;
     color: ${({ theme }) => theme.colors.textSecondary};
 
@@ -114,9 +120,10 @@ export const ContentWrapper = styled.div`
   .cookingTimeMain {
     display: flex;
     flex-direction: row;
-    gap: 5px;
+    align-items: center;
+    gap: 10px;
 
-    font-size: 1.4;
+    font-size: 1.4rem;
     font-weight: 600;
     color: ${({ theme }) => theme.colors.textPrimary};
 
@@ -193,18 +200,28 @@ export const RecipeDetails = styled.div`
   .ingredientsAndTips {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: baseline;
 
+    align-items: stretch; /* растягиваем по ширине */
+    justify-content: flex-start;
     gap: 10px;
+    width: 100%;
+
+    ul {
+      padding: 0;
+      margin: 0;
+    }
 
     li {
       width: 100%;
-      display: flex;
-      flex-direction: row;
+
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 15px;
+
+      padding: 8px 20px;
+
       align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+      border-bottom: 1px dashed ${({ theme }) => theme.colors.border};
     }
 
     .dot {
@@ -214,7 +231,7 @@ export const RecipeDetails = styled.div`
     }
 
     .ingredient {
-      font-size: 1.3rem;
+      font-size: 1.8rem;
       font-weight: 400;
       color: ${({ theme }) => theme.colors.textPrimary};
     }
@@ -226,8 +243,10 @@ export const RecipeDetails = styled.div`
       justify-content: flex-start;
       gap: 20px;
 
-      padding: 20px;
-      max-width: 500px;
+      padding: 18px;
+      max-width: 600px;
+
+      font-size: 1.7rem;
 
       border: 1px solid ${({ theme }) => theme.colors.border};
       background-color: ${({ theme }) => theme.colors.accentBgSuccess};
@@ -269,6 +288,8 @@ export const RecipeDetails = styled.div`
 
         background-color: ${({ theme }) => theme.colors.accentBgSuccess};
         color: ${({ theme }) => theme.colors.accent};
+
+        font-weight: 700;
       }
 
       .text {

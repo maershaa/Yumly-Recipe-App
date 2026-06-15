@@ -12,6 +12,7 @@ import {
   RecipeInfo,
   Ingredients,
   CookingSteps,
+  AddImageSection,
 } from '@/features/recipes/components/create-recipe';
 import { GeneralBtn } from '@/components';
 
@@ -32,9 +33,15 @@ const RecipeForm = () => {
   const createInitialFormState = () => ({
     ///мы делаем функцию createInitialFormState а не обьект потому что После очистки формы создаются новые UUID в createIngredient и createStep
     recipe_name: '',
+    description: '',
+
     cuisine: '',
     cooking_time: '',
+    servings: '',
+
     image_url: '',
+
+    tips: '',
 
     ingredients: [createIngredient(), createIngredient(), createIngredient()],
     instructions: [createStep(), createStep(), createStep()],
@@ -57,10 +64,22 @@ const RecipeForm = () => {
       recipeForm.instructions.length >= 3 &&
       recipeForm.instructions.every((step) => step.text.trim().length > 0);
 
+    const descriptionValid = recipeForm.description.trim().length >= 20;
+
+    const servingsValid = Number(recipeForm.servings) > 0;
+
+    const imageValid = recipeForm.image_url.trim() !== '';
+
+    const tipsValid = recipeForm.tips.trim().length >= 10;
+
     return (
       titleValid &&
+      descriptionValid &&
       cuisineValid &&
       cookingTimeValid &&
+      servingsValid &&
+      imageValid &&
+      tipsValid &&
       ingredientsValid &&
       instructionsValid
     );
@@ -198,6 +217,7 @@ const RecipeForm = () => {
             removeImage={removeImage}
           />
         </FormSectionWrapper>
+
         <FormSectionWrapper>
           <Ingredients
             ingredients={recipeForm.ingredients}
@@ -216,6 +236,15 @@ const RecipeForm = () => {
             addStep={addStep}
             removeStep={removeStep}
           />
+        </FormSectionWrapper>
+
+        <FormSectionWrapper>
+          <AddImageSection
+            recipe_name={recipeForm.recipe_name}
+            image_url={recipeForm.image_url}
+            handleImageUpload={handleImageUpload}
+            removeImage={removeImage}
+          ></AddImageSection>
         </FormSectionWrapper>
 
         <GeneralBtn

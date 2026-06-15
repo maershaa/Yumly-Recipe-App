@@ -1,12 +1,13 @@
-import { ImgWrapper, ReplaceImageWrapper } from './RecipeInfo.styled';
+import { DetailsMeta } from './RecipeInfo.styled';
 import { cuisines } from '@/features/recipes/constants';
-import { GeneralBtn } from '@/components';
-const RecipeInfo = ({ values, onChange, handleImageUpload, removeImage }) => {
+const RecipeInfo = ({ values, onChange }) => {
   const {
     recipe_name,
+    description,
+    servings,
     cuisine: cuisineValue,
     cooking_time,
-    image_url,
+    tips,
   } = values;
 
   return (
@@ -22,6 +23,17 @@ const RecipeInfo = ({ values, onChange, handleImageUpload, removeImage }) => {
           placeholder="Recipe title"
         />
       </label>
+
+      <label>
+        Description
+        <textarea
+          name="description"
+          value={description}
+          onChange={onChange}
+          placeholder="Share the story behind this dish or what makes it special..."
+        />
+      </label>
+
       <label>
         Choose a Cuisine
         <select name="cuisine" value={cuisineValue} onChange={onChange}>
@@ -36,40 +48,42 @@ const RecipeInfo = ({ values, onChange, handleImageUpload, removeImage }) => {
           ))}
         </select>
       </label>
+
+      <DetailsMeta>
+        <label>
+          Cooking Time
+          <input
+            type="number"
+            name="cooking_time"
+            value={cooking_time}
+            onChange={onChange}
+            placeholder="Enter time in mins"
+            min="1"
+          />
+        </label>
+
+        <label>
+          Servings
+          <input
+            type="number"
+            name="servings"
+            placeholder="Number of servings"
+            value={servings}
+            onChange={onChange}
+            min="1"
+          />
+        </label>
+      </DetailsMeta>
+
       <label>
-        Cooking Time
-        <input
-          type="number"
-          name="cooking_time"
-          value={cooking_time}
+        <textarea
+          name="tips"
+          rows={3}
           onChange={onChange}
+          value={tips}
+          placeholder="Share your kitchen secrets..."
         />
       </label>
-
-      {!image_url ? (
-        <ImgWrapper>
-          <label>
-            <input
-              type="file"
-              accept=".jpg, .png, .jpeg"
-              multiple={false} //если ты разрешаешь загрузку нескольких фото => true
-              onChange={handleImageUpload}
-              name="image_url"
-            />
-          </label>
-        </ImgWrapper>
-      ) : (
-        <ReplaceImageWrapper>
-          <img
-            src={image_url}
-            alt={recipe_name || 'Recipe image'}
-            loading="lazy"
-          />
-          <GeneralBtn variant="delete" onClick={removeImage}>
-            Replace image
-          </GeneralBtn>
-        </ReplaceImageWrapper>
-      )}
     </>
   );
 };

@@ -8,6 +8,11 @@ export const prepareRecipeForSave = (formData) => {
 
   return {
     ...formData,
+    recipe_name: formData.recipe_name.trim(),
+    description: formData.description.trim(),
+    cuisine: formData.cuisine.trim(),
+    servings: Number(formData.servings) || 1,
+    cooking_time: Number(formData.cooking_time),
 
     ingredients: formData.ingredients.map((el) => {
       return {
@@ -24,10 +29,9 @@ export const prepareRecipeForSave = (formData) => {
       };
     }),
 
-    calories: null,
     difficulty: difficultyValue,
     likes: 0,
-
-    tags: generateRecipeTags(formData.cuisine, difficultyValue),
+    tips: formData.tips.trim(),
+    tags: generateRecipeTags(difficultyValue),
   };
 };

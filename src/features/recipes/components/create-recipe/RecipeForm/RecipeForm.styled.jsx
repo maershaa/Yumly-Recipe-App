@@ -105,7 +105,6 @@ export const FormSectionWrapper = styled.div`
   }
 `;
 
-// !Мне так не нарвится! силино широкие.
 export const FormMainSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -114,11 +113,14 @@ export const FormMainSection = styled.div`
   width: 100%;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    width: 420px;
+    max-width: 500px;
   }
 `;
 
 export const FormStepsSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   width: 100%;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
