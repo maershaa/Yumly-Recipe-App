@@ -2,33 +2,19 @@ import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectRecipes } from '@/app/redux/recipes/selectors.js';
 import { selectTags } from '@/app/redux/tags/selectors';
+import { selectLoading } from '@/app/redux/recipes/selectors';
+
 import { fetchRecipes } from '@/app/redux/recipes/operations';
 import { fetchTags } from '@/app/redux/tags/operations';
 
 import { RecipesList, TagsFilter } from '@/features/recipes/components';
-
+import { RecipeCardSkeleton } from '@/components';
 const RecipesPage = () => {
   const [selectedTag, setSelectedTag] = useState('');
   const recipes = useSelector(selectRecipes);
   const tags = useSelector(selectTags);
+  const isLoading = useSelector(selectLoading);
   const dispatch = useDispatch();
-
-  // const uniqueTagsHardVariant = useMemo(
-  //   () =>
-  //     tags
-  //       .filter((tagEl) => tagEl?.tags)
-  //       .reduce((acc, nextTag) => {
-  //         nextTag.tags.forEach((tag) => {
-  //           if (acc.includes(tag)) {
-  //             return acc;
-  //           } else {
-  //             acc.push(tag);
-  //           }
-  //         });
-  //         return acc;
-  //       }, []),
-  //   [tags],
-  // );
 
   const uniqueTags = useMemo(
     () => [...new Set(tags.flatMap((el) => el.tags ?? []))], //Если el.tags равно null или undefined, то возьми пустой массив []
@@ -60,7 +46,11 @@ const RecipesPage = () => {
         setSelectedTag={setSelectedTag}
       />
 
-      <RecipesList recipes={filteredRecipes} />
+      {isLoading ? (
+        <RecipeCardSkeleton count={13} />
+      ) : (
+        <RecipesList recipes={filteredRecipes} />
+      )}
     </div>
   );
 };

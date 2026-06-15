@@ -1,7 +1,6 @@
 import { Layout } from '@/components/Layout/Layout';
 import { Route, Routes } from 'react-router-dom';
-import { lazy, Suspense, useEffect } from 'react';
-import { Loader } from '@/components/Loader/Loader';
+import { lazy, useEffect } from 'react';
 import { PrivateRoute, PublicRoute } from '@/components';
 import { useDispatch } from 'react-redux';
 import { refreshUser } from '@/app/redux/auth/operations';
@@ -28,35 +27,33 @@ function App() {
   }, [dispatch]);
   return (
     <>
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<HomePage />} />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
 
-            {/* Public recipes */}
-            <Route path="recipes">
-              <Route index element={<RecipesPage />} />
-              <Route path=":recipeId" element={<RecipeDetailsPage />} />
-            </Route>
-
-            {/* Auth */}
-            <Route path="auth" element={<PublicRoute />}>
-              <Route path="login" element={<LoginPage />} />
-              <Route path="register" element={<RegisterPage />} />
-            </Route>
-
-            {/* Private Routes Group */}
-            <Route path="my-recipes" element={<PrivateRoute />}>
-              <Route index element={<MyRecipesPage />} />
-              <Route path="new" element={<CreateRecipePage />} />
-              <Route path=":recipeId/edit" element={<EditRecipePage />} />
-            </Route>
-
-            {/* 404 */}
-            <Route path="*" element={<NotFoundPage />} />
+          {/* Public recipes */}
+          <Route path="recipes">
+            <Route index element={<RecipesPage />} />
+            <Route path=":recipeId" element={<RecipeDetailsPage />} />
           </Route>
-        </Routes>
-      </Suspense>
+
+          {/* Auth */}
+          <Route path="auth" element={<PublicRoute />}>
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
+          </Route>
+
+          {/* Private Routes Group */}
+          <Route path="my-recipes" element={<PrivateRoute />}>
+            <Route index element={<MyRecipesPage />} />
+            <Route path="new" element={<CreateRecipePage />} />
+            <Route path=":recipeId/edit" element={<EditRecipePage />} />
+          </Route>
+
+          {/* 404 */}
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
     </>
   );
 }

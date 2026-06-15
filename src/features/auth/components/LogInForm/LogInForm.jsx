@@ -38,7 +38,14 @@ const LogInForm = () => {
       setPassword('');
       navigate('/my-recipes');
     } catch (error) {
-      console.error(error);
+      setEmail('');
+      setPassword('');
+
+      if (error === 'Email not confirmed') {
+        alert('Please confirm your email');
+      } else if (error === 'Invalid login credentials') {
+        alert('Invalid username or password');
+      }
     }
   };
   return (
