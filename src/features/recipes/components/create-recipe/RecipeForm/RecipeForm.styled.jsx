@@ -25,6 +25,7 @@ export const FormSectionWrapper = styled.div`
   gap: 20px;
   justify-content: center;
   align-items: flex-start;
+
   width: 100%;
   margin: 0 auto;
   background-color: ${({ theme }) => theme.colors.surface};
@@ -108,6 +109,7 @@ export const FormSectionWrapper = styled.div`
 export const FormMainSection = styled.div`
   display: flex;
   flex-direction: column;
+
   gap: 20px;
 
   width: 100%;

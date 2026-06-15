@@ -6,3 +6,5 @@ export { RecipeDetailsContent } from './RecipeDetailsContent/RecipeDetailsConten
 export { PageHeader } from './PageHeader/PageHeader';
 
 export { RecipeForm } from './create-recipe';
+
+export { RecipeHeader, SummarySection, MainContent } from './recipe-details';

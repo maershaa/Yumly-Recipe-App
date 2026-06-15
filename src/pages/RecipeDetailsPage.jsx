@@ -35,7 +35,7 @@ const RecipeDetailsPage = () => {
       <nav>
         <Link to={'/'}>Home {' > '} </Link>
         <Link to={'/recipes'}>Recipes {' > '} </Link>
-        <Link to={`/recipes${recipeId}`}>{recipe.recipe_name}</Link>
+        <Link to={`/recipes/${recipeId}`}>{recipe.recipe_name}</Link>
       </nav>
 
       <RecipeDetailsContent recipe={recipe} />
