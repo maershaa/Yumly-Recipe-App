@@ -1,1 +1,0 @@
-import{j as e,u as t}from"./index-CtLnHcnd.js";import{t as n}from"./components-qhP2aDBt.js";var r=e(),i=()=>(0,r.jsxs)(`div`,{children:[(0,r.jsx)(t,{title:`Add Recipe`,children:` `}),(0,r.jsx)(n,{})]});export{i as default};
