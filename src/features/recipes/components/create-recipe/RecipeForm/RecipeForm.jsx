@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { FaUtensils } from 'react-icons/fa';
 
 import {
@@ -16,101 +14,18 @@ import {
 } from '@/features/recipes/components/create-recipe';
 import { GeneralBtn } from '@/components';
 
-import { selectUser } from '@/app/redux/auth/selectors';
-import { useCreateRecipe, uploadRecipeImage } from '@/features/recipes/api';
-import {
-  createIngredient,
-  createStep,
-  prepareRecipeForSave,
-} from '@/features/recipes/helpers';
+import { uploadRecipeImage } from '@/features/recipes/api';
+import { createIngredient, createStep } from '@/features/recipes/helpers';
 
-const RecipeForm = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { id: currentUserId } = useSelector(selectUser);
-
-  const createRecipe = useCreateRecipe(); // мой хук который достает функцию createRecipe которая готовит на основе формы обьект для отправки на бекенд
-
-  const createInitialFormState = () => ({
-    ///мы делаем функцию createInitialFormState а не обьект потому что После очистки формы создаются новые UUID в createIngredient и createStep
-    recipe_name: '',
-    description: '',
-
-    cuisine: '',
-    cooking_time: '',
-    servings: '',
-
-    image_url: '',
-
-    tips: '',
-
-    ingredients: [createIngredient(), createIngredient(), createIngredient()],
-    instructions: [createStep(), createStep(), createStep()],
-  });
-
-  const [recipeForm, setRecipeForm] = useState(createInitialFormState); //Это Lazy Initial State. React сам вызовет функцию только один раз при первом рендере
-
-  const isFormValid = () => {
-    const titleValid = recipeForm.recipe_name.trim().length >= 3;
-    const cuisineValid = recipeForm.cuisine !== '';
-    const cookingTimeValid = Number(recipeForm.cooking_time) > 0;
-
-    const ingredientsValid =
-      recipeForm.ingredients.length >= 3 &&
-      recipeForm.ingredients.every(
-        (ingredient) => ingredient.name.trim() && Number(ingredient.amount) > 0,
-      );
-
-    const instructionsValid =
-      recipeForm.instructions.length >= 3 &&
-      recipeForm.instructions.every((step) => step.text.trim().length > 0);
-
-    const descriptionValid = recipeForm.description.trim().length >= 20;
-
-    const servingsValid = Number(recipeForm.servings) > 0;
-
-    const imageValid = recipeForm.image_url.trim() !== '';
-
-    const tipsValid = recipeForm.tips.trim().length >= 10;
-
-    return (
-      titleValid &&
-      descriptionValid &&
-      cuisineValid &&
-      cookingTimeValid &&
-      servingsValid &&
-      imageValid &&
-      tipsValid &&
-      ingredientsValid &&
-      instructionsValid
-    );
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!isFormValid()) return; //Если каждая переменная которая вернется из isFormValid === true то функция в целом вернет true
-
-    if (isSubmitting) return;
-
-    try {
-      setIsSubmitting(true);
-
-      const recipeToSubmit = prepareRecipeForSave(recipeForm);
-
-      await createRecipe(recipeToSubmit, currentUserId);
-
-      resetForm();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const resetForm = () => {
-    setRecipeForm(createInitialFormState());
-  };
-
+const RecipeForm = ({
+  recipeForm,
+  setRecipeForm,
+  handleSubmit,
+  currentUserId,
+  isSubmitting,
+  isValid,
+  submitButtonText,
+}) => {
   const handleInfoChange = (e) => {
     const { name, value } = e.target;
 
@@ -250,10 +165,10 @@ const RecipeForm = () => {
         <GeneralBtn
           type="submit"
           variant="submit"
-          disabled={!isFormValid() || isSubmitting}
+          disabled={!isValid || isSubmitting}
         >
           <FaUtensils />
-          Create Recipe
+          {submitButtonText}
         </GeneralBtn>
       </FormStepsSection>
     </Form>

@@ -12,6 +12,7 @@ const RecipeHeader = ({ recipe }) => {
 
   console.log('🚀 ~ RecipeHeader ~ recipe:', recipe);
   const {
+    id,
     recipe_name,
     description,
     // cuisine,
@@ -66,6 +67,7 @@ const RecipeHeader = ({ recipe }) => {
         </div>
       </ImgWrapper>
       <SummarySection
+        id={id}
         recipe_name={recipe_name}
         cooking_time={cooking_time}
         description={description}

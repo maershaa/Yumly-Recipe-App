@@ -1,13 +1,108 @@
+import { PageTitle } from '@/components';
+import { RecipeForm } from '@/features/recipes/components';
+import { isFormValid } from '@/features/recipes/helpers';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { selectUser } from '@/app/redux/auth/selectors';
+import { useUpdateRecipe } from '@/features/recipes/api';
+import { prepareRecipeForUpdate } from '@/features/recipes/helpers';
+import { getRecipeById } from '@/features/recipes/api';
+
 const EditRecipePage = () => {
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+
+  const [recipeForm, setRecipeForm] = useState({
+    recipe_name: '',
+    description: '',
+
+    cuisine: '',
+    cooking_time: '',
+    servings: '',
+
+    image_url: '',
+
+    tips: '',
+
+    ingredients: [],
+    instructions: [],
+  });
+
+  const { id: currentUserId } = useSelector(selectUser);
+  const { recipeId } = useParams();
+
+  const isValid = isFormValid(recipeForm);
+
+  const updateRecipe = useUpdateRecipe();
+
+  useEffect(() => {
+    const loadRecipeDetails = async (id) => {
+      try {
+        const data = await getRecipeById(id);
+        setRecipeForm({
+          recipe_name: data.recipe_name,
+          description: data.description,
+
+          cuisine: data.cuisine,
+          cooking_time: data.cooking_time,
+          servings: data.servings,
+
+          image_url: data.image_url,
+
+          tips: data.tips,
+
+          ingredients: data.ingredients,
+          instructions: data.instructions,
+
+          likes: data.likes,
+          created_at: data.created_at,
+        });
+      } catch (error) {
+        console.log(error.message); //!а что мы с этим можем сделать на продакшен?
+      }
+    };
+
+    if (recipeId) {
+      loadRecipeDetails(recipeId);
+    }
+  }, [recipeId]);
+
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    if (!isValid) return;
+    if (isSubmitting) return;
+
+    setError(null);
+
+    try {
+      setIsSubmitting(true);
+      const recipeToSubmit = prepareRecipeForUpdate(recipeForm);
+
+      await updateRecipe(recipeToSubmit, currentUserId, recipeId);
+
+      navigate(`/recipes/${recipeId}`); //но при переходе на страницу не отображается уже обновленный рецепт. для этого нужно перезагружать страницу.
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div>
-      EditRecipePage
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero quae est
-        magnam, obcaecati non ex harum mollitia quo veritatis minus unde
-        placeat, labore asperiores quia accusamus dicta consectetur, tempore
-        enim?
-      </p>
+      <PageTitle title={'Edit Recipe'}> </PageTitle>
+
+      <RecipeForm
+        recipeForm={recipeForm}
+        setRecipeForm={setRecipeForm}
+        handleSubmit={handleSubmit}
+        currentUserId={currentUserId}
+        isSubmitting={isSubmitting}
+        isValid={isValid}
+        submitButtonText="Save Changes"
+        error={error}
+      />
     </div>
   );
 };

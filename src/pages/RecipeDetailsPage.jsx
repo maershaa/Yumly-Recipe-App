@@ -1,33 +1,27 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { supabase } from '../../supabaseClient';
 import { RecipeDetailsContent } from '@/features/recipes/components';
+import { getRecipeById } from '@/features/recipes/api';
 
 const RecipeDetailsPage = () => {
   const { recipeId } = useParams();
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
-    const fetchRecipe = async () => {
+    const loadRecipeDetails = async (id) => {
       try {
-        const { data, error } = await supabase
-          .from('recipes')
-          .select('*') //забираем все поля рецепта
-          .eq('id', recipeId) //фильтруем строки, где id строго равен recipeId
-          .single(); //ожидаю ровно одну запись, не массив
-
-        if (error) throw error;
-
+        const data = await getRecipeById(id);
         setRecipe(data);
       } catch (error) {
-        console.log(error.message);
+        console.log(error.message); //!а что мы с этим можем сделать на продакшен?
       }
     };
 
     if (recipeId) {
-      fetchRecipe();
+      loadRecipeDetails(recipeId);
     }
   }, [recipeId]);
+
   if (!recipe) return <div>Loading...</div>;
 
   return (
