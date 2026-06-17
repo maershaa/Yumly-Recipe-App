@@ -1,0 +1,1 @@
+import{F as e}from"./index-HpQ0__2G.js";import{n as t}from"./components-BddcByll.js";var n=e(),r=()=>(0,n.jsx)(`div`,{children:(0,n.jsx)(t,{})});export{r as default};
