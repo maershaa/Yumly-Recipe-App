@@ -54,68 +54,70 @@ const MyRecipesPage = () => {
     loadUserRecipes(currentUserId);
   }, [currentUserId]);
 
-  const onCreateNewRecipeBtnClick = () => {
-    navigate('new');
-  };
-
   if (isLoading) {
     return (
-      <>
-        <PageHeader title={'Recipes'}>
+      <div>
+        <PageHeader title="Recipes">
           <CreateButton
-            onClick={onCreateNewRecipeBtnClick}
-            btnText={'Add new recipe'}
+            onClick={() => navigate('new')}
+            btnText="Add new recipe"
           />
         </PageHeader>
+
         <RecipeCardSkeleton count={8} />
-      </>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <>
-        <PageHeader title={'Recipes'}>
+      <div>
+        <PageHeader title="Recipes">
           <CreateButton
-            onClick={onCreateNewRecipeBtnClick}
-            btnText={'Add new recipe'}
+            onClick={() => navigate('new')}
+            btnText="Add new recipe"
           />
         </PageHeader>
-        <ErrorMessage message={error} onRetry={loadUserRecipes} />
-      </>
+
+        <ErrorMessage
+          message={error}
+          onRetry={() => loadUserRecipes(currentUserId)}
+        />
+      </div>
     );
   }
 
-  if (userRecipes.length === 0) {
+  if (!userRecipes.length) {
     return (
-      <>
-        <PageHeader title={'Recipes'}>
+      <div>
+        <PageHeader title="Recipes">
           <CreateButton
-            onClick={onCreateNewRecipeBtnClick}
-            btnText={'Add new recipe'}
+            onClick={() => navigate('new')}
+            btnText="Add new recipe"
           />
         </PageHeader>
+
         <RedirectComponent
-          spanText={'There are no recipes yet.'}
-          linkText={'Add new recipe'}
-          to={'new'}
-        />{' '}
-      </>
+          spanText="There are no recipes yet."
+          linkText="Add new recipe"
+          to="new"
+        />
+      </div>
     );
   }
 
   return (
     <div>
-      <PageHeader title={'Recipes'}>
+      <PageHeader title="Recipes">
         <CreateButton
-          onClick={onCreateNewRecipeBtnClick}
-          btnText={'Add new recipe'}
+          onClick={() => navigate('new')}
+          btnText="Add new recipe"
         />
       </PageHeader>
 
       <InputFilter
-        type={'text'}
-        name={'filter'}
+        type="text"
+        name="filter"
         placeholder="Start typing the recipe name..."
         filterValue={filter}
         setFilterValue={setFilter}
@@ -124,8 +126,13 @@ const MyRecipesPage = () => {
       {filteredRecipes.length > 0 ? (
         <RecipesList recipes={filteredRecipes} />
       ) : (
-        <p>There are no recipes matching your search. </p>
+        <p>
+          {filter.trim().length > 0
+            ? 'There are no recipes matching your search.'
+            : 'No recipes found.'}
+        </p>
       )}
+
       <Outlet />
     </div>
   );

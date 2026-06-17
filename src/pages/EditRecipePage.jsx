@@ -1,13 +1,14 @@
-import { PageTitle } from '@/components';
+import { PageTitle, BackButton } from '@/components';
 import { RecipeForm } from '@/features/recipes/components';
-import { isFormValid } from '@/features/recipes/helpers';
+import {
+  isFormValid,
+  prepareRecipeForUpdate,
+} from '@/features/recipes/helpers';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { selectUser } from '@/app/redux/auth/selectors';
-import { useUpdateRecipe } from '@/features/recipes/api';
-import { prepareRecipeForUpdate } from '@/features/recipes/helpers';
-import { getRecipeById } from '@/features/recipes/api';
+import { useUpdateRecipe, getRecipeById } from '@/features/recipes/api';
 
 const EditRecipePage = () => {
   const navigate = useNavigate();
@@ -92,6 +93,7 @@ const EditRecipePage = () => {
   return (
     <div>
       <PageTitle title={'Edit Recipe'}> </PageTitle>
+      <BackButton />
 
       <RecipeForm
         recipeForm={recipeForm}

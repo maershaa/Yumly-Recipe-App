@@ -14,6 +14,7 @@ export const GlobalStyle = createGlobalStyle`
   :root {
   color-scheme: dark;
 
+
   /* BASE THEME (DARK DEFAULT) */
 
   --bg-color: #121418;
@@ -44,6 +45,11 @@ export const GlobalStyle = createGlobalStyle`
 
   --font-main: 'Inter', sans-serif;
   --font-logo: 'Pacifico', cursive;
+
+--danger-color: #ff4d4f;
+--danger-bg-color: rgba(255, 77, 79, 0.12);
+--danger-hover-color: rgba(255, 77, 79, 0.2);
+--hover-shadow-danger: 0 0 15px rgba(255, 77, 79, 0.35);
 }
 
 [data-theme='light'] {

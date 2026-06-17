@@ -22,6 +22,12 @@ export const theme = Object.freeze({
 
     hoverBorderSecondary: 'var(--hover-border-secondary)',
     hoverShadowSecondary: 'var(--hover-shadow-secondary)',
+
+    danger: 'var(--danger-color)',
+    dangerBg: 'var(--danger-bg-color)',
+    dangerHover: 'var(--danger-hover-color)',
+
+    hoverShadowDanger: 'var(--hover-shadow-danger)',
   },
 
   fonts: {

@@ -3,9 +3,9 @@ import { supabase } from '../../../../supabaseClient';
 export const getUserRecipes = async (currentUserId) => {
   try {
     const { data, error } = await supabase
-      .from('recippes')
+      .from('recipes')
       .select('*') //забираем все поля рецепта
-      .eq('user_id', currentUserId);
+      .eq('user_id', currentUserId); //фильтруем строки, где user_id строго равен currentUserId
 
     if (error) throw error;
 

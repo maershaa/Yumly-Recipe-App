@@ -59,23 +59,22 @@ const RetryButton = styled.button`
   margin-top: 12px;
   padding: 10px 18px;
   border-radius: 8px;
-  border: none;
   cursor: pointer;
-  background: #ff4d4f;
-  color: white;
+
+  border: 2px solid ${({ theme }) => theme.colors.danger};
+  color: ${({ theme }) => theme.colors.textPrimary};
+  background: ${({ theme }) => theme.colors.dangerBg};
 
   transition: ${({ theme }) => theme.transitions.main};
 
   &:hover {
-    filter: brightness(0.75);
-  }
-
-  &:active {
-    transform: scale(0.98);
+    background-color: ${({ theme }) => theme.colors.dangerHover};
+    box-shadow: ${({ theme }) => theme.colors.hoverShadowDanger};
+    transform: translateY(-1px);
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.accent};
+    outline: 2px solid ${({ theme }) => theme.colors.danger};
     outline-offset: 2px;
   }
 `;

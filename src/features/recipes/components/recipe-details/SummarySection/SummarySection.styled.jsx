@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const SummaryWrapper = styled.div`
   display: flex;
@@ -68,5 +69,70 @@ export const SummaryWrapper = styled.div`
     }
   }
 `;
-// Цвета для тэгов
-// #9791ef - фиолетовый
+
+export const RecipeHeaderBar = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 30px;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .btn {
+    //общий класс для EditBtn и DeleteBtn
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: ${({ theme }) => theme.radii.md};
+    transition: ${({ theme }) => theme.transitions.main};
+    text-decoration: none;
+    font-size: 1.6rem;
+    line-height: 1;
+
+    svg {
+      display: block;
+      font-size: 16px;
+    }
+  }
+`;
+
+export const EditBtn = styled(Link)`
+  border: 2px solid ${({ theme }) => theme.colors.accent};
+  color: ${({ theme }) => theme.colors.textPrimary};
+  background: ${({ theme }) => theme.colors.accentBgSuccess};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.accent};
+    box-shadow: ${({ theme }) => theme.colors.hoverShadowAccent};
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.accent};
+    outline-offset: 2px;
+  }
+`;
+
+export const DeleteBtn = styled.button`
+  border: 2px solid ${({ theme }) => theme.colors.danger};
+  color: ${({ theme }) => theme.colors.textPrimary};
+  background: ${({ theme }) => theme.colors.dangerBg};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.dangerHover};
+    box-shadow: ${({ theme }) => theme.colors.hoverShadowDanger};
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.danger};
+    outline-offset: 2px;
+  }
+`;
