@@ -1,14 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectRecipes } from '@/app/redux/recipes/selectors.js';
+import { selectRecipes, selectLoading } from '@/app/redux/recipes/selectors.js';
 import { selectTags } from '@/app/redux/tags/selectors';
-import { selectLoading } from '@/app/redux/recipes/selectors';
-
 import { fetchRecipes } from '@/app/redux/recipes/operations';
 import { fetchTags } from '@/app/redux/tags/operations';
-
 import { RecipesList, TagsFilter } from '@/features/recipes/components';
 import { RecipeCardSkeleton } from '@/components';
+
 const RecipesPage = () => {
   const [selectedTag, setSelectedTag] = useState('');
   const recipes = useSelector(selectRecipes);

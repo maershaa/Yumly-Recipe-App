@@ -1,10 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Redirect } from './RedirectComponent.styled';
 const RedirectComponent = ({ spanText, linkText, to }) => {
+  const location = useLocation();
   return (
     <Redirect>
       <span>{spanText}</span>
-      <Link to={to}>{linkText}</Link>
+      <Link to={to} state={{ from: location.pathname + location.search }}>
+        {linkText}
+      </Link>
     </Redirect>
   );
 };

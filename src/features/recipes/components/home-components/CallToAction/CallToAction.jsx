@@ -1,7 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { CtaSection } from './CallToAction.styled';
 
 const CallToAction = () => {
+  const location = useLocation();
+
   return (
     <CtaSection>
       <div className="content">
@@ -16,7 +18,13 @@ const CallToAction = () => {
           cookbook you'll return to again and again.
         </p>
 
-        <Link to="/my-recipes/new" className="ctaButton">
+        <Link
+          to="/my-recipes/new"
+          state={{
+            from: location.pathname + location.search,
+          }}
+          className="ctaButton"
+        >
           Get Started
         </Link>
       </div>

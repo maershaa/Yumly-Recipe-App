@@ -2,7 +2,7 @@ import { FaSun, FaMoon, FaLeaf } from 'react-icons/fa';
 import { AiOutlineClockCircle } from 'react-icons/ai';
 import { SummaryWrapper } from './SummarySection.styled';
 import { PiLightning } from 'react-icons/pi';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const SummarySection = ({
   id,
@@ -17,6 +17,9 @@ const SummarySection = ({
     healthy: <FaLeaf />,
     easy: <PiLightning />,
   };
+
+  const location = useLocation();
+
   return (
     <SummaryWrapper>
       <h1>{recipe_name}</h1>
@@ -26,7 +29,10 @@ const SummarySection = ({
         <span> Prep time:</span>
         <span className="accent">{cooking_time} min</span>
       </span>
-      <Link to={`/my-recipes/${id}/edit`}>EDIT</Link> //!!!!!!
+      <Link to={`/my-recipes/${id}/edit`} state={location.state}>
+        EDIT
+      </Link>{' '}
+      //!!!!!!
       <ul className="tagsList">
         {tags?.map((tag) => (
           <li key={tag}>

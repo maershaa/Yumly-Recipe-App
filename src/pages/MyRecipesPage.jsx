@@ -1,31 +1,109 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectRecipes } from '@/app/redux/recipes/selectors.js';
-import { useMemo, useState } from 'react';
-// import { fetchRecipes } from '@/app/redux/recipes/operations';
+import { selectUser } from '@/app/redux/auth/selectors.js';
+import { useEffect, useMemo, useState } from 'react';
 import {
   RecipesList,
   PageHeader,
   InputFilter,
 } from '@/features/recipes/components';
-import { CreateButton, RedirectComponent } from '@/components';
+import {
+  CreateButton,
+  RedirectComponent,
+  RecipeCardSkeleton,
+  ErrorMessage,
+} from '@/components';
+import { getUserRecipes } from '@/features/recipes/api';
 
 const MyRecipesPage = () => {
+  const { id: currentUserId } = useSelector(selectUser);
   const [filter, setFilter] = useState('');
-  const recipes = useSelector(selectRecipes);
+  const [userRecipes, setUserRecipes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const filteredRecipes = useMemo(
     () =>
-      recipes.filter((r) =>
-        r.recipe_name.toLowerCase().includes(filter.toLowerCase()),
+      userRecipes?.filter((r) =>
+        r.recipe_name
+          .trim()
+          .toLowerCase()
+          .includes(filter.trim().toLowerCase()),
       ),
-    [filter, recipes],
+    [filter, userRecipes],
   );
+
+  const loadUserRecipes = async (userId) => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const data = await getUserRecipes(userId);
+      setUserRecipes(data);
+    } catch (error) {
+      setError(error.message);
+      console.log('🚀 ~ loadUserRecipes ~ error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!currentUserId) return;
+
+    loadUserRecipes(currentUserId);
+  }, [currentUserId]);
 
   const onCreateNewRecipeBtnClick = () => {
     navigate('new');
   };
+
+  if (isLoading) {
+    return (
+      <>
+        <PageHeader title={'Recipes'}>
+          <CreateButton
+            onClick={onCreateNewRecipeBtnClick}
+            btnText={'Add new recipe'}
+          />
+        </PageHeader>
+        <RecipeCardSkeleton count={8} />
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <PageHeader title={'Recipes'}>
+          <CreateButton
+            onClick={onCreateNewRecipeBtnClick}
+            btnText={'Add new recipe'}
+          />
+        </PageHeader>
+        <ErrorMessage message={error} onRetry={loadUserRecipes} />
+      </>
+    );
+  }
+
+  if (userRecipes.length === 0) {
+    return (
+      <>
+        <PageHeader title={'Recipes'}>
+          <CreateButton
+            onClick={onCreateNewRecipeBtnClick}
+            btnText={'Add new recipe'}
+          />
+        </PageHeader>
+        <RedirectComponent
+          spanText={'There are no recipes yet.'}
+          linkText={'Add new recipe'}
+          to={'new'}
+        />{' '}
+      </>
+    );
+  }
+
   return (
     <div>
       <PageHeader title={'Recipes'}>
@@ -38,21 +116,16 @@ const MyRecipesPage = () => {
       <InputFilter
         type={'text'}
         name={'filter'}
-        placeholder="Start enter the recipe name ..."
+        placeholder="Start typing the recipe name..."
         filterValue={filter}
         setFilterValue={setFilter}
       />
 
-      {recipes.length === 0 ? (
-        <RedirectComponent
-          spanText={'There are no recipes yet.'}
-          linkText={'Add new recipe'}
-          to={'new'}
-        />
-      ) : (
+      {filteredRecipes.length > 0 ? (
         <RecipesList recipes={filteredRecipes} />
+      ) : (
+        <p>There are no recipes matching your search. </p>
       )}
-
       <Outlet />
     </div>
   );
