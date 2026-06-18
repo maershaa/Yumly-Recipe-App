@@ -1,1 +1,0 @@
-import{F as e}from"./index-Da2g5t-g.js";import{t}from"./components-2LFs4e9e.js";var n=e(),r=()=>(0,n.jsx)(`div`,{children:(0,n.jsx)(t,{})});export{r as default};
