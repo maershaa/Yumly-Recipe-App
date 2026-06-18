@@ -588,3 +588,8 @@ DELETE FROM recipes; - отчищает всю БД таблицу с рецеп
 Необходимо Если id создан через GENERATED AS IDENTITY, выполни:
 ALTER TABLE recipes
 ALTER COLUMN id RESTART WITH 1;
+
+
+
+Supabase Tutorial Update - https://www.youtube.com/watch?v=uMTJ8HzaVZk&t=225s
+Supabase Tutorial Delete - https://www.youtube.com/watch?v=P7CkdtU5bWc&list=PL4cUxeGkcC9hUb6sHthUEwG7r9VDPBMKO&index=7

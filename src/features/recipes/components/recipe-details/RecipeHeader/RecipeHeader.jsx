@@ -9,9 +9,8 @@ import { useState } from 'react';
 
 const RecipeHeader = ({ recipe }) => {
   const [isLiked, setIsLiked] = useState(false);
-
-  console.log('🚀 ~ RecipeHeader ~ recipe:', recipe);
   const {
+    user_id,
     id,
     recipe_name,
     description,
@@ -68,6 +67,7 @@ const RecipeHeader = ({ recipe }) => {
       </ImgWrapper>
       <SummarySection
         id={id}
+        user_id={user_id}
         recipe_name={recipe_name}
         cooking_time={cooking_time}
         description={description}

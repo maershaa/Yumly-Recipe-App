@@ -3,3 +3,4 @@ export { uploadRecipeImage } from './uploadRecipeImage';
 export { useUpdateRecipe } from './updateRecipe';
 export { getRecipeById } from './getRecipeById';
 export { getUserRecipes } from './getUserRecipes';
+export { deleteRecipe } from './deleteRecipe';

@@ -16,6 +16,7 @@ import { GeneralBtn } from '@/components';
 
 import { uploadRecipeImage } from '@/features/recipes/api';
 import { createIngredient, createStep } from '@/features/recipes/helpers';
+import { useNavigate } from 'react-router-dom';
 
 const RecipeForm = ({
   recipeForm,
@@ -26,6 +27,8 @@ const RecipeForm = ({
   isValid,
   submitButtonText,
 }) => {
+  const navigate = useNavigate();
+
   const handleInfoChange = (e) => {
     const { name, value } = e.target;
 
@@ -121,6 +124,9 @@ const RecipeForm = ({
     }));
   };
 
+  const handleSubmitBtnClick = () => {
+    navigate(`/my-recipes`); //после добавления рецепта делаем редирект на страницу с моими рецептами
+  };
   return (
     <Form onSubmit={handleSubmit}>
       <FormMainSection>
@@ -166,6 +172,7 @@ const RecipeForm = ({
           type="submit"
           variant="submit"
           disabled={!isValid || isSubmitting}
+          onClick={handleSubmitBtnClick}
         >
           <FaUtensils />
           {submitButtonText}

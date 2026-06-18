@@ -13,7 +13,7 @@ export const isFormValid = (recipeForm) => {
     recipeForm.instructions.length >= 3 &&
     recipeForm.instructions.every((step) => step.text.trim().length > 0);
 
-  const descriptionValid = recipeForm.description.trim().length >= 20;
+  const descriptionValid = recipeForm.description.trim().length >= 5;
 
   const servingsValid = Number(recipeForm.servings) > 0;
 

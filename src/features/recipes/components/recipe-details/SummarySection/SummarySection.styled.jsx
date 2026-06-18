@@ -82,57 +82,62 @@ export const RecipeHeaderBar = styled.div`
     align-items: center;
     justify-content: space-between;
   }
+`;
 
-  .btn {
+export const Actions = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: center;
+
+  .actionsItem {
     //общий класс для EditBtn и DeleteBtn
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border-radius: ${({ theme }) => theme.radii.md};
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: ${({ theme }) => theme.radii.rounded};
     transition: ${({ theme }) => theme.transitions.main};
     text-decoration: none;
-    font-size: 1.6rem;
-    line-height: 1;
 
     svg {
       display: block;
-      font-size: 16px;
+      font-size: 28px;
     }
   }
-`;
 
-export const EditBtn = styled(Link)`
-  border: 2px solid ${({ theme }) => theme.colors.accent};
-  color: ${({ theme }) => theme.colors.textPrimary};
-  background: ${({ theme }) => theme.colors.accentBgSuccess};
+  .edit {
+    border: 2px solid ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.textPrimary};
+    background: ${({ theme }) => theme.colors.accentBgSuccess};
 
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.accent};
-    box-shadow: ${({ theme }) => theme.colors.hoverShadowAccent};
-    transform: translateY(-1px);
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.accent};
+      box-shadow: ${({ theme }) => theme.colors.hoverShadowAccent};
+      transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid ${({ theme }) => theme.colors.accent};
+      outline-offset: 2px;
+    }
   }
 
-  &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.accent};
-    outline-offset: 2px;
-  }
-`;
+  .delete {
+    border: 2px solid ${({ theme }) => theme.colors.danger};
+    color: ${({ theme }) => theme.colors.textPrimary};
+    background: ${({ theme }) => theme.colors.dangerBg};
 
-export const DeleteBtn = styled.button`
-  border: 2px solid ${({ theme }) => theme.colors.danger};
-  color: ${({ theme }) => theme.colors.textPrimary};
-  background: ${({ theme }) => theme.colors.dangerBg};
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.dangerHover};
+      box-shadow: ${({ theme }) => theme.colors.hoverShadowDanger};
+      transform: translateY(-1px);
+    }
 
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.dangerHover};
-    box-shadow: ${({ theme }) => theme.colors.hoverShadowDanger};
-    transform: translateY(-1px);
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.danger};
-    outline-offset: 2px;
+    &:focus-visible {
+      outline: 2px solid ${({ theme }) => theme.colors.danger};
+      outline-offset: 2px;
+    }
   }
 `;
