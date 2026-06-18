@@ -6,6 +6,7 @@ import { Container } from '@/components';
 import { LayoutWrapper } from './Layout.styled';
 import { Loader } from '@/components/Loader/Loader';
 import { Suspense } from 'react';
+import { Toaster } from 'sonner';
 
 const Layout = () => {
   return (
@@ -22,7 +23,9 @@ const Layout = () => {
           </Suspense>
         </Container>
       </main>
+
       <Footer />
+      <Toaster richColors />
     </LayoutWrapper>
   );
 };

@@ -12,6 +12,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { deleteRecipe } from '@/features/recipes/api';
 import { selectUser } from '@/app/redux/auth/selectors';
 import { useSelector } from 'react-redux';
+import { Toaster, toast } from 'sonner';
+
 const SummarySection = ({
   id,
   user_id,
@@ -33,12 +35,16 @@ const SummarySection = ({
     easy: <PiLightning />,
   };
 
-  const onDeleteRecipe = async (recipeId) => {
+  const handleDeleteRecipe = async (recipeId) => {
     try {
       await deleteRecipe(recipeId);
+
+      toast.success('Recipe deleted successfully.');
+
       navigate('/my-recipes');
     } catch (error) {
-      console.log('error:', error);
+      console.error('Failed to delete recipe:', error);
+      toast.error('Failed to delete the recipe. Please try again.');
     }
   };
 
@@ -59,7 +65,7 @@ const SummarySection = ({
             <button
               className="actionsItem delete"
               type="button"
-              onClick={() => onDeleteRecipe(id)}
+              onClick={() => handleDeleteRecipe(id)}
             >
               <MdDeleteForever />
             </button>
@@ -82,6 +88,7 @@ const SummarySection = ({
           </li>
         ))}
       </ul>
+      <Toaster />
     </SummaryWrapper>
   );
 };

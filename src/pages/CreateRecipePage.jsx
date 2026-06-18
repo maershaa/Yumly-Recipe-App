@@ -9,7 +9,7 @@ import {
   prepareRecipeForSave,
 } from '@/features/recipes/helpers';
 import { selectUser } from '@/app/redux/auth/selectors';
-
+import { toast } from 'sonner';
 import { useCreateRecipe } from '@/features/recipes/api';
 import { isFormValid } from '@/features/recipes/helpers';
 
@@ -51,9 +51,10 @@ const CreateRecipePage = () => {
       const recipeToSubmit = prepareRecipeForSave(recipeForm);
 
       await createRecipe(recipeToSubmit, currentUserId);
-
+      toast.success('Your recipe has been created.');
       resetForm();
     } catch (error) {
+      toast.error('Failed to create the recipe. Please try again.');
       console.error(error);
     } finally {
       setIsSubmitting(false);
