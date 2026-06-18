@@ -54,8 +54,23 @@ const EditRecipePage = () => {
 
           tips: data.tips,
 
-          ingredients: data.ingredients,
-          instructions: data.instructions,
+          ingredients: data.ingredients.map((el) => {
+            return {
+              id: crypto.randomUUID(), // Временный id для работы формы. Используется React как key, а также для поиска,
+              // изменения и удаления элементов. На бэкенд этот id не отправляется.
+              amount: parseFloat(el.amount),
+              unit: el.unit,
+            };
+          }),
+
+          instructions: data.instructions.map((el, index) => {
+            return {
+              id: crypto.randomUUID(), // Временный id для работы формы. Используется React как key, а также для поиска,
+              // изменения и удаления элементов. На бэкенд этот id не отправляется.
+              step: index + 1,
+              text: el.text.trim(),
+            };
+          }),
 
           likes: data.likes,
           created_at: data.created_at,
@@ -83,7 +98,7 @@ const EditRecipePage = () => {
 
       await updateRecipe(recipeToSubmit, currentUserId, recipeId);
 
-      navigate(`/recipes/${recipeId}`); //но при переходе на страницу не отображается уже обновленный рецепт. для этого нужно перезагружать страницу.
+      navigate(`/recipes/${recipeId}`); //!но при переходе на страницу не отображается уже обновленный рецепт. для этого нужно перезагружать страницу.
     } catch (error) {
       setError(error.message);
     } finally {

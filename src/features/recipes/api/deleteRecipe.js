@@ -8,7 +8,6 @@ export const deleteRecipe = async (recipeIdToDelete) => {
       .delete()
       //.eq('user_id', currentUserId) //!не нужно. для этого настроена политика в самлй supabase
       .eq('id', recipeIdToDelete)
-      .single() //ожидаю ровно одну запись, не массив
       .select();
 
     if (error) throw error;
