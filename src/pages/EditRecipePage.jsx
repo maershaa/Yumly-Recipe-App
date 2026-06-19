@@ -55,9 +55,11 @@ const EditRecipePage = () => {
           tips: data.tips,
 
           ingredients: data.ingredients.map((el) => {
+            console.log('🚀 ~ loadRecipeDetails ~ el:', el);
             return {
               id: crypto.randomUUID(), // Временный id для работы формы. Используется React как key, а также для поиска,
               // изменения и удаления элементов. На бэкенд этот id не отправляется.
+              name: el.name.trim(),
               amount: parseFloat(el.amount),
               unit: el.unit,
             };
