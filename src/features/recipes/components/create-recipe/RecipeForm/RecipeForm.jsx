@@ -24,7 +24,7 @@ const RecipeForm = ({
   handleSubmit,
   currentUserId,
   isSubmitting,
-  isValid,
+  isFormValid,
   submitButtonText,
   validationErrors,
 }) => {
@@ -66,7 +66,6 @@ const RecipeForm = ({
 
     try {
       const imageUrl = await uploadRecipeImage(filePath, uploadedFile);
-      // console.log('Картинка успешно загружена:', imageUrl);
       setRecipeForm((prevValue) => ({
         ...prevValue,
         image_url: imageUrl,
@@ -192,7 +191,7 @@ const RecipeForm = ({
         <GeneralBtn
           type="submit"
           variant="submit"
-          disabled={!isValid || isSubmitting}
+          disabled={!isFormValid || isSubmitting}
         >
           <FaUtensils />
           {submitButtonText}

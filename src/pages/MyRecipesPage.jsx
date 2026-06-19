@@ -42,7 +42,6 @@ const MyRecipesPage = () => {
       setUserRecipes(data);
     } catch (error) {
       setError(error.message);
-      console.log('🚀 ~ loadUserRecipes ~ error:', error);
     } finally {
       setIsLoading(false);
     }

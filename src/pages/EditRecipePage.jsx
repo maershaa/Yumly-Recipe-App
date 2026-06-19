@@ -34,7 +34,8 @@ const EditRecipePage = () => {
   const { id: currentUserId } = useSelector(selectUser);
   const { recipeId } = useParams();
 
-  const { isValid, errors: validationErrors } = validateRecipeForm(recipeForm); //Возвращает объект с значением isValid=true/false и обьхект ошибок  в полях формы или их отсутствием
+  const { isFormValid, errors: validationErrors } =
+    validateRecipeForm(recipeForm); //Возвращает объект с значением isFormValid=true/false и обьхект ошибок  в полях формы или их отсутствием
 
   const updateRecipe = useUpdateRecipe();
 
@@ -55,7 +56,6 @@ const EditRecipePage = () => {
           tips: data.tips,
 
           ingredients: data.ingredients.map((el) => {
-            console.log('🚀 ~ loadRecipeDetails ~ el:', el);
             return {
               id: crypto.randomUUID(), // Временный id для работы формы. Используется React как key, а также для поиска,
               // изменения и удаления элементов. На бэкенд этот id не отправляется.
@@ -89,7 +89,7 @@ const EditRecipePage = () => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    if (!isValid) return; //!вот тут не знаю как проверить. каждое поле что '' строка
+    if (!isFormValid) return;
     if (isSubmitting) return;
 
     setError(null);

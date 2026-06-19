@@ -37,13 +37,14 @@ const CreateRecipePage = () => {
   });
 
   const [recipeForm, setRecipeForm] = useState(createInitialFormState); //Это Lazy Initial State. React сам вызовет функцию только один раз при первом рендере
-  const { isValid, errors: validationErrors } = validateRecipeForm(recipeForm); //Возвращает объект с значением isValid=true/false и обьхект ошибок  в полях формы или их отсутствием
+  const { isFormValid, errors: validationErrors } =
+    validateRecipeForm(recipeForm); //Возвращает объект с значением isFormValid=true/false и обьхект ошибок  в полях формы или их отсутствием
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!isValid) return;
+    if (!isFormValid) return;
 
     if (isSubmitting) return;
 
@@ -79,6 +80,7 @@ const CreateRecipePage = () => {
         createInitialFormState={createInitialFormState}
         handleSubmit={handleSubmit}
         currentUserId={currentUserId}
+        isFormValid={isFormValid}
         isSubmitting={isSubmitting}
         validationErrors={validationErrors}
         submitButtonText="Create Recipe"
