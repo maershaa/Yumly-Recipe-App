@@ -1,0 +1,1 @@
+import{L as e}from"./index-B0apsKjs.js";import{n as t}from"./components-CAhEVKvI.js";var n=e(),r=()=>(0,n.jsx)(`div`,{children:(0,n.jsx)(t,{})});export{r as default};
