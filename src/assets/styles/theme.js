@@ -26,7 +26,6 @@ export const theme = Object.freeze({
     danger: 'var(--danger-color)',
     dangerBg: 'var(--danger-bg-color)',
     dangerHover: 'var(--danger-hover-color)',
-
     hoverShadowDanger: 'var(--hover-shadow-danger)',
   },
 

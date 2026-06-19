@@ -17,6 +17,17 @@ export const Form = styled.form`
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     gap: 32px;
   }
+
+  .invalid {
+    //для невалидных полей формы
+    border: 1px solid ${({ theme }) => theme.colors.danger};
+    box-shadow: ${({ theme }) => theme.colors.hoverShadowDanger};
+
+    &:hover {
+      border: ${({ theme }) => theme.colors.dangerHover};
+      box-shadow: ${({ theme }) => theme.colors.hoverShadowDanger};
+    }
+  }
 `;
 
 export const FormSectionWrapper = styled.div`

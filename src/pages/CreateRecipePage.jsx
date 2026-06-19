@@ -11,7 +11,8 @@ import {
 import { selectUser } from '@/app/redux/auth/selectors';
 import { toast } from 'sonner';
 import { useCreateRecipe } from '@/features/recipes/api';
-import { isFormValid } from '@/features/recipes/helpers';
+import { validateRecipeForm } from '@/features/recipes/helpers';
+import { useNavigate } from 'react-router-dom';
 
 const CreateRecipePage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,12 +37,13 @@ const CreateRecipePage = () => {
   });
 
   const [recipeForm, setRecipeForm] = useState(createInitialFormState); //Это Lazy Initial State. React сам вызовет функцию только один раз при первом рендере
-  const isValid = isFormValid(recipeForm);
+  const { isValid, errors: validationErrors } = validateRecipeForm(recipeForm); //Возвращает объект с значением isValid=true/false и обьхект ошибок  в полях формы или их отсутствием
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!isValid) return; //Если каждая переменная которая вернется из isFormValid === true то функция в целом вернет true
+    if (!isValid) return;
 
     if (isSubmitting) return;
 
@@ -53,6 +55,7 @@ const CreateRecipePage = () => {
       await createRecipe(recipeToSubmit, currentUserId);
       toast.success('Your recipe has been created.');
       resetForm();
+      navigate('/my-recipes');
     } catch (error) {
       toast.error('Failed to create the recipe. Please try again.');
       console.error(error);
@@ -76,7 +79,7 @@ const CreateRecipePage = () => {
         handleSubmit={handleSubmit}
         currentUserId={currentUserId}
         isSubmitting={isSubmitting}
-        isValid={isValid}
+        validationErrors={validationErrors}
         submitButtonText="Create Recipe"
       />
     </div>

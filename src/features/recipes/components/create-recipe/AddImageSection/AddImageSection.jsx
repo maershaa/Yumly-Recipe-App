@@ -1,12 +1,18 @@
 import { ImgWrapper, ReplaceImageWrapper } from './AddImageSection.styled';
 import { GeneralBtn } from '@/components';
+import { FieldErrorMessage } from '@/features/recipes/components/create-recipe'; //!может вынести его в переиспользуемы комопненты ui или папку просто components
 
 const AddImageSection = ({
   recipe_name,
   image_url,
   handleImageUpload,
   removeImage,
+  isImgError,
+  handleInputBlur,
+  isTouched,
 }) => {
+  const { image_url: isImageUrlTouched } = isTouched;
+
   return (
     <>
       {!image_url ? (
@@ -17,6 +23,7 @@ const AddImageSection = ({
               accept=".jpg, .png, .jpeg"
               multiple={false} //если ты разрешаешь загрузку нескольких фото => true
               onChange={handleImageUpload}
+              onBlur={handleInputBlur}
               name="image_url"
             />
           </label>
@@ -32,6 +39,9 @@ const AddImageSection = ({
             Replace image
           </GeneralBtn>
         </ReplaceImageWrapper>
+      )}
+      {isImgError && isImageUrlTouched && (
+        <FieldErrorMessage errorMessage={isImgError} />
       )}
     </>
   );

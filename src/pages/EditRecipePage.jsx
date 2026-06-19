@@ -1,7 +1,7 @@
 import { PageTitle, BackButton } from '@/components';
 import { RecipeForm } from '@/features/recipes/components';
 import {
-  isFormValid,
+  validateRecipeForm,
   prepareRecipeForUpdate,
 } from '@/features/recipes/helpers';
 import { useEffect, useState } from 'react';
@@ -34,7 +34,7 @@ const EditRecipePage = () => {
   const { id: currentUserId } = useSelector(selectUser);
   const { recipeId } = useParams();
 
-  const isValid = isFormValid(recipeForm);
+  const { isValid, errors: validationErrors } = validateRecipeForm(recipeForm); //Возвращает объект с значением isValid=true/false и обьхект ошибок  в полях формы или их отсутствием
 
   const updateRecipe = useUpdateRecipe();
 
@@ -87,7 +87,7 @@ const EditRecipePage = () => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    if (!isValid) return;
+    if (!isValid) return; //!вот тут не знаю как проверить. каждое поле что '' строка
     if (isSubmitting) return;
 
     setError(null);
@@ -116,7 +116,7 @@ const EditRecipePage = () => {
         handleSubmit={handleSubmit}
         currentUserId={currentUserId}
         isSubmitting={isSubmitting}
-        isValid={isValid}
+        validationErrors={validationErrors}
         submitButtonText="Save Changes"
         error={error}
       />

@@ -9,8 +9,6 @@ export const getUserRecipes = async (currentUserId) => {
 
     if (error) throw error;
 
-    console.log('🚀 ~ getUserRecipes ~ data:', data);
-
     return data;
   } catch (error) {
     console.error('Error get user recipes:', error.message);

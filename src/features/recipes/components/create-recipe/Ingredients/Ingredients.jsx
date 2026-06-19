@@ -2,17 +2,19 @@ import { FaPlus, FaTrash } from 'react-icons/fa';
 import { IngredientRow } from './Ingredients.styled';
 import { GeneralBtn } from '@/components';
 import { units } from '@/features/recipes/constants';
+import { FieldErrorMessage } from '@/features/recipes/components/create-recipe'; //!может вынести его в переиспользуемы комопненты ui или папку просто components
 
 const Ingredients = ({
   ingredients,
   onChange,
   addIngredient,
   removeIngredient,
+  isIngredientsError,
 }) => {
   return (
     <>
       <h2>Ingredients</h2>
-      {ingredients.map(({ id, name, amount }) => (
+      {ingredients.map(({ id, name, amount, unit }) => (
         <IngredientRow key={id}>
           <label>
             <input
@@ -30,7 +32,7 @@ const Ingredients = ({
               value={amount}
               placeholder="Amount"
             />
-            <select name="unit" onChange={(e) => onChange(id, e)}>
+            <select name="unit" value={unit} onChange={(e) => onChange(id, e)}>
               {units.map((unitOption) => (
                 <option key={unitOption} value={unitOption}>
                   {unitOption}
@@ -48,7 +50,9 @@ const Ingredients = ({
           </GeneralBtn>
         </IngredientRow>
       ))}
-
+      {isIngredientsError && (
+        <FieldErrorMessage errorMessage={isIngredientsError} />
+      )}
       <GeneralBtn variant="add" onClick={addIngredient}>
         <FaPlus />
         Add Ingredient

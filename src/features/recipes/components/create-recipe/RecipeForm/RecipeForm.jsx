@@ -16,7 +16,7 @@ import { GeneralBtn } from '@/components';
 
 import { uploadRecipeImage } from '@/features/recipes/api';
 import { createIngredient, createStep } from '@/features/recipes/helpers';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const RecipeForm = ({
   recipeForm,
@@ -26,8 +26,19 @@ const RecipeForm = ({
   isSubmitting,
   isValid,
   submitButtonText,
+  validationErrors,
 }) => {
-  const navigate = useNavigate();
+  const FORM_FIELDS = {
+    recipe_name: false,
+    description: false,
+    cuisine: false,
+    cooking_time: false,
+    servings: false,
+    image_url: false,
+    tips: false,
+  };
+
+  const [isTouched, setIsTouched] = useState(FORM_FIELDS);
 
   const handleInfoChange = (e) => {
     const { name, value } = e.target;
@@ -124,9 +135,11 @@ const RecipeForm = ({
     }));
   };
 
-  const handleSubmitBtnClick = () => {
-    navigate(`/my-recipes`); //после добавления рецепта делаем редирект на страницу с моими рецептами
+  const handleInputBlur = (evt) => {
+    const name = evt.currentTarget.name;
+    setIsTouched((prev) => ({ ...prev, [name]: true }));
   };
+
   return (
     <Form onSubmit={handleSubmit}>
       <FormMainSection>
@@ -134,8 +147,10 @@ const RecipeForm = ({
           <RecipeInfo
             values={recipeForm}
             onChange={handleInfoChange}
-            handleImageUpload={handleImageUpload}
-            removeImage={removeImage}
+            validationErrors={validationErrors}
+            // Обработчик отображения валидности инпутов в форме и состояние было ли на инпуте событие фокуса
+            handleInputBlur={handleInputBlur}
+            isTouched={isTouched}
           />
         </FormSectionWrapper>
 
@@ -145,6 +160,7 @@ const RecipeForm = ({
             onChange={handleIngredientChange}
             addIngredient={addIngredient}
             removeIngredient={removeIngredient}
+            isIngredientsError={validationErrors.ingredients}
           />
         </FormSectionWrapper>
       </FormMainSection>
@@ -156,6 +172,7 @@ const RecipeForm = ({
             onChange={handleStepChange}
             addStep={addStep}
             removeStep={removeStep}
+            isStepsError={validationErrors.instructions}
           />
         </FormSectionWrapper>
 
@@ -165,6 +182,10 @@ const RecipeForm = ({
             image_url={recipeForm.image_url}
             handleImageUpload={handleImageUpload}
             removeImage={removeImage}
+            isImgError={validationErrors.image}
+            // Обработчик отображения валидности инпутов в форме и состояние было ли на инпуте событие фокуса
+            handleInputBlur={handleInputBlur}
+            isTouched={isTouched}
           ></AddImageSection>
         </FormSectionWrapper>
 
@@ -172,7 +193,6 @@ const RecipeForm = ({
           type="submit"
           variant="submit"
           disabled={!isValid || isSubmitting}
-          onClick={handleSubmitBtnClick}
         >
           <FaUtensils />
           {submitButtonText}
