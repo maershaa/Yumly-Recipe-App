@@ -1,1 +1,0 @@
-import{L as e}from"./index-Cj_MRdb0.js";import{t}from"./components-CMdzdB_y.js";var n=e(),r=()=>(0,n.jsx)(`div`,{children:(0,n.jsx)(t,{})});export{r as default};
