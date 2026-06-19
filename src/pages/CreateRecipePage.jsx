@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { PageTitle } from '@/components';
+import { PageTitle, BackButton } from '@/components';
 import { RecipeForm } from '@/features/recipes/components';
 import {
   createIngredient,
@@ -71,6 +71,7 @@ const CreateRecipePage = () => {
   return (
     <div>
       <PageTitle title={'Add Recipe'}> </PageTitle>
+      <BackButton />
 
       <RecipeForm
         recipeForm={recipeForm}
