@@ -71,7 +71,7 @@ const CreateRecipePage = () => {
 
   return (
     <div>
-      <PageTitle title={'Add Recipe'}> </PageTitle>
+      <PageTitle title={'New homemade recipe'}> </PageTitle>
       <BackButton />
 
       <RecipeForm

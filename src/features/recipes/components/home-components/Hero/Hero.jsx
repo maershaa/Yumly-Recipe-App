@@ -33,7 +33,11 @@ const Hero = () => {
       </HeroContentWrapper>
 
       <HeroImageWrapper>
-        <img src={hero_girl_curly_square} alt="Cooking illustration" />
+        <img
+          src={hero_girl_curly_square}
+          alt="Cooking illustration"
+          loading="lazy"
+        />
       </HeroImageWrapper>
     </HeroSection>
   );

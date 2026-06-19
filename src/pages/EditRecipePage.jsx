@@ -109,7 +109,7 @@ const EditRecipePage = () => {
   };
   return (
     <div>
-      <PageTitle title={'Edit Recipe'}> </PageTitle>
+      <PageTitle title={'Make Changes to Your Recipe'}> </PageTitle>
       <BackButton />
 
       <RecipeForm

@@ -21,7 +21,7 @@ const Benefits = () => {
         <BenefitCard>
           <div className="badge success">Create</div>
 
-          <img src={cake} alt="" />
+          <img src={cake} alt="" loading="lazy" />
 
           <h3>Create Your Own Recipes</h3>
 
@@ -36,7 +36,7 @@ const Benefits = () => {
         <BenefitCard>
           <div className="badge warning">Discover</div>
 
-          <img src={chef_hat} alt="" />
+          <img src={chef_hat} alt="" loading="lazy" />
 
           <h3>Find Recipes Instantly</h3>
 
@@ -51,7 +51,7 @@ const Benefits = () => {
         <BenefitCard>
           <div className="badge success">Save</div>
 
-          <img src={rice} alt="" />
+          <img src={rice} alt="" loading="lazy" />
 
           <h3>Build Your Personal Cookbook</h3>
 
