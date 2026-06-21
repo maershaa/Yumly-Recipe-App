@@ -1,1 +1,0 @@
-import{L as e,w as t}from"./index-B0apsKjs.js";var n=e(),r=()=>(0,n.jsxs)(`div`,{children:[(0,n.jsx)(`h1`,{children:`Check your email`}),(0,n.jsx)(`p`,{children:`We've sent a confirmation email.`}),(0,n.jsx)(`p`,{children:`Open your inbox and click the verification link before signing in.`}),(0,n.jsx)(t,{to:`/auth/login`,children:`Back to Sign In`})]});export{r as default};
