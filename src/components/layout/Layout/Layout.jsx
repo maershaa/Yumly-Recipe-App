@@ -15,7 +15,7 @@ const Layout = () => {
         <HeaderComponent />
       </Container>
 
-      <main className="main-content">
+      <main>
         <Container>
           <Suspense fallback={<Loader />}>
             <Outlet />
