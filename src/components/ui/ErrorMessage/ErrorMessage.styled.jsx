@@ -10,6 +10,7 @@ const ErrorContainer = styled.div`
   padding: 60px 20px;
   text-align: center;
   width: 100%;
+  max-width: 740px;
 `;
 
 const IconWrapper = styled.div`

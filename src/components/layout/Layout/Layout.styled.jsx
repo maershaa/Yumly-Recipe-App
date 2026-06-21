@@ -13,9 +13,12 @@ export const LayoutWrapper = styled.div`
   main {
     flex-grow: 1;
     display: flex;
-    align-items: center;
     width: 100%;
     position: relative;
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+      align-items: center;
+    }
 
     /* блик 1 */
     &::before {

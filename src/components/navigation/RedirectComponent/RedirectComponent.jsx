@@ -4,7 +4,7 @@ const RedirectComponent = ({ spanText, linkText, to }) => {
   const location = useLocation();
   return (
     <Redirect>
-      <span>{spanText}</span>
+      {spanText && <span>{spanText}</span>}{' '}
       <Link to={to} state={{ from: location.pathname + location.search }}>
         {linkText}
       </Link>

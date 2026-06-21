@@ -8,9 +8,9 @@ import { refreshUser } from '@/app/redux/auth/operations';
 const HomePage = lazy(() => import('@/pages/HomePage'));
 const RegisterPage = lazy(() => import('@/pages/RegisterPage'));
 const LoginPage = lazy(() => import('@/pages/LoginPage'));
-const CheckEmailPage = lazy(() => import('@/pages/CheckEmailPage'));
+const VerifyEmailPage = lazy(() => import('@/pages/VerifyEmailPage'));
 
-const RecipesPage = lazy(() => import('@/pages/RecipesPage.jsx'));
+const RecipesPage = lazy(() => import('@/pages/RecipesPage'));
 const RecipeDetailsPage = lazy(() => import('@/pages/RecipeDetailsPage'));
 
 const MyRecipesPage = lazy(() => import('@/pages/MyRecipesPage'));
@@ -41,6 +41,7 @@ function App() {
           <Route path="auth" element={<PublicRoute />}>
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegisterPage />} />
+            <Route path="verify-email" element={<VerifyEmailPage />} />
           </Route>
 
           {/* Private Routes Group */}
