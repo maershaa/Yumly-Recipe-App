@@ -111,7 +111,6 @@ export const CtaSection = styled.section`
     align-items: center;
     justify-content: center;
 
-    min-width: 220px;
     padding: 16px 32px;
     border-radius: ${({ theme }) => theme.radii.pill};
     background-color: ${({ theme }) => theme.colors.accentSecondary};
@@ -125,6 +124,10 @@ export const CtaSection = styled.section`
     &:focus {
       transform: translateY(-2px);
       box-shadow: ${({ theme }) => theme.colors.hoverShadowSecondary};
+    }
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.mobileLarge}) {
+      min-width: 220px;
     }
   }
 `;
