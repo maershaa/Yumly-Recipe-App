@@ -8,7 +8,7 @@ import {
   Bottom,
 } from './Footer.styled';
 
-import { Logo } from '@/components/Logo/Logo';
+import { Logo } from '@/components/ui/Logo/Logo';
 
 const Footer = () => {
   return (

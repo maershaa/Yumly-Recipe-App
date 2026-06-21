@@ -1,10 +1,9 @@
-// import { Header, Footer, Loader } from '@/shared';
-import { HeaderComponent } from '@/components/Header/Header';
-import { Footer } from '@/components/Footer/Footer';
+import { HeaderComponent } from '@/components/layout/Header/Header';
+import { Footer } from '@/components/layout/Footer/Footer';
 import { Outlet } from 'react-router-dom';
 import { Container } from '@/components';
 import { LayoutWrapper } from './Layout.styled';
-import { Loader } from '@/components/Loader/Loader';
+import { Loader } from '@/components/ui/Loader/Loader';
 import { Suspense } from 'react';
 import { Toaster } from 'sonner';
 

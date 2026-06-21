@@ -1,4 +1,4 @@
-import { supabase } from '../../../../supabaseClient';
+import { supabase } from '../../../supabase/supabaseClient';
 
 export const deleteRecipe = async (recipeIdToDelete) => {
   console.log('🚀 ~ deleteRecipe ~ recipeIdToDelete:', recipeIdToDelete);

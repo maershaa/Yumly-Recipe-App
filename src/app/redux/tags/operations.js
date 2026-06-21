@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { supabase } from '../../../../supabaseClient';
+import { supabase } from '../../../supabase/supabaseClient';
 
 const fetchTags = createAsyncThunk('tags/getTags', async (_, thunkApi) => {
   try {

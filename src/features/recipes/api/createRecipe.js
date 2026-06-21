@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { supabase } from '../../../../supabaseClient';
+import { supabase } from '../../../supabase/supabaseClient';
 
 export const useCreateRecipe = () => {
   const createRecipe = useCallback(async (newRecipe, currentUserId) => {

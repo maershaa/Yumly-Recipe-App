@@ -1,4 +1,4 @@
-import { Layout } from '@/components/Layout/Layout';
+import { Layout } from '@/components/layout/Layout/Layout';
 import { Route, Routes } from 'react-router-dom';
 import { lazy, useEffect } from 'react';
 import { PrivateRoute, PublicRoute } from '@/components';

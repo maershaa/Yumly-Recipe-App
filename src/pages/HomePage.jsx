@@ -5,7 +5,7 @@ import {
   Benefits,
   Statistics,
   CallToAction,
-} from '@/features/recipes/components/home-components';
+} from '@/features/recipes/components/home';
 
 const HomePage = () => {
   return (

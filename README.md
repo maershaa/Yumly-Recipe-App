@@ -1,167 +1,277 @@
-# 🚀 Yumly — старт и настройка проекта
+# 🍽️ Yumly – Recipe Management Application
 
-## 📦 Создание проекта (Vite + React)
+<p align="center">
 
-```bash
-npm create vite@latest . -- --template react
-```
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![Redux Toolkit](https://img.shields.io/badge/Redux%20Toolkit-2.x-764ABC?logo=redux&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-Backend-3ECF8E?logo=supabase&logoColor=white)
+![Styled Components](https://img.shields.io/badge/Styled--Components-6-DB7093?logo=styled-components&logoColor=white)
+![React Router](https://img.shields.io/badge/React%20Router-v7-CA4245?logo=react-router&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-````
+</p>
+
+## 📖 About
+
+**Yumly** is a modern Single Page Application for creating, managing, and discovering cooking recipes.
+
+The project was built as a portfolio application to demonstrate practical experience with modern frontend development, including state management, routing, authentication, CRUD operations, image uploads, and scalable application architecture.
+
+The backend is powered by **Supabase**, providing PostgreSQL, Authentication, Storage, and Row Level Security (RLS).
 
 ---
 
-## 📥 Установка зависимостей
+## 🚀 Live Demo
+
+🔗 **Application**
+
+https://maershaa.github.io/Yumly-Recipe-App/
+
+---
+
+## ✨ Features
+
+### Public
+
+- Browse all recipes
+- Search recipes
+- View recipe details
+- Responsive interface
+- Dark / Light theme
+
+### Authentication
+
+- User registration
+- Login / Logout
+- Protected routes
+- Persistent authentication
+
+### Authorized Users
+
+- Create new recipes
+- Edit own recipes
+- Delete own recipes
+- Upload recipe images
+- Manage personal recipe collection
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+
+- React 19
+- Redux Toolkit
+- React Router
+- Styled Components
+- Vite
+- React Icons
+- Sonner
+
+### Backend
+
+- Supabase
+- PostgreSQL
+- Supabase Auth
+- Supabase Storage
+- Row Level Security (RLS)
+
+---
+
+## 🏗 Architecture
+
+The project follows a **feature-based architecture**, where business logic is grouped by domain instead of file type.
+
+```
+src
+│
+├── app
+│   ├── providers
+│   └── redux
+│
+├── assets
+├── components
+│   ├── navigation
+│   └── ui
+│
+├── context
+│
+├── features
+│   ├── auth
+│   └── recipes
+│
+├── pages
+├── supabase
+├── utils
+```
+
+This structure improves:
+
+- scalability
+- maintainability
+- code reuse
+- separation of concerns
+
+---
+
+## 🗄 Database
+
+The application uses **Supabase PostgreSQL**.
+
+### Main entities
+
+- Recipes
+- Authentication (Supabase Auth)
+- Images (Supabase Storage)
+
+Each recipe contains:
+
+- title
+- description
+- image
+- cuisine
+- difficulty
+- cooking time
+- servings
+- ingredients
+- instructions
+- tags
+- author
+- likes
+
+---
+
+## 🔐 Authentication
+
+Authentication is implemented using **Supabase Auth**.
+
+Protected functionality includes:
+
+- creating recipes
+- editing recipes
+- deleting recipes
+- personal recipe management
+
+Row Level Security policies ensure users can modify only their own recipes.
+
+---
+
+## 🎨 UI Features
+
+- Dark / Light theme
+- Responsive layout
+- Styled Components
+- Loading indicators
+- Error handling
+- Toast notifications
+- Reusable UI components
+
+---
+
+## 📦 Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Maershaa/Yumly-Recipe-App.git
+```
+
+Go to the project folder:
+
+```bash
+cd Yumly-Recipe-App
+```
+
+Install dependencies:
 
 ```bash
 npm install
 ```
 
----
+Create an environment file:
 
-## 🧠 Инициализация Git
+```env
+VITE_SUPABASE_URL=your_project_url
+VITE_SUPABASE_ANON_KEY=your_anon_key
+```
+
+Start the development server:
 
 ```bash
-git init
-git add .
-git commit -m "Initial commit: create project with Vite"
-git branch -M main
+npm run dev
 ```
 
 ---
 
-## 🌐 Подключение к GitHub
-
-1. Создать репозиторий на GitHub
-
-2. Связать локальный проект с удалённым:
+## 📜 Available Scripts
 
 ```bash
-git remote add origin https://github.com/maershaa/Yumly-Recipe-App.git
-git push -u origin main
+npm run dev
 ```
 
----
-
-## ⚙️ Настройка Vite (GitHub Pages)
-
-`vite.config.js`
-
-```js
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-export default defineConfig({
-  base: '/Yumly-Recipe-App/',
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-});
-```
-
----
-
-## 🧭 jsconfig.json / tsconfig.json
-
-Для автоподсказок, перехода по импортам и поддержки алиасов в VS Code необходимо вручную создать файл `jsconfig.json` (или `tsconfig.json`, если используется TypeScript).
-
-Без этого файла Vite будет работать нормально, но VS Code не будет понимать алиас `@` и не сможет автодополнять импорты.
-
----
-
-### 📄 Содержимое файла
-
-```json
-{
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
-  },
-  "include": ["src"]
-}
-```
-
----
-
-## 🚀 Деплой на GitHub Pages
-
-### 📦 Установка gh-pages
-
-```bash
-npm install --save-dev gh-pages
-```
-
----
-
-### ⚙️ Добавить script в `package.json`
-
-```json
-"scripts": {
-  "deploy": "gh-pages -d dist"
-}
-```
-
----
-
-## 📤 Деплой
+Starts the development server.
 
 ```bash
 npm run build
+```
+
+Builds the production version.
+
+```bash
+npm run preview
+```
+
+Runs the production build locally.
+
+```bash
+npm run lint
+```
+
+Runs ESLint.
+
+```bash
 npm run deploy
 ```
 
----
-
-# 🔁 Работа с изменениями
-
-## 📌 Обычный пуш
-
-```bash
-git status
-git add .
-git commit -m "feat: описание изменений"
-git push
-```
+Deploys the application to GitHub Pages.
 
 ---
 
-## 🌿 Создание новой ветки и пуш
+## 📁 Project Highlights
 
-```bash
-git checkout -b feature/branch-name
-git add .
-git commit -m "feat: описание фичи"
-git push -u origin feature/branch-name
-```
-
----
-
-## 🔀 Слияние ветки с main
-
-```bash
-git checkout main
-git merge feature/branch-name
-git push
-```
+- Feature-based architecture
+- Redux Toolkit state management
+- Reusable UI components
+- Protected routing
+- CRUD functionality
+- Image upload
+- Theme switching
+- Form validation
+- Production-ready project structure
 
 ---
 
-# 🧠 Примечание
+## 🔮 Future Improvements
 
-- `main` — основная стабильная ветка
-- `feature/*` — ветки для новых фич
-- Каждый логичный блок работы оформляй отдельным коммитом
-
-```
+- Favorites system
+- Advanced recipe filters
+- Pagination
+- User profiles
+- Comments
+- Ratings
+- Recipe collections
+- Internationalization (i18n)
+- Unit & integration tests
+- Performance optimization
 
 ---
-```
-````
+
+## 👩‍💻 Author
+
+**Valeria**
+
+Frontend Developer
+
+GitHub:
+https://github.com/Maershaa

@@ -1,4 +1,4 @@
-import { supabase } from '../../../../supabaseClient';
+import { supabase } from '../../../supabase/supabaseClient';
 
 export const useUpdateRecipe = () => {
   const updateRecipe = async (updatedRecipe, currentUserId, recipeId) => {

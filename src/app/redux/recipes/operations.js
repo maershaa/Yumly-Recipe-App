@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { supabase } from '../../../../supabaseClient';
+import { supabase } from '../../../supabase/supabaseClient';
 
 const fetchRecipes = createAsyncThunk(
   'recipes/getRecipes',

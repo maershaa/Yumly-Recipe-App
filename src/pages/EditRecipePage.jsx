@@ -1,19 +1,22 @@
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'sonner';
+
+import { selectUser } from '@/app/redux/auth/selectors';
+import { useUpdateRecipe, getRecipeById } from '@/features/recipes/api';
 import { PageTitle, BackButton } from '@/components';
 import { RecipeForm } from '@/features/recipes/components';
 import {
   validateRecipeForm,
   prepareRecipeForUpdate,
 } from '@/features/recipes/helpers';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import { selectUser } from '@/app/redux/auth/selectors';
-import { useUpdateRecipe, getRecipeById } from '@/features/recipes/api';
 
 const EditRecipePage = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const [recipeForm, setRecipeForm] = useState({
     recipe_name: '',
@@ -43,6 +46,7 @@ const EditRecipePage = () => {
     const loadRecipeDetails = async (id) => {
       try {
         const data = await getRecipeById(id);
+
         setRecipeForm({
           recipe_name: data.recipe_name,
           description: data.description,
@@ -87,6 +91,22 @@ const EditRecipePage = () => {
     }
   }, [recipeId]);
 
+  useEffect(() => {
+    if (recipeForm.recipe_name !== '') {
+      console.log(
+        '🚀 ~ EditRecipePage ~ recipeForm.recipe_name:',
+        recipeForm.recipe_name,
+      );
+
+      console.log(recipeForm);
+
+      const { isFormValid, errors: validationErrors } =
+        validateRecipeForm(recipeForm); //Возвращает объект с значением isFormValid=true/false и обьхект ошибок  в полях формы или их отсутствием
+      console.log('isFormValid', isFormValid);
+      console.log('🚀 ~ EditRecipePage ~ validationErrors:', validationErrors);
+    }
+  }, [isFormValid, recipeForm, validationErrors]);
+
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     if (!isFormValid) return;
@@ -100,8 +120,11 @@ const EditRecipePage = () => {
 
       await updateRecipe(recipeToSubmit, currentUserId, recipeId);
 
+      toast.success('Your recipe has been successfully editing.');
+
       navigate(`/recipes/${recipeId}`); //!но при переходе на страницу не отображается уже обновленный рецепт. для этого нужно перезагружать страницу.
     } catch (error) {
+      toast.error('Failed to edit the recipe. Please try again.');
       setError(error.message);
     } finally {
       setIsSubmitting(false);
@@ -118,6 +141,7 @@ const EditRecipePage = () => {
         handleSubmit={handleSubmit}
         currentUserId={currentUserId}
         isSubmitting={isSubmitting}
+        isFormValid={isFormValid}
         validationErrors={validationErrors}
         submitButtonText="Save Changes"
         error={error}

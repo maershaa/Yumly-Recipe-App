@@ -4,16 +4,18 @@ export {
   Container,
   GeneralBtn,
   CreateButton,
-  BackButton,
   Tooltip,
+  ErrorMessage,
+  Loader,
+  Logo,
+  RecipeCardSkeleton,
 } from './ui';
 
-export { PrivateRoute } from './PrivateRoute/PrivateRoute.jsx';
-export { PublicRoute } from './PublicRoute/PublicRoute';
+export {
+  PrivateRoute,
+  PublicRoute,
+  BackButton,
+  RedirectComponent,
+} from './navigation';
 
-export { ErrorMessage } from './ErrorMessage/ErrorMessage';
-export { RedirectComponent } from './RedirectComponent/RedirectComponent';
-export { Logo } from './Logo/Logo';
-
-export { Loader } from './Loader/Loader';
-export { RecipeCardSkeleton } from './skeleton';
+export { Layout, HeaderComponent, Footer } from './layout';
