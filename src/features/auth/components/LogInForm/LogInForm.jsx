@@ -5,6 +5,8 @@ import { toast } from 'sonner';
 
 import { Form, RedirectComponent, FieldErrorMessage } from '@/components';
 import { loginUser } from '@/app/redux/auth/operations';
+import { refreshUser } from '@/app/redux/auth/operations';
+
 import { validateLoginForm } from '@/features/auth/helpers';
 
 const LogInForm = () => {
@@ -32,8 +34,6 @@ const LogInForm = () => {
 
   const showEmailError = emailError && isEmailTouched;
   const showPasswordError = passwordError && isPasswordTouched;
-
-  const canSubmit = isFormValid && isEmailTouched && isPasswordTouched;
 
   const handleFormChange = (evt) => {
     const { name, value } = evt.target;
@@ -63,6 +63,7 @@ const LogInForm = () => {
       setLoginForm(initialForm);
 
       navigate('/my-recipes');
+      dispatch(refreshUser());
     } catch (error) {
       setLoginForm(initialForm);
       if (error === 'Email not confirmed') {
@@ -106,7 +107,7 @@ const LogInForm = () => {
       </label>
       {showPasswordError && <FieldErrorMessage errorMessage={passwordError} />}
 
-      <button type="submit" disabled={!canSubmit}>
+      <button type="submit" disabled={!isFormValid}>
         Sign in
       </button>
 
