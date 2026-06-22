@@ -1,7 +1,6 @@
 import { FaPlus, FaTrash } from 'react-icons/fa';
-import { GeneralBtn } from '@/components';
+import { GeneralBtn, FieldErrorMessage } from '@/components';
 import { StepRow } from './CookingSteps.styled';
-import { FieldErrorMessage } from '@/features/recipes/components/create-recipe'; //!может вынести его в переиспользуемы комопненты ui или папку просто components
 
 const CookingSteps = ({
   instructions,

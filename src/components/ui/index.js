@@ -9,3 +9,5 @@ export { ErrorMessage } from './ErrorMessage/ErrorMessage';
 export { Logo } from './Logo/Logo';
 export { Loader } from './Loader/Loader';
 export { RecipeCardSkeleton } from './Skeletons';
+
+export { FieldErrorMessage } from './FieldErrorMessage/FieldErrorMessage';

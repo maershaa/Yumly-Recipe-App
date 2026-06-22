@@ -4,7 +4,6 @@ import { supabase } from '../../../supabase/supabaseClient';
 const registerNewUser = createAsyncThunk(
   'auth/postNewUser',
   async (newUser, thunkApi) => {
-    console.log('запускаем registerNewUser');
     const { userName, email, password } = newUser;
     try {
       const { data, error } = await supabase.auth.signUp({
@@ -20,7 +19,6 @@ const registerNewUser = createAsyncThunk(
       });
 
       if (error) {
-        console.log('🚀 ~ error:', error.message);
         return thunkApi.rejectWithValue(error.message);
       }
 

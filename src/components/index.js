@@ -9,6 +9,7 @@ export {
   Loader,
   Logo,
   RecipeCardSkeleton,
+  FieldErrorMessage,
 } from './ui';
 
 export {

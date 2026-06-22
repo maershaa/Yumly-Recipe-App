@@ -1,5 +1,5 @@
 import { DetailsMeta } from './RecipeInfo.styled';
-import { FieldErrorMessage } from '@/features/recipes/components/create-recipe'; //!может вынести его в переиспользуемы комопненты ui или папку просто components
+import { FieldErrorMessage } from '@/components';
 import { cuisines } from '@/features/recipes/constants';
 const RecipeInfo = ({
   values,

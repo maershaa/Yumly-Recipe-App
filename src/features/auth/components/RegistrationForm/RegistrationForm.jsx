@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Form, RedirectComponent } from '@/components';
-import { registerNewUser } from '@/app/redux/auth/operations';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { FieldErrorMessage } from '@/features/recipes/components/create-recipe'; //!может вынести его в переиспользуемы комопненты ui или папку просто components
-import { validateRegistrationForm } from '@/features/auth/helpers';
 import { toast } from 'sonner';
+
+import { Form, RedirectComponent, FieldErrorMessage } from '@/components';
+import { registerNewUser } from '@/app/redux/auth/operations';
+import { validateRegistrationForm } from '@/features/auth/helpers';
 
 const RegistrationForm = () => {
   const initialForm = {
@@ -14,6 +14,7 @@ const RegistrationForm = () => {
     password: '',
     confirmPassword: '',
   };
+
   const INITIAL_TOUCHED_STATE = {
     userName: false,
     email: false,
@@ -24,17 +25,16 @@ const RegistrationForm = () => {
   const [registrationForm, setRegistrationForm] = useState(initialForm);
   const [isTouched, setIsTouched] = useState(INITIAL_TOUCHED_STATE);
 
+  const { isFormValid, errors: formErrors } =
+    validateRegistrationForm(registrationForm);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleFormChange = (evt) => {
     const { name, value } = evt.target;
-
     setRegistrationForm((prevValue) => ({ ...prevValue, [name]: value }));
   };
-
-  const { isFormValid, errors: formErrors } =
-    validateRegistrationForm(registrationForm);
 
   const {
     userName: userNameError,
@@ -56,6 +56,13 @@ const RegistrationForm = () => {
   const showConfirmPasswordError =
     confirmPasswordError && isConfirmPasswordTouched;
 
+  const canSubmit =
+    isFormValid &&
+    isConfirmPasswordTouched &&
+    isPasswordTouched &&
+    isUserNameTouched &&
+    isEmailTouched;
+
   const handleSubmit = async (evt) => {
     evt.preventDefault();
 
@@ -72,11 +79,9 @@ const RegistrationForm = () => {
       // dispatch()→ возвращает action
       // dispatch().unwrap() → возвращает данные или бросает ошибку
       setRegistrationForm(initialForm);
-
-      navigate('/auth/check-email');
+      navigate('/auth/verify-email');
     } catch (error) {
-      toast.error('Email already exists.');
-      setRegistrationForm(initialForm);
+      toast.error(error);
       console.error(error);
     }
   };
@@ -147,7 +152,7 @@ const RegistrationForm = () => {
       {showConfirmPasswordError && (
         <FieldErrorMessage errorMessage={confirmPasswordError} />
       )}
-      <button type="submit" disabled={!isFormValid}>
+      <button type="submit" disabled={!canSubmit}>
         Sign in
       </button>
 

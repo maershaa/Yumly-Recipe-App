@@ -1,50 +1,76 @@
 import { useState } from 'react';
-import { Form, RedirectComponent } from '@/components';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '@/app/redux/auth/operations';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+
+import { Form, RedirectComponent, FieldErrorMessage } from '@/components';
+import { loginUser } from '@/app/redux/auth/operations';
+import { validateLoginForm } from '@/features/auth/helpers';
 
 const LogInForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const initialForm = {
+    email: '',
+    password: '',
+  };
+
+  const INITIAL_TOUCHED_STATE = {
+    email: false,
+    password: false,
+  };
+
+  const [loginForm, setLoginForm] = useState(initialForm);
+  const [isTouched, setIsTouched] = useState(INITIAL_TOUCHED_STATE);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { isFormValid, errors: formErrors } = validateLoginForm(loginForm);
+
+  const { email: emailError, password: passwordError } = formErrors;
+
+  const { email: isEmailTouched, password: isPasswordTouched } = isTouched;
+
+  const showEmailError = emailError && isEmailTouched;
+  const showPasswordError = passwordError && isPasswordTouched;
+
+  const canSubmit = isFormValid && isEmailTouched && isPasswordTouched;
+
   const handleFormChange = (evt) => {
     const { name, value } = evt.target;
-    if (name === 'email') {
-      setEmail(value);
-    } else if (name === 'password') {
-      setPassword(value);
-    } else return;
+
+    setLoginForm((prevValue) => ({ ...prevValue, [name]: value }));
+  };
+
+  const handleInputBlur = (evt) => {
+    const { name } = evt.target;
+    setIsTouched((prev) => ({ ...prev, [name]: true }));
   };
 
   const handleSignIn = async (evt) => {
     evt.preventDefault();
 
-    if (!email || !password) return;
+    if (!isFormValid) return;
 
-    const authInfo = {
-      email,
-      password,
+    const prepareFormToSubmit = {
+      email: loginForm.email.trim(),
+      password: loginForm.password,
     };
 
     try {
-      await dispatch(loginUser(authInfo)).unwrap();
+      await dispatch(loginUser(prepareFormToSubmit)).unwrap();
       // dispatch()→ возвращает action
       // dispatch().unwrap() → возвращает данные или бросает ошибку
-      setEmail('');
-      setPassword('');
+      setLoginForm(initialForm);
+
       navigate('/my-recipes');
     } catch (error) {
-      setEmail('');
-      setPassword('');
-
+      setLoginForm(initialForm);
       if (error === 'Email not confirmed') {
-        alert('Please confirm your email');
+        toast.error(error);
       } else if (error === 'Invalid login credentials') {
-        alert('Invalid username or password');
+        toast.error('Invalid email or password');
+      } else {
+        toast.error(error);
       }
     }
   };
@@ -57,22 +83,32 @@ const LogInForm = () => {
           name="email"
           placeholder="example@gmail.com"
           onChange={handleFormChange}
-          value={email}
+          onBlur={handleInputBlur}
+          value={loginForm.email}
           required
+          className={showEmailError ? 'invalid' : ''}
         />
       </label>
+      {showEmailError && <FieldErrorMessage errorMessage={emailError} />}
+
       <label>
         Password
         <input
           type="password"
           name="password"
           onChange={handleFormChange}
-          value={password}
+          onBlur={handleInputBlur}
+          value={loginForm.password}
           required
-          minLength={4}
+          minLength={6}
+          className={showPasswordError ? 'invalid' : ''}
         />
       </label>
-      <button type="submit">Sign in</button>
+      {showPasswordError && <FieldErrorMessage errorMessage={passwordError} />}
+
+      <button type="submit" disabled={!canSubmit}>
+        Sign in
+      </button>
 
       <RedirectComponent
         spanText={'New to Yumly?'}

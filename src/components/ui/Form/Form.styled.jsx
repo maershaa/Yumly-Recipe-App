@@ -70,6 +70,15 @@ const FormWrapper = styled.form`
       border: ${({ theme }) => theme.colors.hoverBorderSecondary};
       box-shadow: ${({ theme }) => theme.colors.hoverShadowSecondary};
     }
+
+    &:disabled {
+      background-color: ${({ theme }) => theme.colors.accent};
+      color: ${({ theme }) => theme.colors.background};
+      cursor: not-allowed;
+      opacity: 0.6;
+      box-shadow: none;
+      pointer-events: none;
+    }
   }
 `;
 

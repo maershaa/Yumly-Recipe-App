@@ -20,7 +20,7 @@ const initialState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  redusers: {},
+  reducers: {},
   extraReducers: (builder) => {
     // registerNewUser;
     builder
@@ -31,6 +31,8 @@ const authSlice = createSlice({
       .addCase(registerNewUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        console.log('registerNewUser.rejected');
+        console.log('🚀 ~ action:', action);
       })
       .addCase(registerNewUser.fulfilled, (state, action) => {
         state.loading = false;
@@ -44,8 +46,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
-        console.log('🚀 ~ action:', action);
-
+        state.loading = false;
         state.error = action.payload;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
@@ -68,7 +69,7 @@ const authSlice = createSlice({
       .addCase(logOutUser.fulfilled, (state, action) => {
         console.log('action в loginUser fulfilled', action); //его нету
         state.loading = false;
-        state.user = { name: null, email: null };
+        state.user = { id: '', name: '', email: '' };
         state.token = null;
         state.isLoggedIn = false;
       })

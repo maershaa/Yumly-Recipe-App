@@ -1,8 +1,7 @@
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import { IngredientRow } from './Ingredients.styled';
-import { GeneralBtn } from '@/components';
+import { GeneralBtn, FieldErrorMessage } from '@/components';
 import { units } from '@/features/recipes/constants';
-import { FieldErrorMessage } from '@/features/recipes/components/create-recipe'; //!может вынести его в переиспользуемы комопненты ui или папку просто components
 
 const Ingredients = ({
   ingredients,
