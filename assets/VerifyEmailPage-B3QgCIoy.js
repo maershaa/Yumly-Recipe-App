@@ -1,0 +1,1 @@
+import{B as e}from"./index-BODT-GLF.js";import{t}from"./components-rKoEeapY.js";var n=e(),r=()=>(0,n.jsx)(t,{});export{r as default};
