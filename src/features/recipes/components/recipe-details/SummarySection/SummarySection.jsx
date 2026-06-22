@@ -12,7 +12,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { deleteRecipe } from '@/features/recipes/api';
 import { selectUser } from '@/app/redux/auth/selectors';
 import { useSelector } from 'react-redux';
-import { Toaster, toast } from 'sonner';
+import { toast } from 'sonner';
 
 const SummarySection = ({
   id,
@@ -88,7 +88,6 @@ const SummarySection = ({
           </li>
         ))}
       </ul>
-      <Toaster />
     </SummaryWrapper>
   );
 };

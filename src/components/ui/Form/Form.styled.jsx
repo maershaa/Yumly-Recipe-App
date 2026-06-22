@@ -13,6 +13,17 @@ const FormWrapper = styled.form`
   border-radius: ${({ theme }) => theme.radii.lg};
   box-shadow: ${({ theme }) => theme.shadows.main};
 
+  .invalid {
+    //для невалидных полей формы
+    border: 1px solid ${({ theme }) => theme.colors.danger};
+    box-shadow: ${({ theme }) => theme.colors.hoverShadowDanger};
+
+    &:hover {
+      border: ${({ theme }) => theme.colors.dangerHover};
+      box-shadow: ${({ theme }) => theme.colors.hoverShadowDanger};
+    }
+  }
+
   label {
     display: flex;
     flex-direction: column;

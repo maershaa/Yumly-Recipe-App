@@ -20,12 +20,12 @@ const registerNewUser = createAsyncThunk(
       });
 
       if (error) {
+        console.log('🚀 ~ error:', error.message);
         return thunkApi.rejectWithValue(error.message);
       }
 
       return data.user;
     } catch (error) {
-      console.log('не удалось');
       return thunkApi.rejectWithValue(error.message);
     }
   },
