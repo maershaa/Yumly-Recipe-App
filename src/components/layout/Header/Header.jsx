@@ -1,29 +1,10 @@
-import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
-import { FaMoon, FaSun } from 'react-icons/fa';
-import { ThemeContext } from '@/context';
-import { Logo } from '@/components';
-import {
-  Header,
-  NavMenu,
-  UserMenu,
-  UserAvatarWrapper,
-  ThemeButton,
-  StyledTooltip,
-} from './Header.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOutUser } from '@/app/redux/auth/operations';
 import { selectIsLoggedIn, selectUser } from '@/app/redux/auth/selectors';
-
+import { DesktopNavigation, MobileNavigation } from '@/components';
 const HeaderComponent = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const { name } = useSelector(selectUser);
 
-  const context = useContext(ThemeContext);
-  if (!context)
-    throw new Error('HeaderComponent must be used within ThemeProvider');
-
-  const { theme, toggleTheme } = context;
   const dispatch = useDispatch();
 
   const navLinks = [
@@ -37,56 +18,18 @@ const HeaderComponent = () => {
   };
 
   return (
-    <Header>
-      <Logo />
-
-      <NavMenu>
-        <ul>
-          {navLinks.map(({ to, label }) => (
-            <li key={to}>
-              <NavLink
-                to={to}
-                className={({ isActive }) => (isActive ? 'active' : '')}
-              >
-                {label}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </NavMenu>
-
-      {!isLoggedIn ? (
-        <UserMenu>
-          <NavLink
-            to="auth/login"
-            className={({ isActive }) => (isActive ? 'accent' : '')}
-          >
-            Login
-          </NavLink>
-          <NavLink
-            to="auth/register"
-            className={({ isActive }) => (isActive ? 'accent' : '')}
-          >
-            Register
-          </NavLink>
-        </UserMenu>
-      ) : (
-        <UserMenu>
-          <button to="/" onClick={onLogOutClick}>
-            Logout
-          </button>
-
-          <UserAvatarWrapper>
-            <span className="userName">{name.slice(0, 1)}</span>
-            <StyledTooltip text={name} />
-          </UserAvatarWrapper>
-        </UserMenu>
-      )}
-
-      <ThemeButton onClick={toggleTheme} aria-label="Toggle theme">
-        {theme === 'dark' ? <FaSun /> : <FaMoon />}
-      </ThemeButton>
-    </Header>
+    <>
+      <DesktopNavigation
+        isLoggedIn={isLoggedIn}
+        onLogOutClick={onLogOutClick}
+        navLinks={navLinks}
+      />
+      <MobileNavigation
+        isLoggedIn={isLoggedIn}
+        onLogOutClick={onLogOutClick}
+        navLinks={navLinks}
+      />
+    </>
   );
 };
 

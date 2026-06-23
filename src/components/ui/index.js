@@ -11,3 +11,4 @@ export { Loader } from './Loader/Loader';
 export { RecipeCardSkeleton } from './Skeletons';
 
 export { FieldErrorMessage } from './FieldErrorMessage/FieldErrorMessage';
+export { ThemeButton } from './ThemeButton/ThemeButton';

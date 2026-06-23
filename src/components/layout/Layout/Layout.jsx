@@ -1,11 +1,9 @@
-import { HeaderComponent } from '@/components/layout/Header/Header';
-import { Footer } from '@/components/layout/Footer/Footer';
 import { Outlet } from 'react-router-dom';
-import { Container } from '@/components';
-import { LayoutWrapper } from './Layout.styled';
-import { Loader } from '@/components/ui/Loader/Loader';
 import { Suspense } from 'react';
 import { Toaster } from 'sonner';
+
+import { HeaderComponent, Footer, Container, Loader } from '@/components';
+import { LayoutWrapper } from './Layout.styled';
 
 const Layout = () => {
   return (
