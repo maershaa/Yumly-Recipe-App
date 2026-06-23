@@ -1,0 +1,1 @@
+import{B as e}from"./index-BGmXoAbj.js";import{t}from"./components-DEMxdc4Q.js";var n=e(),r=()=>(0,n.jsx)(t,{});export{r as default};
