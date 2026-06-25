@@ -1,10 +1,4 @@
 import styled from 'styled-components';
-import { Tooltip } from '@/components';
-
-export const StyledTooltip = styled(Tooltip)`
-  /* Здесь можно добавить специфичные отступы, если нужно */
-  /* Не трогать. нужно чтобы при ховере всплывало имя пользователя */
-`;
 
 const Header = styled.header`
   display: none;
@@ -22,82 +16,4 @@ const Header = styled.header`
   }
 `;
 
-const NavMenu = styled.nav`
-  ul {
-    display: flex;
-    gap: 15px;
-  }
-
-  a {
-    padding: 12px 16px;
-    border-radius: ${({ theme }) => theme.radii.lg};
-
-    font-size: 1.4rem;
-    font-weight: 500;
-    transition: ${({ theme }) => theme.transitions.main};
-
-    &:hover {
-      color: ${({ theme }) => theme.colors.accent};
-    }
-
-    &.active {
-      background-color: ${({ theme }) => theme.colors.cardSecondary};
-      color: ${({ theme }) => theme.colors.accent};
-    }
-  }
-`;
-
-const UserMenu = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 15px;
-
-  a,
-  button {
-    padding: 8px 16px;
-    border-radius: ${({ theme }) => theme.radii.md};
-
-    font-size: 1.4rem;
-    font-weight: 500;
-    transition: ${({ theme }) => theme.transitions.main};
-
-    &:hover {
-      color: ${({ theme }) => theme.colors.accent};
-    }
-  }
-
-  .accent {
-    background-color: ${({ theme }) => theme.colors.accent};
-  }
-`;
-
-const UserAvatarWrapper = styled.div`
-  position: relative;
-
-  width: 40px;
-  height: 40px;
-  border-radius: ${({ theme }) => theme.radii.rounded};
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: ${({ theme }) => theme.colors.cardSecondary};
-  color: #fff;
-
-  .userName {
-    font-size: 1.2rem;
-    font-weight: 600;
-    font-family: ${({ theme }) => theme.fonts.main};
-    text-transform: uppercase;
-  }
-
-  /*  наводим на UserAvatarWrapper -> меняем состояние StyledTooltip */
-  &:hover ${StyledTooltip} {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(-50%) translateX(0);
-  }
-`;
-
-export { Header, NavMenu, UserMenu, UserAvatarWrapper };
+export { Header };

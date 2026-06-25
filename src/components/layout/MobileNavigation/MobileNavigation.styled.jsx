@@ -1,10 +1,4 @@
 import styled from 'styled-components';
-import { Tooltip } from '@/components';
-
-export const StyledTooltip = styled(Tooltip)`
-  /* Здесь можно добавить специфичные отступы, если нужно */
-  /* Не трогать. нужно чтобы при ховере всплывало имя пользователя */
-`;
 
 const ResponsiveNavigationWrapper = styled.div`
   position: relative;
@@ -26,87 +20,77 @@ const ResponsiveNavigationWrapper = styled.div`
 `;
 
 const BurgerMenu = styled.div`
-  top: 0;
-  position: sticky; //почему не прилипает?
-
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 
-  svg {
+  .burgerBtn svg {
     width: 30px;
     height: 30px;
   }
 `;
 
 const MobileMenu = styled.div`
-  display: none;
+  padding: 20px;
 
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 30px;
+  gap: 10px;
 
   svg {
     width: 30px;
     height: 30px;
   }
 
-  .closeBtn svg {
-    top: 20px;
-    right: 20px;
+  .closeBtn {
+    top: 40px;
+    right: 40px;
     position: absolute;
+
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: ${({ theme }) => theme.radii.rounded};
+
+    transition: ${({ theme }) => theme.transitions.main};
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.cardSecondary};
+    }
+
+    svg {
+      width: 30px;
+      height: 30px;
+    }
   }
 
-  ul {
+  .navigation,
+  .themeSection,
+  .userSection {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 30px;
+    gap: 24px;
+    padding: 20px 0;
   }
 
-  a {
-    padding: 12px 16px;
-    border-radius: ${({ theme }) => theme.radii.lg};
+  .navigation {
+    border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+  }
 
-    font-size: 1.4rem;
-    font-weight: 500;
-    transition: ${({ theme }) => theme.transitions.main};
+  .themeSection {
+    border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+  }
 
-    &:hover {
-      color: ${({ theme }) => theme.colors.accent};
-    }
-
-    &.active {
-      background-color: ${({ theme }) => theme.colors.cardSecondary};
-      color: ${({ theme }) => theme.colors.accent};
-    }
+  .userSection {
+    margin-top: auto;
   }
 `;
 
-const UserMenu = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 15px;
-
-  a,
-  button {
-    padding: 8px 16px;
-    border-radius: ${({ theme }) => theme.radii.md};
-
-    font-size: 1.4rem;
-    font-weight: 500;
-    transition: ${({ theme }) => theme.transitions.main};
-
-    &:hover {
-      color: ${({ theme }) => theme.colors.accent};
-    }
-  }
-
-  .accent {
-    background-color: ${({ theme }) => theme.colors.accent};
-  }
-`;
-
-export { UserMenu, ResponsiveNavigationWrapper, BurgerMenu, MobileMenu };
+export { ResponsiveNavigationWrapper, BurgerMenu, MobileMenu };

@@ -26,4 +26,7 @@ export {
   Footer,
   DesktopNavigation,
   MobileNavigation,
+  AuthLinks,
+  NavList,
+  UserProfile,
 } from './layout';
