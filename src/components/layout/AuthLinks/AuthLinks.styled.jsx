@@ -12,12 +12,11 @@ export const AuthLinksList = styled.ul`
     font-weight: 500;
     transition: ${({ theme }) => theme.transitions.main};
 
+    @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+      font-size: 1.4rem;
+    }
     &:hover {
       color: ${({ theme }) => theme.colors.accent};
     }
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    font-size: 1.4rem;
   }
 `;

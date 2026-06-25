@@ -22,7 +22,18 @@ const Layout = () => {
       </main>
 
       <Footer />
-      <Toaster richColors />
+      <Toaster
+        richColors
+        position="top-right"
+        closeButton={true}
+        toastOptions={{
+          style: {
+            fontSize: '1.4rem',
+            fontWeight: 600,
+            lineHeight: 1.4,
+          },
+        }}
+      />
     </LayoutWrapper>
   );
 };

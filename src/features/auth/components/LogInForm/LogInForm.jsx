@@ -64,6 +64,7 @@ const LogInForm = () => {
 
       navigate('/my-recipes');
       dispatch(refreshUser());
+      toast.success('You are successfully logged in');
     } catch (error) {
       setLoginForm(initialForm);
       if (error === 'Email not confirmed') {
