@@ -28,6 +28,7 @@ const BurgerMenu = styled.div`
   .burgerBtn svg {
     width: 30px;
     height: 30px;
+    color: ${({ theme }) => theme.colors.textPrimary};
   }
 `;
 
@@ -42,6 +43,7 @@ const MobileMenu = styled.div`
   svg {
     width: 30px;
     height: 30px;
+    color: ${({ theme }) => theme.colors.textPrimary};
   }
 
   .closeBtn {

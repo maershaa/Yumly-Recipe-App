@@ -17,6 +17,8 @@ export const UserMenu = styled.div`
     font-weight: 500;
     transition: ${({ theme }) => theme.transitions.main};
 
+    color: ${({ theme }) => theme.colors.textPrimary};
+
     &:hover {
       color: ${({ theme }) => theme.colors.accent};
     }
