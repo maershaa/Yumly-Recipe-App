@@ -1,0 +1,1 @@
+import{B as e}from"./index-CQPueZUA.js";import{t}from"./components-Dd-1KCnI.js";var n=e(),r=()=>(0,n.jsx)(t,{});export{r as default};
