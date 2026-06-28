@@ -26,6 +26,7 @@ const Layout = () => {
         richColors
         position="top-right"
         closeButton={true}
+        onAutoClose
         toastOptions={{
           style: {
             fontSize: '1.4rem',

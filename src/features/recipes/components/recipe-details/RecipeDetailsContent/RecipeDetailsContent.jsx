@@ -6,7 +6,7 @@ import { RecipeHeader, MainContent } from '@/features/recipes/components';
 // import { AiOutlineClockCircle } from 'react-icons/ai';
 // import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
 
-const RecipeDetailsContent = ({ recipe }) => {
+const RecipeDetailsContent = ({ recipe, setRecipe }) => {
   const {
     // recipe_name,
     // description,
@@ -24,7 +24,7 @@ const RecipeDetailsContent = ({ recipe }) => {
 
   return (
     <RecipeDetailsWrapper>
-      <RecipeHeader recipe={recipe} />
+      <RecipeHeader recipe={recipe} setRecipe={setRecipe} />
 
       <MainContent
         tips={tips}

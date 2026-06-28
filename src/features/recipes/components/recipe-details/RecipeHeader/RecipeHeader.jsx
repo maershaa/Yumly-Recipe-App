@@ -2,13 +2,20 @@ import { Header, ImgWrapper } from './RecipeHeader.styled';
 import { noImgPlaceholder } from '@/assets/images';
 import { AiOutlineClockCircle } from 'react-icons/ai';
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { selectUser } from '@/app/redux/auth/selectors';
+import { toast } from 'sonner';
+
 import { BsPerson } from 'react-icons/bs';
 import { SummarySection } from '@/features/recipes/components';
+import {
+  addRecipeToFavorites,
+  removeRecipeFromFavorites,
+} from '@/features/favorites/api';
 
-import { useState } from 'react';
+const RecipeHeader = ({ recipe, setRecipe }) => {
+  const { id: currentUserId } = useSelector(selectUser);
 
-const RecipeHeader = ({ recipe }) => {
-  const [isLiked, setIsLiked] = useState(false);
   const {
     user_id,
     id,
@@ -22,17 +29,40 @@ const RecipeHeader = ({ recipe }) => {
     image_url,
     cooking_time,
     tags = [],
+    favorites = [],
     // ingredients = [],
     // instructions,
   } = recipe;
+
   const recipeImage = image_url ? image_url : noImgPlaceholder;
 
+  const isFavorite = favorites.some((fav) => fav.user_id === currentUserId);
+
   const handleToggleFavorite = async () => {
-    const nextLike = !isLiked;
+    if (!currentUserId) {
+      toast.info('Please log in earlier');
+      return;
+    }
 
-    setIsLiked(nextLike);
-
-    // ! Добавить логику +1 и -1 like
+    try {
+      if (!isFavorite) {
+        await addRecipeToFavorites(id, currentUserId);
+        setRecipe((prev) => ({
+          ...prev,
+          favorites: [...prev.favorites, { user_id: currentUserId }],
+        }));
+      } else {
+        await removeRecipeFromFavorites(id, currentUserId);
+        setRecipe((prev) => ({
+          ...prev,
+          favorites: [
+            ...prev.favorites.filter((el) => el.user_id !== currentUserId),
+          ],
+        }));
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -40,7 +70,7 @@ const RecipeHeader = ({ recipe }) => {
       <ImgWrapper>
         <img src={recipeImage} alt={recipe_name} loading="lazy" />
 
-        {isLiked ? (
+        {isFavorite ? (
           <MdFavorite
             size={22}
             className="liked chosen"

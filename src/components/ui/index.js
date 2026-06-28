@@ -8,7 +8,7 @@ export { Tooltip } from './Tooltip/Tooltip';
 export { ErrorMessage } from './ErrorMessage/ErrorMessage';
 export { Logo } from './Logo/Logo';
 export { Loader } from './Loader/Loader';
-export { RecipeCardSkeleton } from './Skeletons';
+export { RecipeCardSkeleton, RecipeDetailsSkeleton } from './Skeletons';
 
 export { FieldErrorMessage } from './FieldErrorMessage/FieldErrorMessage';
 export { ThemeButton } from './ThemeButton/ThemeButton';

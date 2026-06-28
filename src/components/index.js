@@ -8,9 +8,10 @@ export {
   ErrorMessage,
   Loader,
   Logo,
-  RecipeCardSkeleton,
   FieldErrorMessage,
   ThemeButton,
+  RecipeCardSkeleton,
+  RecipeDetailsSkeleton,
 } from './ui';
 
 export {
