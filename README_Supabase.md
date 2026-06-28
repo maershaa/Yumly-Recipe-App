@@ -593,3 +593,20 @@ ALTER COLUMN id RESTART WITH 1;
 
 Supabase Tutorial Update - https://www.youtube.com/watch?v=uMTJ8HzaVZk&t=225s
 Supabase Tutorial Delete - https://www.youtube.com/watch?v=P7CkdtU5bWc&list=PL4cUxeGkcC9hUb6sHthUEwG7r9VDPBMKO&index=7
+
+
+create table favorites (
+    user_id uuid not null,
+    recipe_id bigint not null,
+    created_at timestamptz default now(),
+
+    primary key (user_id, recipe_id),
+
+    foreign key (user_id)
+        references auth.users(id)
+        on delete cascade,
+
+    foreign key (recipe_id)
+        references recipes(id)
+        on delete cascade
+);

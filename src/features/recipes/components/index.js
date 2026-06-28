@@ -9,6 +9,7 @@ export { RecipeForm } from './create-recipe';
 export {
   RecipeDetailsContent,
   RecipeHeader,
+  ImageSection,
   SummarySection,
   MainContent,
 } from './recipe-details';

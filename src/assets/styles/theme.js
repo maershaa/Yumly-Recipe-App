@@ -1,14 +1,9 @@
 export const theme = Object.freeze({
   colors: {
     background: 'var(--bg-color)',
-    accentBgSuccess: 'var(--accent-bg-success)',
-    accentBgWarning: 'var(--accent-bg-warning)',
 
     surface: 'var(--surface-color)',
     cardSecondary: 'var(--card-secondary-color)',
-
-    accent: 'var(--accent-color)',
-    accentSecondary: 'var(--accent-secondary)',
 
     textPrimary: 'var(--text-primary)',
     textSecondary: 'var(--text-secondary)',
@@ -17,11 +12,15 @@ export const theme = Object.freeze({
 
     border: 'var(--border-color)',
 
+    accent: 'var(--accent-color)',
     hoverBorderAccent: 'var(--hover-border-accent)',
     hoverShadowAccent: 'var(--hover-shadow-accent)',
+    accentBgSuccess: 'var(--accent-bg-success)',
 
+    accentSecondary: 'var(--accent-secondary)',
     hoverBorderSecondary: 'var(--hover-border-secondary)',
     hoverShadowSecondary: 'var(--hover-shadow-secondary)',
+    accentBgWarning: 'var(--accent-bg-warning)',
 
     danger: 'var(--danger-color)',
     dangerBg: 'var(--danger-bg-color)',

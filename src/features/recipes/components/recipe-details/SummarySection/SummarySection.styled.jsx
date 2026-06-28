@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 export const SummaryWrapper = styled.div`
   display: flex;
@@ -71,6 +70,8 @@ export const SummaryWrapper = styled.div`
 `;
 
 export const RecipeHeaderBar = styled.div`
+  width: 100%;
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -85,8 +86,9 @@ export const RecipeHeaderBar = styled.div`
 `;
 
 export const Actions = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   gap: 20px;
   align-items: center;
 
@@ -101,6 +103,13 @@ export const Actions = styled.div`
     transition: ${({ theme }) => theme.transitions.main};
     text-decoration: none;
 
+    color: ${({ theme }) => theme.colors.textPrimary};
+    opacity: 0.7;
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+      margin: 0 0 0 auto;
+    }
+
     svg {
       display: block;
       font-size: 28px;
@@ -108,36 +117,33 @@ export const Actions = styled.div`
   }
 
   .edit {
-    border: 2px solid ${({ theme }) => theme.colors.accent};
-    color: ${({ theme }) => theme.colors.textPrimary};
-    background: ${({ theme }) => theme.colors.accentBgSuccess};
-
+    background-color: ${({ theme }) => theme.colors.accent};
     &:hover {
-      background-color: ${({ theme }) => theme.colors.accent};
       box-shadow: ${({ theme }) => theme.colors.hoverShadowAccent};
       transform: translateY(-1px);
+      opacity: 1;
     }
 
     &:focus-visible {
       outline: 2px solid ${({ theme }) => theme.colors.accent};
       outline-offset: 2px;
+      opacity: 1;
     }
   }
 
   .delete {
-    border: 2px solid ${({ theme }) => theme.colors.danger};
-    color: ${({ theme }) => theme.colors.textPrimary};
     background: ${({ theme }) => theme.colors.dangerBg};
 
     &:hover {
-      background-color: ${({ theme }) => theme.colors.dangerHover};
       box-shadow: ${({ theme }) => theme.colors.hoverShadowDanger};
       transform: translateY(-1px);
+      opacity: 1;
     }
 
     &:focus-visible {
       outline: 2px solid ${({ theme }) => theme.colors.danger};
       outline-offset: 2px;
+      opacity: 1;
     }
   }
 `;

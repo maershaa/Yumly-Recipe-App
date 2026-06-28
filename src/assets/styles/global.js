@@ -20,7 +20,22 @@ export const GlobalStyle = createGlobalStyle`
   --card-secondary-color: #2D323C;
 
   --accent-color: #7ab04c;
+  --accent-bg-success: rgba(122, 176, 75, 0.1);
+  --hover-border-accent: 1px solid var(--accent-color);
+  --hover-shadow-accent: 0 0 15px rgba(122, 176, 75, 0.4);
+
+
+
   --accent-secondary: #F8B862;
+  --accent-bg-warning: rgba(248, 184, 98, 0.1);
+  --hover-border-secondary: 1px solid var(--accent-secondary);
+  --hover-shadow-secondary: 0 0 15px rgba(248, 184, 98, 0.4);
+
+  --danger-color: #DC3F45;
+  --danger-bg-color: #DC3F45;
+  --danger-hover-color: #C9363C;
+  --hover-shadow-danger: 0 0 15px rgba(220, 63, 69, 0.35);
+
 
   --text-primary: #F5F6F8;
   --text-secondary: #9BA1A6;
@@ -32,22 +47,14 @@ export const GlobalStyle = createGlobalStyle`
 
   --theme-icon-color: #7ab04c;
 
-  --hover-border-accent: 1px solid var(--accent-color);
-  --hover-shadow-accent: 0 0 15px rgba(122, 176, 75, 0.4);
 
-  --hover-border-secondary: 1px solid var(--accent-secondary);
-  --hover-shadow-secondary: 0 0 15px rgba(248, 184, 98, 0.4);
 
-  --accent-bg-success: rgba(122, 176, 75, 0.1);
-  --accent-bg-warning: rgba(248, 184, 98, 0.1);
+
 
   --font-main: 'Inter', sans-serif;
   --font-logo: 'Pacifico', cursive;
 
---danger-color: #ff4d4f;
---danger-bg-color: rgba(255, 77, 79, 0.12);
---danger-hover-color: rgba(255, 77, 79, 0.2);
---hover-shadow-danger: 0 0 15px rgba(255, 77, 79, 0.35);
+
 }
 
 [data-theme='light'] {
@@ -60,8 +67,16 @@ export const GlobalStyle = createGlobalStyle`
   --card-secondary-color: #EDEFF2;
 
   --accent-color: #7ab04c;
-  --accent-secondary: #E0942F;
+    --hover-border-accent: 1px solid var(--accent-color);
+  --hover-shadow-accent: 0 0 15px rgba(122, 176, 75, 0.3);
+  --accent-bg-success: rgba(122, 176, 75, 0.15);
 
+  --accent-secondary: #E0942F;
+  --hover-border-secondary: 1px solid var(--accent-secondary);
+  --hover-shadow-secondary: 0 0 15px rgba(224, 148, 47, 0.3);
+  --accent-bg-warning: rgba(248, 184, 98, 0.5);
+
+  
   --text-primary: #1A1D24;
   --text-secondary: #6A7077;
 
@@ -72,14 +87,11 @@ export const GlobalStyle = createGlobalStyle`
 
   --theme-icon-color: #7ab04c;
 
-  --hover-border-accent: 1px solid var(--accent-color);
-  --hover-shadow-accent: 0 0 15px rgba(122, 176, 75, 0.3);
 
-  --hover-border-secondary: 1px solid var(--accent-secondary);
-  --hover-shadow-secondary: 0 0 15px rgba(224, 148, 47, 0.3);
-
-  --accent-bg-success: rgba(122, 176, 75, 0.15);
-  --accent-bg-warning: rgba(248, 184, 98, 0.5);
+  --danger-color: #D63C42;
+--danger-bg-color: #D63C42;
+--danger-hover-color: #C53137;
+--hover-shadow-danger: 0 0 15px rgba(214, 60, 66, 0.25);
 }
 
 

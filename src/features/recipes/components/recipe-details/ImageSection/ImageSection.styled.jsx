@@ -1,26 +1,5 @@
 import styled from 'styled-components';
 
-export const Header = styled.header`
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 40px;
-  align-items: flex-start;
-
-  background-color: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: ${({ theme }) => theme.radii.lg};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: 1fr 0.9fr;
-    gap: 30px;
-    align-items: center;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    align-items: flex-start;
-  }
-`;
-
 export const ImgWrapper = styled.div`
   position: relative;
 
@@ -28,9 +7,6 @@ export const ImgWrapper = styled.div`
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-
-    border-radius: ${({ theme }) => theme.radii.lg}
-      ${({ theme }) => theme.radii.lg} 0 0;
 
     border-top-left-radius: ${({ theme }) => theme.radii.lg};
     border-bottom-left-radius: 0;
@@ -58,6 +34,7 @@ export const ImgWrapper = styled.div`
   .badge {
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 5px;
 
     padding: 6px 9px;
@@ -88,8 +65,18 @@ export const ToggleFavoriteBtn = styled.button`
 
   background: ${({ theme }) => theme.colors.cardSecondary};
   border-radius: ${({ theme }) => theme.radii.rounded};
+  border: none;
 
   cursor: pointer;
+  transition: ${({ theme }) => theme.transitions.main};
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
 
   svg {
     width: 33px;

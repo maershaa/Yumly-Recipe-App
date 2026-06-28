@@ -13,16 +13,13 @@ const RecipeDetailsPage = () => {
 
   useEffect(() => {
     const loadRecipeDetails = async (id) => {
-      const toastId = toast.loading('Loading...'); //Создаем тост загрузки и сохраняем его ID
       setLoading(true);
 
       try {
         const data = await getRecipeById(id);
         setRecipe(data);
-
-        toast.dismiss(toastId); //Убираем тост загрузки при успехе
       } catch (error) {
-        toast.error(`Error: ${error.message}`, { id: toastId }); // Обновляем тост загрузки на статус ошибки
+        toast.error(`Error: ${error.message}`);
       } finally {
         setLoading(false);
       }
