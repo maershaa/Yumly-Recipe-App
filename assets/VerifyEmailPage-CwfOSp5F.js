@@ -1,1 +1,0 @@
-import{V as e}from"./index-DbxPVN_q.js";import{t}from"./components-BNCDVXxM.js";var n=e(),r=()=>(0,n.jsx)(t,{});export{r as default};
