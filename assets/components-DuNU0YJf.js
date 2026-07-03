@@ -1,4 +1,4 @@
-import{A as e,B as t,C as n,D as r,E as i,H as a,L as o,S as s,T as c,U as l,V as u,a as d,c as f,d as p,i as m,k as h,l as g,o as _,p as v,r as y,s as b,u as x,x as S,y as C,z as w}from"./index-RXY_P3xN.js";var T=l(a(),1),E=()=>(0,T.useCallback)(async(e,t)=>{try{let{data:n,error:r}=await o.from(`recipes`).insert({...e,user_id:t}).select();if(r)throw r;return console.log(`🚀 ~ Recipe successfully created:`,n),n}catch(e){throw console.error(`Error creating recipe:`,e.message),e}},[]),D=async(e,t)=>{try{let{data:n,error:r}=await o.storage.from(`recipeImage`).upload(e,t,{cacheControl:`3600`,upsert:!0});if(r)throw r;console.log(`🚀 ~ Upload success ~ data:`,n);let{data:i}=o.storage.from(`recipeImage`).getPublicUrl(e);return i.publicUrl}catch(e){throw console.error(`Error saving recipe:`,e.message),e}},O=()=>async(e,t,n)=>{let{data:r,error:i}=await o.from(`recipes`).update(e).eq(`id`,n).eq(`user_id`,t).select().single();if(i)throw console.error(`Error updating recipe:`,i.message),i;return r},k=async e=>{try{let{data:t,error:n}=await o.from(`recipes`).select(`*, 
+import{A as e,B as t,C as n,D as r,E as i,H as a,L as o,S as s,T as c,U as l,V as u,a as d,c as f,d as p,i as m,k as h,l as g,o as _,p as v,r as y,s as b,u as x,x as S,y as C,z as w}from"./index-XLsQIHXn.js";var T=l(a(),1),E=()=>(0,T.useCallback)(async(e,t)=>{try{let{data:n,error:r}=await o.from(`recipes`).insert({...e,user_id:t}).select();if(r)throw r;return console.log(`🚀 ~ Recipe successfully created:`,n),n}catch(e){throw console.error(`Error creating recipe:`,e.message),e}},[]),D=async(e,t)=>{try{let{data:n,error:r}=await o.storage.from(`recipeImage`).upload(e,t,{cacheControl:`3600`,upsert:!0});if(r)throw r;console.log(`🚀 ~ Upload success ~ data:`,n);let{data:i}=o.storage.from(`recipeImage`).getPublicUrl(e);return i.publicUrl}catch(e){throw console.error(`Error saving recipe:`,e.message),e}},O=()=>async(e,t,n)=>{let{data:r,error:i}=await o.from(`recipes`).update(e).eq(`id`,n).eq(`user_id`,t).select().single();if(i)throw console.error(`Error updating recipe:`,i.message),i;return r},k=async e=>{try{let{data:t,error:n}=await o.from(`recipes`).select(`*, 
    favorites (
    user_id    )
   `).eq(`id`,e).single();if(n)throw n;let{count:r,error:i}=await o.from(`favorites`).select(`*`,{count:`exact`,head:!0}).eq(`recipe_id`,e);if(i)throw i;return t.likes=r,t}catch(e){throw console.error(`Error get recipe details:`,e.message),e}},A=async e=>{try{let{data:t,error:n}=await o.from(`recipes`).select(`*`).eq(`user_id`,e);if(n)throw n;return t}catch(e){throw console.error(`Error get user recipes:`,e.message),e}},ee=async e=>{console.log(`🚀 ~ deleteRecipe ~ recipeIdToDelete:`,e);try{let{data:t,error:n}=await o.from(`recipes`).delete().eq(`id`,e).select();if(n)throw n;return t}catch(e){throw console.log(`Error during deleted recipe`),e}},te=t.ul`
@@ -151,27 +151,29 @@ import{A as e,B as t,C as n,D as r,E as i,H as a,L as o,S as s,T as c,U as l,V a
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin: 32px auto;
-
-  justify-content: center;
+  margin: 24px auto;
+  width: 100%;
 
   @media (min-width: ${({theme:e})=>e.breakpoints.tablet}) {
-    flex-direction: row;
-    align-items: flex-start;
     gap: 24px;
+    margin: 40px auto;
   }
 
   @media (min-width: ${({theme:e})=>e.breakpoints.desktop}) {
+    flex-direction: row;
+    align-items: flex-start;
+
     gap: 32px;
+    max-width: 1200px;
   }
 
   .invalid {
-    //для невалидных полей формы
     border: 1px solid ${({theme:e})=>e.colors.danger};
     box-shadow: ${({theme:e})=>e.colors.hoverShadowDanger};
 
-    &:hover {
-      border: ${({theme:e})=>e.colors.dangerHover};
+    &:hover,
+    &:focus-within {
+      border-color: ${({theme:e})=>e.colors.dangerHover||e.colors.danger};
       box-shadow: ${({theme:e})=>e.colors.hoverShadowDanger};
     }
   }
@@ -179,15 +181,8 @@ import{A as e,B as t,C as n,D as r,E as i,H as a,L as o,S as s,T as c,U as l,V a
   display: flex;
   flex-direction: column;
   gap: 20px;
-  justify-content: center;
   align-items: flex-start;
-
   width: 100%;
-  margin: 0 auto;
-  background-color: ${({theme:e})=>e.colors.surface};
-  border: 1px solid ${({theme:e})=>e.colors.border};
-  border-radius: ${({theme:e})=>e.radii.lg};
-
   padding: 20px;
 
   background-color: ${({theme:e})=>e.colors.surface};
@@ -195,7 +190,7 @@ import{A as e,B as t,C as n,D as r,E as i,H as a,L as o,S as s,T as c,U as l,V a
   border-radius: ${({theme:e})=>e.radii.lg};
 
   @media (min-width: ${({theme:e})=>e.breakpoints.tablet}) {
-    padding: 28px;
+    padding: 24px;
   }
 
   @media (min-width: ${({theme:e})=>e.breakpoints.desktop}) {
@@ -204,72 +199,67 @@ import{A as e,B as t,C as n,D as r,E as i,H as a,L as o,S as s,T as c,U as l,V a
 
   label {
     width: 100%;
-
     display: flex;
     flex-direction: column;
     gap: 8px;
     color: ${({theme:e})=>e.colors.textPrimary};
+    font-size: 1rem;
     font-weight: 500;
   }
 
+  /* Стили для базовых инпутов формы */
   input,
-  select {
+  select,
+  textarea {
     width: 100%;
-    padding: 14px 18px;
+    padding: 12px 16px;
+    font-size: 1rem;
     background-color: transparent;
     border: 1px solid ${({theme:e})=>e.colors.border};
     border-radius: ${({theme:e})=>e.radii.md};
     color: ${({theme:e})=>e.colors.textPrimary};
     outline: none;
-
     transition: ${({theme:e})=>e.transitions.main};
 
     @media (min-width: ${({theme:e})=>e.breakpoints.tablet}) {
-      flex: 1;
+      padding: 14px 18px;
     }
 
     &:hover,
     &:focus {
-      border: ${({theme:e})=>e.colors.hoverBorderAccent};
+      border-color: ${({theme:e})=>e.colors.hoverBorderAccent};
       box-shadow: ${({theme:e})=>e.colors.hoverShadowAccent};
     }
 
     &::placeholder {
       color: ${({theme:e})=>e.colors.textSecondary};
     }
+  }
 
+  select {
+    cursor: pointer;
     option {
+      background-color: ${({theme:e})=>e.colors.surface};
       color: ${({theme:e})=>e.colors.textPrimary};
-      font-weight: 500;
     }
   }
 
   textarea {
-    width: 100%;
-    padding: 14px 18px;
-    background-color: transparent;
-    border: 1px solid ${({theme:e})=>e.colors.border};
-    border-radius: ${({theme:e})=>e.radii.md};
-    color: ${({theme:e})=>e.colors.textPrimary};
     resize: vertical;
-    outline: none;
-
-    &:hover,
-    &:focus {
-      border: ${({theme:e})=>e.colors.hoverBorderAccent};
-      box-shadow: ${({theme:e})=>e.colors.hoverShadowAccent};
-    }
+    min-height: 120px;
   }
 `,K=t.div`
   display: flex;
   flex-direction: column;
-
   gap: 20px;
-
   width: 100%;
 
   @media (min-width: ${({theme:e})=>e.breakpoints.tablet}) {
-    max-width: 500px;
+    flex: 4;
+  }
+
+  @media (min-width: ${({theme:e})=>e.breakpoints.desktop}) {
+    max-width: 480px;
   }
 `,q=t.div`
   display: flex;
@@ -278,29 +268,40 @@ import{A as e,B as t,C as n,D as r,E as i,H as a,L as o,S as s,T as c,U as l,V a
   width: 100%;
 
   @media (min-width: ${({theme:e})=>e.breakpoints.tablet}) {
-    flex: 1;
-    max-width: 700px;
+    flex: 6;
+  }
+
+  @media (min-width: ${({theme:e})=>e.breakpoints.desktop}) {
+    max-width: 680px;
   }
 `;t.button`
   width: 100%;
   height: 56px;
-
   font-size: 16px;
   font-weight: 700;
-
   display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 
-  margin-top: 24px auto;
+  /* ИСПРАВЛЕНИЕ: убрали некорректный auto */
+  margin-top: 24px;
   padding: 18px;
-  font-size: 16px;
-  font-weight: 700;
 
+  border: none;
   border-radius: ${({theme:e})=>e.radii.lg};
   background-color: ${({theme:e})=>e.colors.accentSecondary};
   color: ${({theme:e})=>e.colors.background};
+  cursor: pointer;
+  transition: ${({theme:e})=>e.transitions.main};
 
   &:hover {
     box-shadow: ${({theme:e})=>e.colors.hoverShadowSecondary};
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 `;var J=()=>({id:crypto.randomUUID(),name:``,amount:``,unit:`g`}),Y=()=>({id:crypto.randomUUID(),text:``}),oe=({recipeForm:e,setRecipeForm:t,handleSubmit:r,currentUserId:i,isSubmitting:a,isFormValid:o,submitButtonText:s,validationErrors:c})=>{let[l,u]=(0,T.useState)({recipe_name:!1,description:!1,cuisine:!1,cooking_time:!1,servings:!1,image_url:!1,tips:!1}),d=e=>{let{name:n,value:r}=e.target;t(e=>({...e,[n]:r}))},f=async e=>{let n=e.target.files[0];if(!n)return;if(n.size>5*1024*1024){alert(`Слишком большой файл. Выберите файл до 5 мб`);return}let r=n.name.split(`.`).pop(),a=`${i}/${`${crypto.randomUUID()}.${r}`}`;try{let e=await D(a,n);t(t=>({...t,image_url:e}))}catch(e){console.error(`Ошибка при загрузке изображения:`,e)}},p=(e,n)=>{let{name:r,value:i}=n.target;t(t=>({...t,ingredients:t.ingredients.map(t=>t.id===e?{...t,[r]:i}:t)}))},m=(e,n)=>{let{value:r}=n.target;t(t=>({...t,instructions:t.instructions.map(t=>t.id===e?{...t,text:r}:t)}))},h=()=>{t(e=>({...e,ingredients:[...e.ingredients,J()]}))},g=()=>{t(e=>({...e,instructions:[...e.instructions,Y()]}))},_=e=>{t(t=>({...t,ingredients:t.ingredients.filter(t=>t.id!==e)}))},v=e=>{t(t=>({...t,instructions:t.instructions.filter(t=>t.id!==e)}))},y=()=>{t(e=>({...e,image_url:``}))},b=e=>{let t=e.currentTarget.name;u(e=>({...e,[t]:!0}))};return(0,j.jsxs)(W,{onSubmit:r,children:[(0,j.jsxs)(K,{children:[(0,j.jsx)(G,{children:(0,j.jsx)(ue,{values:e,onChange:d,validationErrors:c,handleInputBlur:b,isTouched:l})}),(0,j.jsx)(G,{children:(0,j.jsx)(fe,{ingredients:e.ingredients,onChange:p,addIngredient:h,removeIngredient:_,isIngredientsError:c.ingredients})})]}),(0,j.jsxs)(q,{children:[(0,j.jsx)(G,{children:(0,j.jsx)(me,{instructions:e.instructions,onChange:m,addStep:g,removeStep:v,isStepsError:c.instructions})}),(0,j.jsx)(G,{children:(0,j.jsx)(_e,{recipe_name:e.recipe_name,image_url:e.image_url,handleImageUpload:f,removeImage:y,isImgError:c.image,handleInputBlur:b,isTouched:l})}),(0,j.jsxs)(n,{type:`submit`,variant:`submit`,disabled:!o||a,children:[(0,j.jsx)(x,{}),s]})]})]})},se=t.div`
   display: flex;
@@ -357,38 +358,53 @@ import{A as e,B as t,C as n,D as r,E as i,H as a,L as o,S as s,T as c,U as l,V a
     width: 100%;
   }
 `;var ce=[`Ukrainian`,`American`,`British`,`Chinese`,`French`,`German`,`Greek`,`Indian`,`Italian`,`Japanese`,`Jewish`,`Korean`,`Mexican`,`Spanish`,`Thai`,`Vietnamese`],le=[`g`,`kg`,`ml`,`l`,`pcs`,`tbsp`,`tsp`],ue=({values:e,onChange:t,validationErrors:n,handleInputBlur:r,isTouched:i})=>{let{recipe_name:a,description:o,servings:s,cuisine:c,cooking_time:l,tips:u}=e,{recipe_name:d,description:f,servings:m,cuisine:h,cooking_time:g,tips:_}=n,{recipe_name:v,description:y,servings:b,cuisine:x,cooking_time:S,tips:C}=i,w=d&&v,T=f&&y,E=h&&x,D=g&&S,O=m&&b,k=_&&C;return(0,j.jsxs)(j.Fragment,{children:[(0,j.jsx)(`h2`,{children:`Recipe Info`}),(0,j.jsxs)(`label`,{children:[`Title`,(0,j.jsx)(`input`,{type:`text`,name:`recipe_name`,onChange:t,onBlur:r,value:a,placeholder:`Recipe title`,className:w?`invalid`:``})]}),w&&(0,j.jsx)(p,{errorMessage:d}),(0,j.jsxs)(`label`,{children:[`Description`,(0,j.jsx)(`textarea`,{name:`description`,value:o,onChange:t,onBlur:r,placeholder:`Share the story behind this dish or what makes it special...`,className:T?`invalid`:``})]}),T&&(0,j.jsx)(p,{errorMessage:f}),(0,j.jsxs)(`label`,{children:[`Choose a Cuisine`,(0,j.jsxs)(`select`,{name:`cuisine`,value:c,onChange:t,onBlur:r,className:E?`invalid`:``,children:[(0,j.jsx)(`option`,{value:``,disabled:!0,children:`Cuisine...`}),ce.map(e=>(0,j.jsx)(`option`,{value:e,children:e},e))]})]}),E&&(0,j.jsx)(p,{errorMessage:h}),(0,j.jsxs)(se,{children:[(0,j.jsxs)(`label`,{children:[`Cooking Time`,(0,j.jsx)(`input`,{type:`number`,name:`cooking_time`,value:l,onChange:t,onBlur:r,placeholder:`Enter time in mins`,min:`1`,className:D?`invalid`:``})]}),(0,j.jsxs)(`label`,{children:[`Servings`,(0,j.jsx)(`input`,{type:`number`,name:`servings`,placeholder:`Number of servings`,value:s,onChange:t,onBlur:r,min:`1`,className:O?`invalid`:``})]})]}),D&&(0,j.jsx)(p,{errorMessage:g}),O&&(0,j.jsx)(p,{errorMessage:m}),(0,j.jsx)(`label`,{children:(0,j.jsx)(`textarea`,{name:`tips`,rows:3,onChange:t,onBlur:r,value:u,placeholder:`Share your kitchen secrets...`,className:k?`invalid`:``})}),k&&(0,j.jsx)(p,{errorMessage:_})]})},de=t.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  /* 
+    1fr — название (забирает всё свободное место).
+    80px — количество (фиксированная небольшая ширина).
+    90px — селект (фиксированная небольшая ширина).
+    auto — кнопка удаления (по размеру иконки).
+  */
+  grid-template-columns: 1fr 80px 90px auto;
+  align-items: center;
   width: 100%;
-  gap: 12px;
+  gap: 10px;
+  margin-bottom: 12px;
 
   @media (min-width: ${({theme:e})=>e.breakpoints.tablet}) {
-    flex-direction: row;
-    align-items: center;
+    grid-template-columns: 1fr 120px 110px auto;
+    gap: 15px;
   }
-
-  label {
-    flex-direction: row;
-  }
-`,fe=({ingredients:e,onChange:t,addIngredient:r,removeIngredient:i,isIngredientsError:a})=>(0,j.jsxs)(j.Fragment,{children:[(0,j.jsx)(`h2`,{children:`Ingredients`}),e.map(({id:r,name:a,amount:o,unit:s})=>(0,j.jsxs)(de,{children:[(0,j.jsxs)(`label`,{children:[(0,j.jsx)(`input`,{type:`text`,name:`name`,onChange:e=>t(r,e),value:a,placeholder:`Ingredient name`}),` `,(0,j.jsx)(`input`,{type:`number`,name:`amount`,min:`0`,step:`0.01`,onChange:e=>t(r,e),value:o,placeholder:`Amount`}),(0,j.jsx)(`select`,{name:`unit`,value:s,onChange:e=>t(r,e),children:le.map(e=>(0,j.jsx)(`option`,{value:e,children:e},e))})]}),(0,j.jsx)(n,{variant:`delete`,onClick:()=>i(r),disabled:e.length<=3,children:(0,j.jsx)(g,{})})]},r)),a&&(0,j.jsx)(p,{errorMessage:a}),(0,j.jsxs)(n,{variant:`add`,onClick:r,children:[(0,j.jsx)(_,{}),`Add Ingredient`]})]}),pe=t.div`
+`,fe=({ingredients:e,onChange:t,addIngredient:r,removeIngredient:i,isIngredientsError:a})=>(0,j.jsxs)(j.Fragment,{children:[(0,j.jsx)(`h2`,{children:`Ingredients`}),e.map(({id:r,name:a,amount:o,unit:s})=>(0,j.jsxs)(de,{children:[(0,j.jsx)(`input`,{type:`text`,name:`name`,onChange:e=>t(r,e),value:a,placeholder:`Ingredient name`}),` `,(0,j.jsx)(`input`,{type:`number`,name:`amount`,min:`0`,step:`0.01`,onChange:e=>t(r,e),value:o,placeholder:`Amount`}),(0,j.jsx)(`select`,{name:`unit`,value:s,onChange:e=>t(r,e),children:le.map(e=>(0,j.jsx)(`option`,{value:e,children:e},e))}),(0,j.jsx)(n,{variant:`delete`,onClick:()=>i(r),disabled:e.length<=3,children:(0,j.jsx)(g,{})})]},r)),a&&(0,j.jsx)(p,{errorMessage:a}),(0,j.jsxs)(n,{variant:`add`,onClick:r,children:[(0,j.jsx)(_,{}),`Add Ingredient`]})]}),pe=t.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: flex-start;
   gap: 12px;
   width: 100%;
+  margin-bottom: 16px;
 
-  @media (min-width: ${({theme:e})=>e.breakpoints.tablet}) {
-    flex-direction: row;
-    align-items: center;
+  .step-number {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: ${({theme:e})=>e.colors.textSecondary};
+    padding-top: 10px;
+    min-width: 24px;
+
+    @media (min-width: ${({theme:e})=>e.breakpoints.tablet}) {
+      font-size: 1.2rem;
+      padding-top: 12px;
+    }
   }
 
-  label {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-
-    font-size: 1.5;
+  textarea {
+    flex: 1;
   }
-`,me=({instructions:e,onChange:t,addStep:r,removeStep:i,isStepsError:a})=>(0,j.jsxs)(j.Fragment,{children:[(0,j.jsx)(`h2`,{children:`Steps`}),e.map(({id:r,text:a},o)=>(0,j.jsxs)(pe,{children:[(0,j.jsxs)(`label`,{children:[(0,j.jsxs)(`span`,{className:`step-number`,children:[o+1,`.`]}),` `,(0,j.jsx)(`textarea`,{type:`text`,onChange:e=>t(r,e),value:a,placeholder:`Describe step ${o+1}`,rows:3})]}),(0,j.jsx)(n,{variant:`delete`,onClick:()=>i(r),disabled:e.length<=3,children:(0,j.jsx)(g,{})})]},r)),a&&(0,j.jsx)(p,{errorMessage:a}),(0,j.jsxs)(n,{variant:`add`,onClick:r,children:[(0,j.jsx)(_,{}),`Add Step`]})]}),he=t.div`
+
+  /* Кнопка удаления */
+  button {
+    margin-top: 4px;
+  }
+`,me=({instructions:e,onChange:t,addStep:r,removeStep:i,isStepsError:a})=>(0,j.jsxs)(j.Fragment,{children:[(0,j.jsx)(`h2`,{children:`Steps`}),e.map(({id:r,text:a},o)=>(0,j.jsxs)(pe,{children:[(0,j.jsxs)(`span`,{className:`step-number`,children:[o+1,`.`]}),` `,(0,j.jsx)(`textarea`,{type:`text`,onChange:e=>t(r,e),value:a,placeholder:`Describe step ${o+1}`,rows:3}),(0,j.jsx)(n,{variant:`delete`,onClick:()=>i(r),disabled:e.length<=3,children:(0,j.jsx)(g,{})})]},r)),a&&(0,j.jsx)(p,{errorMessage:a}),(0,j.jsxs)(n,{variant:`add`,onClick:r,children:[(0,j.jsx)(_,{}),`Add Step`]})]}),he=t.div`
   position: relative;
 
   display: flex;
