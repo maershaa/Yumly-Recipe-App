@@ -4,27 +4,30 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin: 32px auto;
-
-  justify-content: center;
+  margin: 24px auto;
+  width: 100%;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    flex-direction: row;
-    align-items: flex-start;
     gap: 24px;
+    margin: 40px auto;
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    flex-direction: row;
+    align-items: flex-start;
+
     gap: 32px;
+    max-width: 1200px;
   }
 
   .invalid {
-    //для невалидных полей формы
     border: 1px solid ${({ theme }) => theme.colors.danger};
     box-shadow: ${({ theme }) => theme.colors.hoverShadowDanger};
 
-    &:hover {
-      border: ${({ theme }) => theme.colors.dangerHover};
+    &:hover,
+    &:focus-within {
+      border-color: ${({ theme }) =>
+        theme.colors.dangerHover || theme.colors.danger};
       box-shadow: ${({ theme }) => theme.colors.hoverShadowDanger};
     }
   }
@@ -34,15 +37,8 @@ export const FormSectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  justify-content: center;
   align-items: flex-start;
-
   width: 100%;
-  margin: 0 auto;
-  background-color: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: ${({ theme }) => theme.radii.lg};
-
   padding: 20px;
 
   background-color: ${({ theme }) => theme.colors.surface};
@@ -50,7 +46,7 @@ export const FormSectionWrapper = styled.div`
   border-radius: ${({ theme }) => theme.radii.lg};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    padding: 28px;
+    padding: 24px;
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
@@ -59,74 +55,69 @@ export const FormSectionWrapper = styled.div`
 
   label {
     width: 100%;
-
     display: flex;
     flex-direction: column;
     gap: 8px;
     color: ${({ theme }) => theme.colors.textPrimary};
+    font-size: 1rem;
     font-weight: 500;
   }
 
+  /* Стили для базовых инпутов формы */
   input,
-  select {
+  select,
+  textarea {
     width: 100%;
-    padding: 14px 18px;
+    padding: 12px 16px;
+    font-size: 1rem;
     background-color: transparent;
     border: 1px solid ${({ theme }) => theme.colors.border};
     border-radius: ${({ theme }) => theme.radii.md};
     color: ${({ theme }) => theme.colors.textPrimary};
     outline: none;
-
     transition: ${({ theme }) => theme.transitions.main};
 
     @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-      flex: 1;
+      padding: 14px 18px;
     }
 
     &:hover,
     &:focus {
-      border: ${({ theme }) => theme.colors.hoverBorderAccent};
+      border-color: ${({ theme }) => theme.colors.hoverBorderAccent};
       box-shadow: ${({ theme }) => theme.colors.hoverShadowAccent};
     }
 
     &::placeholder {
       color: ${({ theme }) => theme.colors.textSecondary};
     }
+  }
 
+  select {
+    cursor: pointer;
     option {
+      background-color: ${({ theme }) => theme.colors.surface};
       color: ${({ theme }) => theme.colors.textPrimary};
-      font-weight: 500;
     }
   }
 
   textarea {
-    width: 100%;
-    padding: 14px 18px;
-    background-color: transparent;
-    border: 1px solid ${({ theme }) => theme.colors.border};
-    border-radius: ${({ theme }) => theme.radii.md};
-    color: ${({ theme }) => theme.colors.textPrimary};
     resize: vertical;
-    outline: none;
-
-    &:hover,
-    &:focus {
-      border: ${({ theme }) => theme.colors.hoverBorderAccent};
-      box-shadow: ${({ theme }) => theme.colors.hoverShadowAccent};
-    }
+    min-height: 120px;
   }
 `;
 
 export const FormMainSection = styled.div`
   display: flex;
   flex-direction: column;
-
   gap: 20px;
-
   width: 100%;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    max-width: 500px;
+    flex: 4;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    max-width: 480px;
   }
 `;
 
@@ -137,30 +128,41 @@ export const FormStepsSection = styled.div`
   width: 100%;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    flex: 1;
-    max-width: 700px;
+    flex: 6;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    max-width: 680px;
   }
 `;
 
 export const SubmitButton = styled.button`
   width: 100%;
   height: 56px;
-
   font-size: 16px;
   font-weight: 700;
-
   display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 
-  margin-top: 24px auto;
+  /* ИСПРАВЛЕНИЕ: убрали некорректный auto */
+  margin-top: 24px;
   padding: 18px;
-  font-size: 16px;
-  font-weight: 700;
 
+  border: none;
   border-radius: ${({ theme }) => theme.radii.lg};
   background-color: ${({ theme }) => theme.colors.accentSecondary};
   color: ${({ theme }) => theme.colors.background};
+  cursor: pointer;
+  transition: ${({ theme }) => theme.transitions.main};
 
   &:hover {
     box-shadow: ${({ theme }) => theme.colors.hoverShadowSecondary};
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 `;

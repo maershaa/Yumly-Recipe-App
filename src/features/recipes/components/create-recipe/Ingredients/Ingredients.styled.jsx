@@ -1,17 +1,21 @@
 import styled from 'styled-components';
 
 export const IngredientRow = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  /* 
+    1fr — название (забирает всё свободное место).
+    80px — количество (фиксированная небольшая ширина).
+    90px — селект (фиксированная небольшая ширина).
+    auto — кнопка удаления (по размеру иконки).
+  */
+  grid-template-columns: 1fr 80px 90px auto;
+  align-items: center;
   width: 100%;
-  gap: 12px;
+  gap: 10px;
+  margin-bottom: 12px;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  label {
-    flex-direction: row;
+    grid-template-columns: 1fr 120px 110px auto;
+    gap: 15px;
   }
 `;

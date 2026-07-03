@@ -15,32 +15,29 @@ const Ingredients = ({
       <h2>Ingredients</h2>
       {ingredients.map(({ id, name, amount, unit }) => (
         <IngredientRow key={id}>
-          <label>
-            <input
-              type="text"
-              name={'name'}
-              onChange={(e) => onChange(id, e)}
-              value={name}
-              placeholder="Ingredient name"
-            />{' '}
-            <input
-              type="number"
-              name="amount"
-              min="0"
-              step="0.01"
-              onChange={(e) => onChange(id, e)}
-              value={amount}
-              placeholder="Amount"
-            />
-            <select name="unit" value={unit} onChange={(e) => onChange(id, e)}>
-              {units.map((unitOption) => (
-                <option key={unitOption} value={unitOption}>
-                  {unitOption}
-                </option>
-              ))}
-            </select>
-          </label>
-
+          <input
+            type="text"
+            name={'name'}
+            onChange={(e) => onChange(id, e)}
+            value={name}
+            placeholder="Ingredient name"
+          />{' '}
+          <input
+            type="number"
+            name="amount"
+            min="0"
+            step="0.01"
+            onChange={(e) => onChange(id, e)}
+            value={amount}
+            placeholder="Amount"
+          />
+          <select name="unit" value={unit} onChange={(e) => onChange(id, e)}>
+            {units.map((unitOption) => (
+              <option key={unitOption} value={unitOption}>
+                {unitOption}
+              </option>
+            ))}
+          </select>
           <GeneralBtn
             variant="delete"
             onClick={() => removeIngredient(id)}
