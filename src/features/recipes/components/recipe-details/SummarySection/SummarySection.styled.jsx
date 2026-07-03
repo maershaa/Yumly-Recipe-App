@@ -3,34 +3,42 @@ import styled from 'styled-components';
 export const SummaryWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 25px;
   align-items: flex-start;
   padding: 15px 15px 40px 15px;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     padding: 15px;
-    gap: 50px;
+    gap: 35px;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    gap: 45px;
   }
 
   h1 {
-    font-size: 2.5rem;
+    font-size: 1.4rem;
     font-weight: 800;
     line-height: 1.4;
 
-    max-width: 540px;
+    color: ${({ theme }) => theme.colors.textPrimary};
 
+    @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+      font-size: 1.5rem;
+    }
     @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-      font-size: 2.7rem;
+      font-size: 1.7rem;
     }
   }
 
   .description {
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     font-weight: 400;
+    line-height: 1.5;
     color: ${({ theme }) => theme.colors.textSecondary};
 
-    @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-      font-size: 1.3rem;
+    @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+      font-size: 1rem;
     }
   }
 
@@ -40,9 +48,13 @@ export const SummaryWrapper = styled.div`
     align-items: center;
     gap: 10px;
 
-    font-size: 1.4rem;
+    font-size: 1rem;
     font-weight: 600;
     color: ${({ theme }) => theme.colors.textPrimary};
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+      font-size: 1.1rem;
+    }
 
     .accent {
       color: ${({ theme }) => theme.colors.accent};
@@ -53,20 +65,26 @@ export const SummaryWrapper = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-
-    gap: 15px;
+    gap: 12px;
 
     li {
       display: flex;
       flex-direction: row;
-      gap: 8px;
+      gap: 6px;
       align-items: center;
 
-      padding: 8px;
+      padding: 6px 12px;
       background-color: ${({ theme }) => theme.colors.accentBgWarning};
       border: 1px solid ${({ theme }) => theme.colors.hoverBorderSecondary};
       border-radius: ${({ theme }) => theme.radii.pill};
       color: ${({ theme }) => theme.colors.accentSecondary};
+    }
+
+    svg {
+      width: 14px;
+      height: 14px;
+      color: ${({ theme }) => theme.colors.accentSecondary};
+      flex-shrink: 0;
     }
 
     span {
@@ -77,8 +95,14 @@ export const SummaryWrapper = styled.div`
     }
 
     @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+      gap: 15px;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
       span {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
       }
     }
   }
@@ -86,14 +110,12 @@ export const SummaryWrapper = styled.div`
 
 export const RecipeHeaderBar = styled.div`
   width: 100%;
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: 20px;
 
-  gap: 30px;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -103,17 +125,21 @@ export const RecipeHeaderBar = styled.div`
 export const Actions = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 20px;
-  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    justify-content: flex-end;
+  }
 
   .actionsItem {
     //общий класс для EditBtn и DeleteBtn
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px 14px;
+    justify-content: center;
+
+    padding: 8px;
     border-radius: ${({ theme }) => theme.radii.rounded};
     transition: ${({ theme }) => theme.transitions.main};
     text-decoration: none;
@@ -121,18 +147,21 @@ export const Actions = styled.div`
     color: ${({ theme }) => theme.colors.textPrimary};
     opacity: 0.7;
 
-    @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-      margin: 0 0 0 auto;
-    }
-
     svg {
       display: block;
-      font-size: 28px;
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+
+      @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+        width: 32px;
+        height: 32px;
+      }
     }
   }
-
   .edit {
-    background-color: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.accent};
+
     &:hover {
       box-shadow: ${({ theme }) => theme.colors.hoverShadowAccent};
       transform: translateY(-1px);
@@ -147,7 +176,7 @@ export const Actions = styled.div`
   }
 
   .delete {
-    background: ${({ theme }) => theme.colors.dangerBg};
+    color: ${({ theme }) => theme.colors.danger};
 
     &:hover {
       box-shadow: ${({ theme }) => theme.colors.hoverShadowDanger};

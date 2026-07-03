@@ -29,7 +29,7 @@ const MainContent = ({ ingredients, instructions, tips }) => {
           ))}
         </IngredientsList>
         <p className="tips">
-          <HiOutlineLightBulb size={40} />
+          <HiOutlineLightBulb />
           <span>{tips} </span>
         </p>
       </InfoCard>

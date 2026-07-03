@@ -2,13 +2,13 @@ import styled from 'styled-components';
 
 export const MainContentGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0px, 1fr);
 
   gap: 40px;
-  align-items: stretch; //обе колонки грида будут строго одинаковой высоты, независимо от количества ингредиентов или шагов
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: 1fr;
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch; //обе колонки грида будут строго одинаковой высоты, независимо от количества ингредиентов или шагов
   }
 
   .ingredientsAndTips {
@@ -22,14 +22,32 @@ export const MainContentGrid = styled.div`
       padding: 18px;
       max-width: 600px;
 
-      font-size: 1.7rem;
-
       border: 1px solid ${({ theme }) => theme.colors.border};
       background-color: ${({ theme }) => theme.colors.accentBgSuccess};
       border-radius: ${({ theme }) => theme.radii.lg};
 
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: ${({ theme }) => theme.colors.textPrimary};
+      line-height: 1.4;
+
+      @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+        font-size: 1rem;
+      }
+      @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+        font-size: 1.1rem;
+      }
+
       svg {
+        width: 30px;
+        height: 30px;
+        flex-shrink: 0; //  запрещаем иконке сжиматься, если текст длинный */
         color: ${({ theme }) => theme.colors.accent};
+
+        @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+          width: 40px;
+          height: 40px;
+        }
       }
     }
   }
@@ -55,7 +73,7 @@ export const InfoCard = styled.div`
     align-items: center;
     gap: 10px;
 
-    font-size: 1.8rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: ${({ theme }) => theme.colors.textPrimary};
 
@@ -64,11 +82,23 @@ export const InfoCard = styled.div`
     padding-bottom: 25px;
     border-bottom: 2px solid ${({ theme }) => theme.colors.accent};
 
+    @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+      font-size: 1.5rem;
+    }
+    @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+      font-size: 1.7rem;
+    }
+
     svg {
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0; //  запрещаем иконке сжиматься, если текст длинный */
+      color: ${({ theme }) => theme.colors.accent};
+    }
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
       width: 40px;
       height: 40px;
-
-      color: ${({ theme }) => theme.colors.accent};
     }
   }
 `;
@@ -91,16 +121,27 @@ export const IngredientsList = styled.ul`
   }
 
   .dot {
-    font-size: 1.8rem;
+    font-size: 1rem;
     font-weight: 600;
     color: ${({ theme }) => theme.colors.accent};
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+      font-size: 1.8rem;
+    }
   }
 
   .ingredient {
-    font-size: 1.8rem;
+    font-size: 0.9rem;
     font-weight: 400;
     color: ${({ theme }) => theme.colors.textPrimary};
     line-height: 1.4;
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+      font-size: 1rem;
+    }
+    @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+      font-size: 1.1rem;
+    }
   }
 `;
 
@@ -120,13 +161,18 @@ export const StepsList = styled.ul`
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    gap: 20px;
 
-    padding: 10px 20px;
+    gap: 10px;
+    padding: 5px 10px;
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+      gap: 20px;
+      padding: 10px 20px;
+    }
 
     .step {
-      width: 40px;
-      height: 40px;
+      width: 20px;
+      height: 20px;
 
       display: flex;
       align-items: center;
@@ -138,15 +184,32 @@ export const StepsList = styled.ul`
       background-color: ${({ theme }) => theme.colors.accentBgSuccess};
       color: ${({ theme }) => theme.colors.accent};
 
-      font-size: 1.8rem;
+      font-size: 0.9rem;
       font-weight: 600;
+
+      @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+        width: 40px;
+        height: 40px;
+
+        font-size: 1rem;
+      }
+      @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+        font-size: 1.1rem;
+      }
     }
 
     .text {
-      font-size: 1.8rem;
+      font-size: 0.9rem;
       font-weight: 400;
       color: ${({ theme }) => theme.colors.textPrimary};
       line-height: 1.4;
+
+      @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+        font-size: 1rem;
+      }
+      @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+        font-size: 1.1rem;
+      }
     }
   }
 `;
