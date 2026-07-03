@@ -18,6 +18,7 @@ const ImageSection = ({
   cooking_time,
   image_url,
   favorites = [],
+  likes = 0,
   setRecipe,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -30,12 +31,12 @@ const ImageSection = ({
   const handleToggleFavorite = async () => {
     if (isLoading) return;
 
-    setIsLoading(true);
-
     if (!currentUserId) {
       toast.info('Please log in previously');
       return;
     }
+
+    setIsLoading(true);
 
     try {
       if (!isFavorite) {
@@ -43,31 +44,33 @@ const ImageSection = ({
         setRecipe((prev) => ({
           ...prev,
           favorites: [...prev.favorites, { user_id: currentUserId }],
+          likes: prev.likes + 1,
         }));
       } else {
         await removeRecipeFromFavorites(id, currentUserId);
+
         setRecipe((prev) => ({
           ...prev,
           favorites: [
             ...prev.favorites.filter((el) => el.user_id !== currentUserId),
           ],
+          likes: prev.likes - 1,
         }));
       }
     } catch (error) {
       toast.error(error.message || 'Something went wrong');
     } finally {
       setIsLoading(false);
+      console.log('handleToggleFavorite => favorites', favorites);
     }
   };
 
   return (
     <ImgWrapper>
       <img src={recipeImage} alt={recipe_name} loading="lazy" />
-
       <ToggleFavoriteBtn onClick={handleToggleFavorite} disabled={isLoading}>
         {isFavorite ? <MdFavorite /> : <MdFavoriteBorder />}
       </ToggleFavoriteBtn>
-
       <div className="badgesWrapper">
         <span className="badge">
           <AiOutlineClockCircle />
@@ -77,6 +80,11 @@ const ImageSection = ({
         <span className="badge">
           <BsPerson />
           {servings} servings
+        </span>
+
+        <span className="badge">
+          <MdFavoriteBorder />
+          {likes} likes
         </span>
       </div>
     </ImgWrapper>

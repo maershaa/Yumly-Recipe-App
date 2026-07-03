@@ -91,22 +91,6 @@ const EditRecipePage = () => {
     }
   }, [recipeId]);
 
-  useEffect(() => {
-    if (recipeForm.recipe_name !== '') {
-      console.log(
-        '🚀 ~ EditRecipePage ~ recipeForm.recipe_name:',
-        recipeForm.recipe_name,
-      );
-
-      console.log(recipeForm);
-
-      const { isFormValid, errors: validationErrors } =
-        validateRecipeForm(recipeForm); //Возвращает объект с значением isFormValid=true/false и обьхект ошибок  в полях формы или их отсутствием
-      console.log('isFormValid', isFormValid);
-      console.log('🚀 ~ EditRecipePage ~ validationErrors:', validationErrors);
-    }
-  }, [isFormValid, recipeForm, validationErrors]);
-
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     if (!isFormValid) return;

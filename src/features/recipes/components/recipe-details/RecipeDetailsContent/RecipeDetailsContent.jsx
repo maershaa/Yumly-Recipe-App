@@ -13,7 +13,6 @@ const RecipeDetailsContent = ({ recipe, setRecipe }) => {
     // cuisine,
     // difficulty,
     // servings,
-    // likes,
     tips,
     // image_url,
     // cooking_time,

@@ -17,6 +17,7 @@ const RecipeDetailsPage = () => {
 
       try {
         const data = await getRecipeById(id);
+        console.log('🚀 ~ loadRecipeDetails ~ data:', data);
         setRecipe(data);
       } catch (error) {
         toast.error(`Error: ${error.message}`);

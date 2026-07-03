@@ -26,7 +26,8 @@ const Ingredients = ({
             <input
               type="number"
               name="amount"
-              min={1}
+              min="0"
+              step="0.01"
               onChange={(e) => onChange(id, e)}
               value={amount}
               placeholder="Amount"

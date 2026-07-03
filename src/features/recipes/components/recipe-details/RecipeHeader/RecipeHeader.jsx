@@ -11,7 +11,7 @@ const RecipeHeader = ({ recipe, setRecipe }) => {
     // cuisine,
     // difficulty,
     servings,
-    // likes,
+    likes,
     // tips,
     image_url,
     cooking_time,
@@ -26,6 +26,7 @@ const RecipeHeader = ({ recipe, setRecipe }) => {
       <ImageSection
         id={id}
         servings={servings}
+        likes={likes}
         recipe_name={recipe_name}
         cooking_time={cooking_time}
         image_url={image_url}
