@@ -1,4 +1,4 @@
-import{A as e,B as t,C as n,D as r,E as i,H as a,L as o,S as s,T as c,U as l,V as u,a as d,c as f,d as p,i as m,k as h,l as g,o as _,p as v,r as y,s as b,u as x,x as S,y as C,z as w}from"./index-XLsQIHXn.js";var T=l(a(),1),E=()=>(0,T.useCallback)(async(e,t)=>{try{let{data:n,error:r}=await o.from(`recipes`).insert({...e,user_id:t}).select();if(r)throw r;return console.log(`🚀 ~ Recipe successfully created:`,n),n}catch(e){throw console.error(`Error creating recipe:`,e.message),e}},[]),D=async(e,t)=>{try{let{data:n,error:r}=await o.storage.from(`recipeImage`).upload(e,t,{cacheControl:`3600`,upsert:!0});if(r)throw r;console.log(`🚀 ~ Upload success ~ data:`,n);let{data:i}=o.storage.from(`recipeImage`).getPublicUrl(e);return i.publicUrl}catch(e){throw console.error(`Error saving recipe:`,e.message),e}},O=()=>async(e,t,n)=>{let{data:r,error:i}=await o.from(`recipes`).update(e).eq(`id`,n).eq(`user_id`,t).select().single();if(i)throw console.error(`Error updating recipe:`,i.message),i;return r},k=async e=>{try{let{data:t,error:n}=await o.from(`recipes`).select(`*, 
+import{A as e,B as t,C as n,D as r,E as i,H as a,L as o,S as s,T as c,U as l,V as u,a as d,c as f,d as p,i as m,k as h,l as g,o as _,p as v,r as y,s as b,u as x,x as S,y as C,z as w}from"./index-C_VNKYZw.js";var T=l(a(),1),E=()=>(0,T.useCallback)(async(e,t)=>{try{let{data:n,error:r}=await o.from(`recipes`).insert({...e,user_id:t}).select();if(r)throw r;return console.log(`🚀 ~ Recipe successfully created:`,n),n}catch(e){throw console.error(`Error creating recipe:`,e.message),e}},[]),D=async(e,t)=>{try{let{data:n,error:r}=await o.storage.from(`recipeImage`).upload(e,t,{cacheControl:`3600`,upsert:!0});if(r)throw r;console.log(`🚀 ~ Upload success ~ data:`,n);let{data:i}=o.storage.from(`recipeImage`).getPublicUrl(e);return i.publicUrl}catch(e){throw console.error(`Error saving recipe:`,e.message),e}},O=()=>async(e,t,n)=>{let{data:r,error:i}=await o.from(`recipes`).update(e).eq(`id`,n).eq(`user_id`,t).select().single();if(i)throw console.error(`Error updating recipe:`,i.message),i;return r},k=async e=>{try{let{data:t,error:n}=await o.from(`recipes`).select(`*, 
    favorites (
    user_id    )
   `).eq(`id`,e).single();if(n)throw n;let{count:r,error:i}=await o.from(`favorites`).select(`*`,{count:`exact`,head:!0}).eq(`recipe_id`,e);if(i)throw i;return t.likes=r,t}catch(e){throw console.error(`Error get recipe details:`,e.message),e}},A=async e=>{try{let{data:t,error:n}=await o.from(`recipes`).select(`*`).eq(`user_id`,e);if(n)throw n;return t}catch(e){throw console.error(`Error get user recipes:`,e.message),e}},ee=async e=>{console.log(`🚀 ~ deleteRecipe ~ recipeIdToDelete:`,e);try{let{data:t,error:n}=await o.from(`recipes`).delete().eq(`id`,e).select();if(n)throw n;return t}catch(e){throw console.log(`Error during deleted recipe`),e}},te=t.ul`
@@ -73,32 +73,78 @@ import{A as e,B as t,C as n,D as r,E as i,H as a,L as o,S as s,T as c,U as l,V a
 `,F=({recipe:t})=>{let n=e(),{id:r,recipe_name:i,image_url:a,tags:o,cooking_time:s}=t,c=e=>{n(`/recipes/${e}`)};if(t)return(0,j.jsxs)(ne,{onClick:()=>c(r),children:[(0,j.jsx)(`img`,{src:a||P,alt:i,loading:`lazy`}),(0,j.jsx)(re,{children:i}),(0,j.jsxs)(ie,{children:[(0,j.jsxs)(`span`,{children:[`Prep time: `,s,`m `]}),(0,j.jsx)(ae,{children:o?.map(e=>(0,j.jsx)(`li`,{children:(0,j.jsx)(`span`,{children:e.toUpperCase()})},e))})]})]})},I=t.ul`
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 12px;
   align-items: center;
   justify-content: center;
 
   margin: 50px auto;
 
-  li {
-    padding: 6px 10px;
+  margin: 32px auto;
+  width: 100%;
 
-    background-color: ${({theme:e})=>e.colors.cardSecondary};
+  @media (min-width: ${({theme:e})=>e.breakpoints.tablet}) {
+    gap: 15px;
+    margin: 40px auto;
+  }
+
+  @media (min-width: ${({theme:e})=>e.breakpoints.desktop}) {
+    gap: 20px;
+    margin: 50px auto;
+  }
+
+  li {
+    display: inline-flex;
+    background-color: ${({theme:e})=>e.colors.surface};
     border: 1px solid ${({theme:e})=>e.colors.border};
     border-radius: ${({theme:e})=>e.radii.lg};
-    color: ${({theme:e})=>e.colors.accentSecondary};
+    transition: ${({theme:e})=>e.transitions.main};
+
+    &:hover {
+      box-shadow: ${({theme:e})=>e.colors.hoverShadowAccent};
+      transform: translateY(-1px);
+    }
 
     &.active {
-      background-color: ${({theme:e})=>e.colors.accentSecondary};
-      border: ${({theme:e})=>e.colors.hoverBorderSecondary};
-      box-shadow: ${({theme:e})=>e.colors.hoverShadowSecondary};
+      background-color: ${({theme:e})=>e.colors.accentBgSuccess};
+      border-color: ${({theme:e})=>e.colors.accent};
+      box-shadow: ${({theme:e})=>e.colors.hoverShadowAccent};
+      transform: none;
+
+      button {
+        color: ${({theme:e})=>e.colors.accent};
+      }
     }
 
     button {
+      padding: 8px 14px;
+
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+
       font-size: 0.9rem;
       font-weight: 500;
+      line-height: 1.2;
+      color: ${({theme:e})=>e.colors.textSecondary};
+      text-transform: uppercase;
+
+      transition: color ${({theme:e})=>e.transitions.main};
+
+      &:hover {
+        color: ${({theme:e})=>e.colors.accent};
+      }
+
+      @media (min-width: ${({theme:e})=>e.breakpoints.tablet}) {
+        padding: 10px 16px;
+      }
+
+      @media (min-width: ${({theme:e})=>e.breakpoints.desktop}) {
+        font-size: 1rem;
+      }
     }
   }
-`,L=({tags:e,setSelectedTag:t,selectedTag:n})=>(0,j.jsxs)(I,{children:[(0,j.jsx)(`li`,{className:n===`all`?`active`:``,children:(0,j.jsx)(`button`,{type:`button`,onClick:()=>t(`all`),children:`ALL`})},`all`),e.map(e=>(0,j.jsx)(`li`,{className:e===n?`active`:``,children:(0,j.jsx)(`button`,{type:`button`,onClick:()=>t(e),children:e.toUpperCase()})},e)).slice(1,8)]}),R=t.div`
+`,L=({tags:e,setSelectedTag:t,selectedTag:n})=>(0,j.jsxs)(I,{children:[(0,j.jsx)(`li`,{className:n===`all`?`active`:``,children:(0,j.jsx)(`button`,{type:`button`,onClick:()=>t(`all`),children:`ALL`})},`all`),e.slice(0,7).map(e=>(0,j.jsx)(`li`,{className:e===n?`active`:``,children:(0,j.jsx)(`button`,{type:`button`,onClick:()=>t(e),children:e.toUpperCase()})},e))]}),R=t.div`
   position: relative;
   display: flex;
   margin: 50px auto;
