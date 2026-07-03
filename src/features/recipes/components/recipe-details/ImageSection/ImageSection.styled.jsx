@@ -5,6 +5,7 @@ export const ImgWrapper = styled.div`
 
   img {
     width: 100%;
+    display: block;
     aspect-ratio: 4 / 3;
     object-fit: cover;
 
