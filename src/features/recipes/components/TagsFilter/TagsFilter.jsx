@@ -8,15 +8,13 @@ const TagsFilter = ({ tags, setSelectedTag, selectedTag }) => {
           {'all'.toUpperCase()}
         </button>
       </li>
-      {tags
-        .map((tag) => (
-          <li key={tag} className={tag === selectedTag ? 'active' : ''}>
-            <button type="button" onClick={() => setSelectedTag(tag)}>
-              {tag.toUpperCase()}
-            </button>
-          </li>
-        ))
-        .slice(1, 8)}
+      {tags.slice(0, 7).map((tag) => (
+        <li key={tag} className={tag === selectedTag ? 'active' : ''}>
+          <button type="button" onClick={() => setSelectedTag(tag)}>
+            {tag.toUpperCase()}
+          </button>
+        </li>
+      ))}
     </TagsList>
   );
 };
