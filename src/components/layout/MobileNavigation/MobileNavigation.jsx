@@ -23,11 +23,10 @@ const MobileNavigation = ({ name, isLoggedIn, onLogOutClick }) => {
     setMenuOpen(true);
   };
 
-  //! Сделать закрытие при нажатии на esc хотя зачем оно на телефоне не понятно
-
   const handleCloseBurgerMenu = () => {
     setMenuOpen(false);
   };
+
   return (
     <ResponsiveNavigationWrapper>
       {!menuOpen ? (
@@ -52,7 +51,6 @@ const MobileNavigation = ({ name, isLoggedIn, onLogOutClick }) => {
           </button>
 
           <Logo />
-          {/* </header> */}
 
           <section className="navigation">
             <NavList isLoggedIn={isLoggedIn} onClick={handleCloseBurgerMenu} />
@@ -66,11 +64,7 @@ const MobileNavigation = ({ name, isLoggedIn, onLogOutClick }) => {
             {!isLoggedIn ? (
               <AuthLinks onClick={handleCloseBurgerMenu} />
             ) : (
-              <UserProfile
-                name={name}
-                showFullName={true}
-                onClick={onLogOutClick}
-              />
+              <UserProfile name={name} onClick={onLogOutClick} />
             )}
           </section>
         </MobileMenu>

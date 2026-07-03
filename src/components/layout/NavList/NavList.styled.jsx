@@ -19,17 +19,19 @@ export const NavListComponent = styled.ul`
     padding: 12px 16px;
     border-radius: ${({ theme }) => theme.radii.lg};
 
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 500;
+    line-height: 1.2;
+
     transition: ${({ theme }) => theme.transitions.main};
 
     @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-      padding: 10px;
+      font-size: 1rem;
+      padding: 10px 16px;
     }
 
     @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
       padding: 12px 16px;
-      font-size: 1.4rem;
     }
 
     &:hover {

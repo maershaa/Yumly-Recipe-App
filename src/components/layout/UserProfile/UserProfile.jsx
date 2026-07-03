@@ -4,19 +4,20 @@ import {
   StyledTooltip,
 } from './UserProfile.styled';
 
-const UserProfile = ({ name, onClick, showFullName = false }) => {
+const UserProfile = ({ name, onClick }) => {
   return (
     <UserMenu>
-      <button onClick={onClick}>Logout</button>
-
-      {showFullName ? (
-        <span className="userName">{name}</span>
-      ) : (
+      <div className="userInfoBlock">
         <UserAvatarWrapper>
-          <span className="userName">{name?.[0]?.toUpperCase()}</span>
+          <span className="avatarLetter">{name?.[0]?.toUpperCase()}</span>
           <StyledTooltip text={name} />
         </UserAvatarWrapper>
-      )}
+        <span className="fullName">{name}</span>
+      </div>
+
+      <button className="logoutBtn" type="button" onClick={onClick}>
+        Logout
+      </button>
     </UserMenu>
   );
 };
