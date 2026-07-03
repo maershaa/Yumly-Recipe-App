@@ -52,6 +52,8 @@ export const SummaryWrapper = styled.div`
   .tagsList {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+
     gap: 15px;
 
     li {
@@ -61,10 +63,23 @@ export const SummaryWrapper = styled.div`
       align-items: center;
 
       padding: 8px;
-      background-color: ${({ theme }) => theme.colors.cardSecondary};
-      border: 1px solid ${({ theme }) => theme.colors.border};
+      background-color: ${({ theme }) => theme.colors.accentBgWarning};
+      border: 1px solid ${({ theme }) => theme.colors.hoverBorderSecondary};
       border-radius: ${({ theme }) => theme.radii.pill};
       color: ${({ theme }) => theme.colors.accentSecondary};
+    }
+
+    span {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: ${({ theme }) => theme.colors.accentSecondary};
+      white-space: nowrap; /* Запрещаем тексту внутри бейджа разбиваться на 2 строки */
+    }
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+      span {
+        font-size: 0.9rem;
+      }
     }
   }
 `;
