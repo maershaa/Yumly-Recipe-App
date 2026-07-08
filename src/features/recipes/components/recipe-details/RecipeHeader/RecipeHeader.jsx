@@ -1,6 +1,6 @@
 import { Header } from './RecipeHeader.styled';
-
 import { ImageSection, SummarySection } from '@/features/recipes/components';
+import { convertMinutes } from '@/features/recipes/helpers';
 
 const RecipeHeader = ({ recipe, setRecipe }) => {
   const {
@@ -21,6 +21,8 @@ const RecipeHeader = ({ recipe, setRecipe }) => {
     // instructions,
   } = recipe;
 
+  const displayCookingTime = convertMinutes(cooking_time);
+
   return (
     <Header>
       <ImageSection
@@ -28,7 +30,7 @@ const RecipeHeader = ({ recipe, setRecipe }) => {
         servings={servings}
         likes={likes}
         recipe_name={recipe_name}
-        cooking_time={cooking_time}
+        cooking_time={displayCookingTime}
         image_url={image_url}
         favorites={favorites}
         setRecipe={setRecipe}
@@ -38,7 +40,7 @@ const RecipeHeader = ({ recipe, setRecipe }) => {
         id={id}
         user_id={user_id}
         recipe_name={recipe_name}
-        cooking_time={cooking_time}
+        cooking_time={displayCookingTime}
         description={description}
         tags={tags}
       />

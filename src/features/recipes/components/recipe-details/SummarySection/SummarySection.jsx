@@ -13,6 +13,7 @@ import { deleteRecipe } from '@/features/recipes/api';
 import { selectUser } from '@/app/redux/auth/selectors';
 import { useSelector } from 'react-redux';
 import { toast } from 'sonner';
+import { mainTags } from '@/features/recipes/constants';
 
 const SummarySection = ({
   id,
@@ -28,11 +29,11 @@ const SummarySection = ({
 
   const isRecipeOwner = currentUserId === user_id; //только если залогиненный пользователь и автор рецепта один и тот же человек вернет true
 
-  const TAG_ICONS = {
-    breakfast: <FaSun />,
-    dinner: <FaMoon />,
-    healthy: <FaLeaf />,
-    easy: <PiLightning />,
+  const findTagIcon = (tag) => {
+    const foundTag = mainTags.find(
+      (mainTag) => mainTag.value === tag.toLowerCase(),
+    );
+    return foundTag ? foundTag.icon : null;
   };
 
   const handleDeleteRecipe = async (recipeId) => {
@@ -77,13 +78,13 @@ const SummarySection = ({
       <span className="cookingTimeMain">
         <AiOutlineClockCircle className="accent" size={22} />
         <span> Prep time:</span>
-        <span className="accent">{cooking_time} min</span>
+        <span className="accent">{cooking_time}</span>
       </span>
 
       <ul className="tagsList">
         {tags?.map((tag) => (
           <li key={tag}>
-            {TAG_ICONS[tag.toLowerCase()] || null}{' '}
+            {findTagIcon(tag)}
             <span>{tag.toUpperCase()}</span>
           </li>
         ))}

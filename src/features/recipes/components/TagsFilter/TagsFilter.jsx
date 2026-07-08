@@ -1,6 +1,6 @@
 import { TagsList } from './TagsFilter.styled';
-
-const TagsFilter = ({ tags, setSelectedTag, selectedTag }) => {
+import { mainTags } from '@/features/recipes/constants';
+const TagsFilter = ({ setSelectedTag, selectedTag }) => {
   return (
     <TagsList>
       <li key={'all'} className={'all' === selectedTag ? 'active' : ''}>
@@ -8,10 +8,16 @@ const TagsFilter = ({ tags, setSelectedTag, selectedTag }) => {
           {'all'.toUpperCase()}
         </button>
       </li>
-      {tags.slice(0, 7).map((tag) => (
-        <li key={tag} className={tag === selectedTag ? 'active' : ''}>
-          <button type="button" onClick={() => setSelectedTag(tag)}>
-            {tag.toUpperCase()}
+      {mainTags.slice(0, 7).map((tag) => (
+        <li
+          key={tag.value}
+          className={tag.value === selectedTag.value ? 'active' : ''}
+        >
+          <button
+            type="button"
+            onClick={() => setSelectedTag(tag.value.toLowerCase())}
+          >
+            {tag.value.toUpperCase()}
           </button>
         </li>
       ))}

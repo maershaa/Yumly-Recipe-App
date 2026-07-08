@@ -11,6 +11,7 @@ import {
 import { useSelector } from 'react-redux';
 import { selectUser } from '@/app/redux/auth/selectors';
 import { useState } from 'react';
+
 const ImageSection = ({
   id,
   recipe_name,
@@ -74,7 +75,7 @@ const ImageSection = ({
       <div className="badgesWrapper">
         <span className="badge">
           <AiOutlineClockCircle />
-          {cooking_time} min
+          {cooking_time}
         </span>
 
         <span className="badge">

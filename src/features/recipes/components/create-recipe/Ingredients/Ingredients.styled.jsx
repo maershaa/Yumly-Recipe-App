@@ -18,4 +18,16 @@ export const IngredientRow = styled.div`
     grid-template-columns: 1fr 120px 110px auto;
     gap: 15px;
   }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    grid-template-columns: 1fr 110px 50px auto;
+    gap: 10px;
+  }
+
+  //Убираем стандартную стрелку select
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
 `;
