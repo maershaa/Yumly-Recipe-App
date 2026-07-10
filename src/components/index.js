@@ -6,6 +6,7 @@ export {
   CreateButton,
   Tooltip,
   ErrorMessage,
+  NoRecipesFound,
   Loader,
   Logo,
   FieldErrorMessage,

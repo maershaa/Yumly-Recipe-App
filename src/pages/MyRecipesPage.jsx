@@ -1,7 +1,10 @@
+import { useEffect, useMemo, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+
 import { selectUser } from '@/app/redux/auth/selectors.js';
-import { useEffect, useMemo, useState } from 'react';
+import { getUserRecipes } from '@/features/recipes/api';
+
 import {
   RecipesList,
   PageHeader,
@@ -12,8 +15,8 @@ import {
   RedirectComponent,
   RecipeCardSkeleton,
   ErrorMessage,
+  NoRecipesFound,
 } from '@/components';
-import { getUserRecipes } from '@/features/recipes/api';
 
 const MyRecipesPage = () => {
   const { id: currentUserId } = useSelector(selectUser);
@@ -125,11 +128,7 @@ const MyRecipesPage = () => {
       {filteredRecipes.length > 0 ? (
         <RecipesList recipes={filteredRecipes} />
       ) : (
-        <p>
-          {filter.trim().length > 0
-            ? 'There are no recipes matching your search.'
-            : 'No recipes found.'}
-        </p>
+        <NoRecipesFound />
       )}
 
       <Outlet />

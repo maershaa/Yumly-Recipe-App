@@ -14,6 +14,10 @@ const RecipesPage = lazy(() => import('@/pages/RecipesPage'));
 const RecipeDetailsPage = lazy(() => import('@/pages/RecipeDetailsPage'));
 
 const MyRecipesPage = lazy(() => import('@/pages/MyRecipesPage'));
+const MyFavoritesRecipesPage = lazy(
+  () => import('@/pages/MyFavoritesRecipesPage'),
+);
+
 const CreateRecipePage = lazy(() => import('@/pages/CreateRecipePage'));
 const EditRecipePage = lazy(() => import('@/pages/EditRecipePage'));
 
@@ -47,6 +51,7 @@ function App() {
           {/* Private Routes Group */}
           <Route path="my-recipes" element={<PrivateRoute />}>
             <Route index element={<MyRecipesPage />} />
+            <Route path="favorites" element={<MyFavoritesRecipesPage />} />
             <Route path="new" element={<CreateRecipePage />} />
             <Route path=":recipeId/edit" element={<EditRecipePage />} />
           </Route>

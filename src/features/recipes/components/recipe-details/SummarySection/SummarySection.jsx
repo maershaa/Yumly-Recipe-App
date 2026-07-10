@@ -1,11 +1,9 @@
-import { FaSun, FaMoon, FaLeaf } from 'react-icons/fa';
 import { AiOutlineClockCircle } from 'react-icons/ai';
 import {
   SummaryWrapper,
   RecipeHeaderBar,
   Actions,
 } from './SummarySection.styled';
-import { PiLightning } from 'react-icons/pi';
 import { FiEdit3 } from 'react-icons/fi';
 import { MdDeleteForever } from 'react-icons/md';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
