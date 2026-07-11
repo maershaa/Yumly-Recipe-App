@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const BenefitsSection = styled.section`
+export const BenefitsSection = styled.section`
   display: flex;
   flex-direction: column;
   row-gap: 20px;
@@ -58,7 +58,7 @@ const BenefitsSection = styled.section`
   }
 `;
 
-const BenefitsList = styled.ul`
+export const BenefitsList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -68,7 +68,7 @@ const BenefitsList = styled.ul`
   }
 `;
 
-const BenefitCard = styled.li`
+export const BenefitCard = styled.li`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -149,5 +149,3 @@ const BenefitCard = styled.li`
     opacity: 0.1;
   }
 `;
-
-export { BenefitsSection, BenefitsList, BenefitCard };

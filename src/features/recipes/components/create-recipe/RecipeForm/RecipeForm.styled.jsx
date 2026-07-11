@@ -13,11 +13,8 @@ export const Form = styled.form`
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    flex-direction: row;
-    align-items: flex-start;
-
-    gap: 32px;
-    max-width: 1200px;
+    min-width: 700px;
+    max-width: 70%;
   }
 
   .invalid {
@@ -103,21 +100,6 @@ export const FormSectionWrapper = styled.div`
   textarea {
     resize: vertical;
     min-height: 120px;
-  }
-`;
-
-export const FormMainSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    flex: 4;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    max-width: 480px;
   }
 `;
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const FormWrapper = styled.form`
+export const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -81,5 +81,3 @@ const FormWrapper = styled.form`
     }
   }
 `;
-
-export { FormWrapper };

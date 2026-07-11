@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-export const BackButtonWrapper = styled.a`
-  margin-top: 20px;
+export const NextButton = styled.button`
+  margin: 20px 0 20px auto;
 
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 8px;
 
@@ -24,5 +24,13 @@ export const BackButtonWrapper = styled.a`
     background-color: ${({ theme }) => theme.colors.accent};
     box-shadow: ${({ theme }) => theme.colors.hoverShadowAccent};
     transform: translateY(-2px);
+  }
+
+  span {
+    font-size: 0.9rem;
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+      font-size: 1rem;
+    }
   }
 `;

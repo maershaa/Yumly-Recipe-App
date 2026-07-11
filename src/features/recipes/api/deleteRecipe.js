@@ -1,7 +1,6 @@
 import { supabase } from '@/supabase/supabaseClient';
 
 export const deleteRecipe = async (recipeIdToDelete) => {
-  console.log('🚀 ~ deleteRecipe ~ recipeIdToDelete:', recipeIdToDelete);
   try {
     const { data, error } = await supabase
       .from('recipes')

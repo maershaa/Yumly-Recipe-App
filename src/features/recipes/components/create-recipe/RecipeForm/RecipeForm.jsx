@@ -1,24 +1,21 @@
 import { FaUtensils } from 'react-icons/fa';
 
+import { Form, FormSectionWrapper } from './RecipeForm.styled';
 import {
-  Form,
-  FormSectionWrapper,
-  FormMainSection,
-  FormStepsSection,
-} from './RecipeForm.styled';
-import {
+  RecipeTagsCheckbox,
   RecipeInfo,
+  AddImageSection,
   Ingredients,
   CookingSteps,
-  AddImageSection,
+  RecipeFormTabs,
+  RecipeNextStepNav,
 } from '@/features/recipes/components/create-recipe';
+
 import { GeneralBtn } from '@/components';
 
 import { uploadRecipeImage } from '@/features/recipes/api';
 import { createIngredient, createStep } from '@/features/recipes/helpers';
 import { useState } from 'react';
-
-import { RecipeTagsCheckbox } from '@/features/recipes/components/create-recipe';
 
 const RecipeForm = ({
   recipeForm,
@@ -41,6 +38,7 @@ const RecipeForm = ({
   };
 
   const [isTouched, setIsTouched] = useState(FORM_FIELDS);
+  const [activeTab, setActiveTab] = useState('generalInfo');
 
   const handleInfoChange = (e) => {
     const { name, value } = e.target;
@@ -154,47 +152,68 @@ const RecipeForm = ({
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FormMainSection>
-        <FormSectionWrapper>
-          <RecipeInfo
-            values={recipeForm}
-            onChange={handleInfoChange}
-            validationErrors={validationErrors}
-            // Обработчик отображения валидности инпутов в форме и состояние было ли на инпуте событие фокуса
-            handleInputBlur={handleInputBlur}
-            isTouched={isTouched}
+      <RecipeFormTabs activeTab={activeTab} onTabChange={setActiveTab} />
+
+      {activeTab === 'generalInfo' && (
+        <>
+          <FormSectionWrapper>
+            <RecipeInfo
+              values={recipeForm}
+              onChange={handleInfoChange}
+              validationErrors={validationErrors}
+              handleInputBlur={handleInputBlur}
+              isTouched={isTouched}
+            />
+          </FormSectionWrapper>
+
+          <FormSectionWrapper>
+            <RecipeTagsCheckbox
+              values={recipeForm}
+              onChange={handleToggleTags}
+            />
+          </FormSectionWrapper>
+
+          <FormSectionWrapper>
+            <AddImageSection
+              recipe_name={recipeForm.recipe_name}
+              image_url={recipeForm.image_url}
+              handleImageUpload={handleImageUpload}
+              removeImage={removeImage}
+              isImgError={validationErrors.image}
+              handleInputBlur={handleInputBlur}
+              isTouched={isTouched}
+            />
+          </FormSectionWrapper>
+
+          <RecipeNextStepNav
+            nextStep={'ingredients'}
+            nextStepName={'Ingredients'}
+            onTabChange={setActiveTab}
           />
-        </FormSectionWrapper>
+        </>
+      )}
 
-        <FormSectionWrapper>
-          <RecipeTagsCheckbox values={recipeForm} onChange={handleToggleTags} />
-        </FormSectionWrapper>
+      {activeTab === 'ingredients' && (
+        <>
+          <FormSectionWrapper>
+            <Ingredients
+              ingredients={recipeForm.ingredients}
+              onChange={handleIngredientChange}
+              addIngredient={addIngredient}
+              removeIngredient={removeIngredient}
+              isIngredientsError={validationErrors.ingredients}
+            />
+          </FormSectionWrapper>
 
-        <FormSectionWrapper>
-          <AddImageSection
-            recipe_name={recipeForm.recipe_name}
-            image_url={recipeForm.image_url}
-            handleImageUpload={handleImageUpload}
-            removeImage={removeImage}
-            isImgError={validationErrors.image}
-            // Обработчик отображения валидности инпутов в форме и состояние было ли на инпуте событие фокуса
-            handleInputBlur={handleInputBlur}
-            isTouched={isTouched}
-          ></AddImageSection>
-        </FormSectionWrapper>
-      </FormMainSection>
-
-      <FormStepsSection>
-        <FormSectionWrapper>
-          <Ingredients
-            ingredients={recipeForm.ingredients}
-            onChange={handleIngredientChange}
-            addIngredient={addIngredient}
-            removeIngredient={removeIngredient}
-            isIngredientsError={validationErrors.ingredients}
+          <RecipeNextStepNav
+            nextStep={'cooking'}
+            nextStepName={'Cooking Steps'}
+            onTabChange={setActiveTab}
           />
-        </FormSectionWrapper>
+        </>
+      )}
 
+      {activeTab === 'cooking' && (
         <FormSectionWrapper>
           <CookingSteps
             instructions={recipeForm.instructions}
@@ -204,16 +223,16 @@ const RecipeForm = ({
             isStepsError={validationErrors.instructions}
           />
         </FormSectionWrapper>
+      )}
 
-        <GeneralBtn
-          type="submit"
-          variant="submit"
-          disabled={!isFormValid || isSubmitting}
-        >
-          <FaUtensils />
-          {submitButtonText}
-        </GeneralBtn>
-      </FormStepsSection>
+      <GeneralBtn
+        type="submit"
+        variant="submit"
+        disabled={!isFormValid || isSubmitting}
+      >
+        <FaUtensils />
+        {submitButtonText}
+      </GeneralBtn>
     </Form>
   );
 };

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Redirect = styled.p`
+export const Redirect = styled.p`
   margin-top: 24px;
 
   display: flex;
@@ -18,5 +18,3 @@ const Redirect = styled.p`
     }
   }
 `;
-
-export { Redirect };

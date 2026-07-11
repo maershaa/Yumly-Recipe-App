@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ResponsiveNavigationWrapper = styled.div`
+export const ResponsiveNavigationWrapper = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
@@ -19,7 +19,7 @@ const ResponsiveNavigationWrapper = styled.div`
   }
 `;
 
-const BurgerMenu = styled.div`
+export const BurgerMenu = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -32,7 +32,7 @@ const BurgerMenu = styled.div`
   }
 `;
 
-const MobileMenu = styled.div`
+export const MobileMenu = styled.div`
   padding: 20px;
 
   display: flex;
@@ -94,5 +94,3 @@ const MobileMenu = styled.div`
     margin-top: auto;
   }
 `;
-
-export { ResponsiveNavigationWrapper, BurgerMenu, MobileMenu };

@@ -41,8 +41,14 @@ export const ReplaceImageWrapper = styled.div`
   margin: 0 auto;
   gap: 30px;
 
+  width: 100%;
+  max-width: 500px;
+
   img {
     width: 100%;
+    display: block;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
 
     border: 2px dashed ${({ theme }) => theme.colors.border};
     border-radius: ${({ theme }) => theme.radii.lg};

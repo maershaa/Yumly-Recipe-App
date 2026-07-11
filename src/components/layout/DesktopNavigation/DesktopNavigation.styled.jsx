@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Header = styled.header`
+export const Header = styled.header`
   display: none;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
@@ -15,5 +15,3 @@ const Header = styled.header`
     border-radius: ${({ theme }) => theme.radii.lg};
   }
 `;
-
-export { Header };

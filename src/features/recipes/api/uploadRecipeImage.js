@@ -11,7 +11,6 @@ export const uploadRecipeImage = async (filePath, uploadedFile) => {
 
     if (error) throw error;
 
-    console.log('🚀 ~ Upload success ~ data:', data);
     const { data: urlData } = supabase.storage
       .from('recipeImage')
       .getPublicUrl(filePath); // Передаем filePath, а не просто имя файла

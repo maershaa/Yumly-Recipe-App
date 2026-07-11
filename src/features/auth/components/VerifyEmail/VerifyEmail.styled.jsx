@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const VerifyEmailWrapper = styled.div`
+export const VerifyEmailWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,5 +49,3 @@ const VerifyEmailWrapper = styled.div`
     font-weight: 700;
   }
 `;
-
-export { VerifyEmailWrapper };

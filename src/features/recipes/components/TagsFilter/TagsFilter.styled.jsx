@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const TagsList = styled.ul`
+export const TagsList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -75,5 +75,3 @@ const TagsList = styled.ul`
     }
   }
 `;
-
-export { TagsList };

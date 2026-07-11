@@ -12,7 +12,6 @@ const RecipeItemCard = ({ recipe }) => {
   const navigate = useNavigate();
 
   const { id, recipe_name, image_url, tags, cooking_time } = recipe;
-  console.log('🚀 ~ RecipeItemCard ~ tags:', tags);
 
   const onItemClick = (itemId) => {
     navigate(`/recipes/${itemId}`);

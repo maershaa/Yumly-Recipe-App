@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const RecipeItem = styled.li`
+export const RecipeItem = styled.li`
   cursor: pointer;
 
   display: flex;
@@ -31,7 +31,7 @@ const RecipeItem = styled.li`
   }
 `;
 
-const Title = styled.h2`
+export const Title = styled.h2`
   margin-bottom: 14px;
   font-size: clamp(18px, 2vw, 22px); //clamp(min, preferred, max)
   font-weight: 700;
@@ -43,7 +43,7 @@ const Title = styled.h2`
   overflow: hidden;
 `;
 
-const RecipeInfo = styled.div`
+export const RecipeInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -53,7 +53,7 @@ const RecipeInfo = styled.div`
   font-size: 16px;
 `;
 
-const TagList = styled.ul`
+export const TagList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -70,5 +70,3 @@ const TagList = styled.ul`
     color: ${({ theme }) => theme.colors.accentSecondary};
   }
 `;
-
-export { RecipeItem, Title, RecipeInfo, TagList };

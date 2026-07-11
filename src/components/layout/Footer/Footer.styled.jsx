@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-const FooterWrapper = styled.footer`
+export const FooterWrapper = styled.footer`
   margin-top: 3.75rem;
   padding: 1.5rem 1rem;
   border-top: 1px solid ${({ theme }) => theme.colors.border};
 `;
 
-const Main = styled.div`
+export const Main = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,7 +14,7 @@ const Main = styled.div`
   text-align: center;
 `;
 
-const Tagline = styled.p`
+export const Tagline = styled.p`
   max-width: 22rem;
 
   font-size: 1rem;
@@ -25,7 +25,7 @@ const Tagline = styled.p`
   color: ${({ theme }) => theme.colors.textSecondary};
 `;
 
-const Socials = styled.ul`
+export const Socials = styled.ul`
   display: flex;
   gap: 0.75rem;
 
@@ -34,7 +34,7 @@ const Socials = styled.ul`
   margin-top: 0.375rem;
 `;
 
-const SocialLink = styled.a`
+export const SocialLink = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,7 +67,7 @@ const SocialLink = styled.a`
   }
 `;
 
-const Bottom = styled.div`
+export const Bottom = styled.div`
   margin-top: 1rem;
   padding-top: 0.75rem;
 
@@ -84,5 +84,3 @@ const Bottom = styled.div`
 
   color: ${({ theme }) => theme.colors.textSecondary};
 `;
-
-export { FooterWrapper, Main, Tagline, Socials, SocialLink, Bottom };

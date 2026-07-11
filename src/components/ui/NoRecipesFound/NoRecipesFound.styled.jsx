@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Container = styled.div`
+export const Container = styled.div`
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
@@ -13,7 +13,7 @@ const Container = styled.div`
   text-align: center;
 `;
 
-const IconWrapper = styled.div`
+export const IconWrapper = styled.div`
   width: 72px;
   height: 72px;
   margin-bottom: 24px;
@@ -35,7 +35,7 @@ const IconWrapper = styled.div`
   }
 `;
 
-const Title = styled.h3`
+export const Title = styled.h3`
   margin: 0 0 20px 0;
 
   font-size: 1.5rem;
@@ -44,7 +44,7 @@ const Title = styled.h3`
   color: ${({ theme }) => theme.colors.textPrimary};
 `;
 
-const Description = styled.p`
+export const Description = styled.p`
   max-width: 420px;
 
   margin: 0;
@@ -54,5 +54,3 @@ const Description = styled.p`
   font-size: 1rem;
   line-height: 1.6;
 `;
-
-export { Container, IconWrapper, Title, Description };

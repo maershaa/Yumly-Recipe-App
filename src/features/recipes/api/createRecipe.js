@@ -10,7 +10,6 @@ export const useCreateRecipe = () => {
         .select();
 
       if (error) throw error;
-      console.log('🚀 ~ Recipe successfully created:', data);
       return data;
     } catch (e) {
       console.error('Error creating recipe:', e.message);

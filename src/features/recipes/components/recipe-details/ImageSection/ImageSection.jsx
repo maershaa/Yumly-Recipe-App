@@ -62,7 +62,6 @@ const ImageSection = ({
       toast.error(error.message || 'Something went wrong');
     } finally {
       setIsLoading(false);
-      console.log('handleToggleFavorite => favorites', favorites);
     }
   };
 

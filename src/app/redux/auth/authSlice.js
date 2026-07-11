@@ -31,13 +31,9 @@ const authSlice = createSlice({
       .addCase(registerNewUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        console.log('registerNewUser.rejected');
-        console.log('🚀 ~ action:', action);
       })
-      .addCase(registerNewUser.fulfilled, (state, action) => {
+      .addCase(registerNewUser.fulfilled, (state) => {
         state.loading = false;
-        console.log('registerNewUser.fulfilled');
-        console.log('🚀 ~ action:', action);
       })
 
       // loginUser
@@ -66,8 +62,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(logOutUser.fulfilled, (state, action) => {
-        console.log('action в loginUser fulfilled', action); //его нету
+      .addCase(logOutUser.fulfilled, (state) => {
         state.loading = false;
         state.user = { id: '', name: '', email: '' };
         state.token = null;

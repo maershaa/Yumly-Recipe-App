@@ -45,7 +45,6 @@ const EditRecipePage = () => {
     const loadRecipeDetails = async () => {
       try {
         const data = await getRecipeById(recipeId);
-        console.log('🚀 ~ loadRecipeDetails ~ data:', data);
 
         setRecipeForm({
           recipe_name: data.recipe_name,
