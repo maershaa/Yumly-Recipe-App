@@ -50,6 +50,7 @@ export const theme = Object.freeze({
   // background: ${({ theme }) => theme.gradients.textAccent};
 
   radii: {
+    sm: '6px',
     md: '12px',
     lg: '16px',
     pill: '999px',

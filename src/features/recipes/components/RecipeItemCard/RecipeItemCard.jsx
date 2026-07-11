@@ -12,6 +12,7 @@ const RecipeItemCard = ({ recipe }) => {
   const navigate = useNavigate();
 
   const { id, recipe_name, image_url, tags, cooking_time } = recipe;
+  console.log('🚀 ~ RecipeItemCard ~ tags:', tags);
 
   const onItemClick = (itemId) => {
     navigate(`/recipes/${itemId}`);
@@ -30,7 +31,7 @@ const RecipeItemCard = ({ recipe }) => {
         <span>Prep time: {displayCookingTime} </span>
 
         <TagList>
-          {tags?.map((tag) => (
+          {tags?.slice(0, 4).map((tag) => (
             <li key={tag}>
               <span>{tag.toUpperCase()}</span>
             </li>

@@ -32,6 +32,11 @@ export const prepareRecipeForSave = (formData) => {
     difficulty: difficultyValue,
     likes: 0,
     tips: formData.tips.trim(),
-    tags: generateRecipeTags(difficultyValue),
+
+    tags: generateRecipeTags(
+      formData.tags,
+      difficultyValue,
+      formData.cuisine.trim(),
+    ),
   };
 };

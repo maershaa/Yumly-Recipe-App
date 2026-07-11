@@ -11,12 +11,11 @@ import {
   validateRecipeForm,
   prepareRecipeForUpdate,
 } from '@/features/recipes/helpers';
-
+import { recipeCategories } from '@/features/recipes/constants';
 const EditRecipePage = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const [recipeForm, setRecipeForm] = useState({
     recipe_name: '',
@@ -29,7 +28,7 @@ const EditRecipePage = () => {
     image_url: '',
 
     tips: '',
-
+    tags: [],
     ingredients: [],
     instructions: [],
   });
@@ -43,9 +42,10 @@ const EditRecipePage = () => {
   const updateRecipe = useUpdateRecipe();
 
   useEffect(() => {
-    const loadRecipeDetails = async (id) => {
+    const loadRecipeDetails = async () => {
       try {
-        const data = await getRecipeById(id);
+        const data = await getRecipeById(recipeId);
+        console.log('🚀 ~ loadRecipeDetails ~ data:', data);
 
         setRecipeForm({
           recipe_name: data.recipe_name,
@@ -78,23 +78,30 @@ const EditRecipePage = () => {
             };
           }),
 
+          // В состоянии формы храним только теги, которые пользователь может изменить через чекбоксы. Автоматически вычисляемые теги (difficulty, cuisine) сюда не включаем
+          tags: data.tags.filter((tag) =>
+            recipeCategories.some((category) => category.value === tag),
+          ),
+
           likes: data.likes,
           created_at: data.created_at,
         });
       } catch (error) {
-        console.log(error.message); //!а что мы с этим можем сделать на продакшен?
+        console.error(error);
+        toast.error('Failed to load recipe.');
+        navigate('/recipes');
       }
     };
 
     if (recipeId) {
-      loadRecipeDetails(recipeId);
+      loadRecipeDetails();
     }
-  }, [recipeId]);
+  }, [navigate, recipeId]);
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    if (!isFormValid) return;
     if (isSubmitting) return;
+    if (!isFormValid) return;
 
     setError(null);
 

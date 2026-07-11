@@ -28,6 +28,7 @@ const CreateRecipePage = () => {
     cooking_time: '',
     servings: '',
 
+    tags: [],
     image_url: '',
 
     tips: '',

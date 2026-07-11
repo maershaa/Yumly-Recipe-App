@@ -146,7 +146,6 @@ export const SubmitButton = styled.button`
   justify-content: center;
   gap: 10px;
 
-  /* ИСПРАВЛЕНИЕ: убрали некорректный auto */
   margin-top: 24px;
   padding: 18px;
 

@@ -18,6 +18,8 @@ import { uploadRecipeImage } from '@/features/recipes/api';
 import { createIngredient, createStep } from '@/features/recipes/helpers';
 import { useState } from 'react';
 
+import { RecipeTagsCheckbox } from '@/features/recipes/components/create-recipe';
+
 const RecipeForm = ({
   recipeForm,
   setRecipeForm,
@@ -139,6 +141,17 @@ const RecipeForm = ({
     setIsTouched((prev) => ({ ...prev, [name]: true }));
   };
 
+  const handleToggleTags = ({ target: { value } }) => {
+    // Если тег уже выбран — удаляем его из массива.
+    // Если нет — добавляем в конец массива.
+    setRecipeForm((prev) => ({
+      ...prev,
+      tags: prev.tags.includes(value)
+        ? prev.tags.filter((tag) => tag !== value)
+        : [...prev.tags, value],
+    }));
+  };
+
   return (
     <Form onSubmit={handleSubmit}>
       <FormMainSection>
@@ -154,25 +167,7 @@ const RecipeForm = ({
         </FormSectionWrapper>
 
         <FormSectionWrapper>
-          <Ingredients
-            ingredients={recipeForm.ingredients}
-            onChange={handleIngredientChange}
-            addIngredient={addIngredient}
-            removeIngredient={removeIngredient}
-            isIngredientsError={validationErrors.ingredients}
-          />
-        </FormSectionWrapper>
-      </FormMainSection>
-
-      <FormStepsSection>
-        <FormSectionWrapper>
-          <CookingSteps
-            instructions={recipeForm.instructions}
-            onChange={handleStepChange}
-            addStep={addStep}
-            removeStep={removeStep}
-            isStepsError={validationErrors.instructions}
-          />
+          <RecipeTagsCheckbox values={recipeForm} onChange={handleToggleTags} />
         </FormSectionWrapper>
 
         <FormSectionWrapper>
@@ -186,6 +181,28 @@ const RecipeForm = ({
             handleInputBlur={handleInputBlur}
             isTouched={isTouched}
           ></AddImageSection>
+        </FormSectionWrapper>
+      </FormMainSection>
+
+      <FormStepsSection>
+        <FormSectionWrapper>
+          <Ingredients
+            ingredients={recipeForm.ingredients}
+            onChange={handleIngredientChange}
+            addIngredient={addIngredient}
+            removeIngredient={removeIngredient}
+            isIngredientsError={validationErrors.ingredients}
+          />
+        </FormSectionWrapper>
+
+        <FormSectionWrapper>
+          <CookingSteps
+            instructions={recipeForm.instructions}
+            onChange={handleStepChange}
+            addStep={addStep}
+            removeStep={removeStep}
+            isStepsError={validationErrors.instructions}
+          />
         </FormSectionWrapper>
 
         <GeneralBtn
