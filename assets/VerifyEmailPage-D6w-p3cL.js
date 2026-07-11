@@ -1,0 +1,1 @@
+import{W as e}from"./index-DRAWBr6W.js";import{t}from"./components-kzSpV56R.js";var n=e(),r=()=>(0,n.jsx)(t,{});export{r as default};

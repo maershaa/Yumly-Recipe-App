@@ -1,0 +1,1 @@
+import{W as e,v as t}from"./index-DRAWBr6W.js";var n=e(),r=()=>(0,n.jsx)(t,{});export{r as default};
