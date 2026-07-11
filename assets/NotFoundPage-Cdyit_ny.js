@@ -1,0 +1,1 @@
+import{G as e,y as t}from"./index-Dfi7LyXO.js";var n=e(),r=()=>(0,n.jsx)(t,{});export{r as default};
