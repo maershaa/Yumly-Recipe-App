@@ -1,0 +1,1 @@
+import{G as e}from"./index-3MJi5YT8.js";import{r as t}from"./components-BJQcWSEH.js";var n=e(),r=()=>(0,n.jsx)(`div`,{children:(0,n.jsx)(t,{})});export{r as default};

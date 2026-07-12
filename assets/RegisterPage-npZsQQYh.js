@@ -1,1 +1,0 @@
-import{G as e}from"./index-Dfi7LyXO.js";import{n as t}from"./components-BUcD-Upm.js";var n=e(),r=()=>(0,n.jsx)(`div`,{children:(0,n.jsx)(t,{})});export{r as default};
