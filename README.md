@@ -1,4 +1,4 @@
-# 🍽️ Yumly – Recipe Management Application
+# 🍽️ Yumly — Recipe Management App
 
 <p align="center">
 
@@ -12,191 +12,149 @@
 
 </p>
 
-## 📖 About
-
-**Yumly** is a modern Single Page Application for creating, managing, and discovering cooking recipes.
-
-The project was built as a portfolio application to demonstrate practical experience with modern frontend development, including state management, routing, authentication, CRUD operations, image uploads, and scalable application architecture.
-
-The backend is powered by **Supabase**, providing PostgreSQL, Authentication, Storage, and Row Level Security (RLS).
+<p align="center">
+  <a href="https://maershaa.github.io/Yumly-Recipe-App/"><b>🚀 Live Demo</b></a>
+</p>
 
 ---
 
-## 🚀 Live Demo
+## 📖 About
 
-🔗 **Application**
+**Yumly** is a Single Page Application for creating, storing, and discovering cooking recipes.
 
-https://maershaa.github.io/Yumly-Recipe-App/
+The project was built as a portfolio piece to practice a real-world frontend workflow: authentication, protected routes, CRUD operations, image uploads, filtering/search, and a scalable feature-based architecture — all backed by a real database instead of mock data.
+
+The backend runs entirely on **Supabase**: PostgreSQL, Auth, Storage, and Row Level Security.
 
 ---
 
 ## ✨ Features
 
-### Public
+**Public**
 
-- Browse all recipes
-- Search recipes
-- View recipe details
-- Responsive interface
-- Dark / Light theme
+- Browse and search all recipes
+- Filter recipes by tags, cuisine, and category
+- View full recipe details (ingredients, steps, cooking time, difficulty)
+- Light / dark theme
+- Fully responsive layout (mobile → desktop)
 
-### Authentication
+**Authentication**
 
-- User registration
-- Login / Logout
-- Protected routes
-- Persistent authentication
+- Registration with email verification
+- Login / logout
+- Persistent session (auto-restored on page reload)
+- Protected and public-only routes
 
-### Authorized Users
+**For logged-in users**
 
-- Create new recipes
-- Edit own recipes
-- Delete own recipes
-- Upload recipe images
-- Manage personal recipe collection
+- Create, edit, and delete your own recipes
+- Multi-step recipe creation form (info → ingredients → steps → image)
+- Upload a recipe photo
+- Add/remove recipes to **Favorites**
+- Manage your personal recipe collection ("My Recipes")
+- Auto-calculated difficulty level, based on cooking time
+- Client-side form validation with inline error messages
 
 ---
 
 ## 🛠 Tech Stack
 
-### Frontend
+**Frontend**
 
 - React 19
-- Redux Toolkit
-- React Router
-- Styled Components
-- Vite
-- React Icons
-- Sonner
+- Redux Toolkit — global state (auth, recipes)
+- React Router v7 — routing, protected/public route guards
+- Styled Components — theming (light/dark), component styles
+- Vite — build tool & dev server
+- React Icons, Sonner (toast notifications), React Spinners
 
-### Backend
+**Backend (BaaS)**
 
 - Supabase
-- PostgreSQL
-- Supabase Auth
-- Supabase Storage
-- Row Level Security (RLS)
+  - PostgreSQL — data storage
+  - Supabase Auth — registration, login, email verification, sessions
+  - Supabase Storage — recipe image uploads
+  - Row Level Security (RLS) — users can only modify their own recipes
+
+**Tooling**
+
+- ESLint (flat config) — code quality
+- GitHub Pages + `gh-pages` — deployment
 
 ---
 
 ## 🏗 Architecture
 
-The project follows a **feature-based architecture**, where business logic is grouped by domain instead of file type.
+The project follows a **feature-based architecture**: code is grouped by business domain (auth, recipes, favorites) rather than by file type.
 
 ```
 src
 │
-├── app
+├── app                  # App entry, providers, Redux store
 │   ├── providers
 │   └── redux
+│       ├── auth
+│       └── recipes
 │
-├── assets
-├── components
-│   ├── navigation
-│   └── ui
+├── assets               # Images, global styles, theme tokens
 │
-├── context
+├── components            # Shared, feature-agnostic building blocks
+│   ├── layout            # Header, Footer, navigation shell
+│   ├── navigation         # Route guards (Private/Public route)
+│   └── ui                # Buttons, inputs, loaders, skeletons, etc.
+│
+├── context               # Theme context (light/dark)
 │
 ├── features
-│   ├── auth
-│   └── recipes
+│   ├── auth               # Login/registration forms, validation
+│   ├── favorites          # Favorites API calls
+│   └── recipes            # Recipe API, forms, cards, home sections
+│       ├── api
+│       ├── components
+│       ├── constants
+│       ├── helpers
+│       └── utils
 │
-├── pages
-├── supabase
-├── utils
+├── pages                  # Route-level page components
+└── supabase               # Supabase client instance
 ```
 
-This structure improves:
-
-- scalability
-- maintainability
-- code reuse
-- separation of concerns
+This structure keeps business logic isolated per domain, makes it easy to find related code, and scales better than a purely type-based (`components/`, `hooks/`, `utils/`) layout as the app grows.
 
 ---
 
-## 🗄 Database
+## 🗄 Data Model
 
-The application uses **Supabase PostgreSQL**.
+Each recipe stored in Supabase includes:
 
-### Main entities
+- title, description, image
+- cuisine, category, tags
+- difficulty _(auto-calculated from cooking time)_
+- cooking time, servings
+- ingredients (list, with amount/unit)
+- step-by-step instructions
+- author (linked to the authenticated user)
 
-- Recipes
-- Authentication (Supabase Auth)
-- Images (Supabase Storage)
-
-Each recipe contains:
-
-- title
-- description
-- image
-- cuisine
-- difficulty
-- cooking time
-- servings
-- ingredients
-- instructions
-- tags
-- author
-- likes
-
----
-
-## 🔐 Authentication
-
-Authentication is implemented using **Supabase Auth**.
-
-Protected functionality includes:
-
-- creating recipes
-- editing recipes
-- deleting recipes
-- personal recipe management
-
-Row Level Security policies ensure users can modify only their own recipes.
-
----
-
-## 🎨 UI Features
-
-- Dark / Light theme
-- Responsive layout
-- Styled Components
-- Loading indicators
-- Error handling
-- Toast notifications
-- Reusable UI components
+Row Level Security policies ensure a user can only edit or delete recipes they created, while all recipes remain publicly readable.
 
 ---
 
 ## 📦 Installation
 
-Clone the repository:
-
 ```bash
 git clone https://github.com/Maershaa/Yumly-Recipe-App.git
-```
-
-Go to the project folder:
-
-```bash
 cd Yumly-Recipe-App
-```
-
-Install dependencies:
-
-```bash
 npm install
 ```
 
-Create an environment file:
+Create a `.env` file in the project root:
 
 ```env
 VITE_SUPABASE_URL=your_project_url
 VITE_SUPABASE_ANON_KEY=your_anon_key
 ```
 
-Start the development server:
+Start the dev server:
 
 ```bash
 npm run dev
@@ -206,72 +164,36 @@ npm run dev
 
 ## 📜 Available Scripts
 
-```bash
-npm run dev
-```
-
-Starts the development server.
-
-```bash
-npm run build
-```
-
-Builds the production version.
-
-```bash
-npm run preview
-```
-
-Runs the production build locally.
-
-```bash
-npm run lint
-```
-
-Runs ESLint.
-
-```bash
-npm run deploy
-```
-
-Deploys the application to GitHub Pages.
+| Script            | Description                               |
+| ----------------- | ----------------------------------------- |
+| `npm run dev`     | Starts the local dev server               |
+| `npm run build`   | Builds the app for production             |
+| `npm run preview` | Serves the production build locally       |
+| `npm run lint`    | Runs ESLint                               |
+| `npm run deploy`  | Deploys the `dist` folder to GitHub Pages |
 
 ---
 
-## 📁 Project Highlights
+## 🔮 Possible Improvements
 
-- Feature-based architecture
-- Redux Toolkit state management
-- Reusable UI components
-- Protected routing
-- CRUD functionality
-- Image upload
-- Theme switching
-- Form validation
-- Production-ready project structure
-
----
-
-## 🔮 Future Improvements
-
-- Favorites system
-- Advanced recipe filters
-- Pagination
-- User profiles
-- Comments
-- Ratings
+- TypeScript migration
+- Pagination / infinite scroll for recipe lists
+- User profiles & public author pages
+- Comments and ratings
 - Recipe collections
 - Internationalization (i18n)
 - Unit & integration tests
-- Performance optimization
 
 ---
 
 ## 👩‍💻 Author
 
-**Valeria**
+**Valeria** — Frontend Developer
 
-Frontend Developer
+GitHub: [github.com/Maershaa](https://github.com/Maershaa)
 
-GitHub:
-https://github.com/Maershaa
+---
+
+## 📄 License
+
+Distributed under the MIT License.
