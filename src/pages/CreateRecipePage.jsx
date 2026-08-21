@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
@@ -13,10 +12,11 @@ import {
   prepareRecipeForSave,
   validateRecipeForm,
 } from '@/features/recipes/helpers';
+import { useAppSelector } from '@/app/redux/hooks';
 
 const CreateRecipePage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { id: currentUserId } = useSelector(selectUser);
+  const { id: currentUserId } = useAppSelector(selectUser);
 
   const createRecipe = useCreateRecipe(); // мой хук который достает функцию createRecipe которая готовит на основе формы обьект для отправки на бекенд
   const createInitialFormState = () => ({

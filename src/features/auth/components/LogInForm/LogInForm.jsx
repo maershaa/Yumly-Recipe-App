@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 import { Form, RedirectComponent, FieldErrorMessage } from '@/components';
 import { loginUser } from '@/app/redux/auth/operations';
 import { refreshUser } from '@/app/redux/auth/operations';
+import { useAppDispatch } from '@/app/redux/hooks';
 
 import { validateLoginForm } from '@/features/auth/helpers';
 
@@ -23,7 +23,7 @@ const LogInForm = () => {
   const [loginForm, setLoginForm] = useState(initialForm);
   const [isTouched, setIsTouched] = useState(INITIAL_TOUCHED_STATE);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const { isFormValid, errors: formErrors } = validateLoginForm(loginForm);

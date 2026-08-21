@@ -1,12 +1,12 @@
 import { selectIsLoggedIn } from '@/app/redux/auth/selectors';
-import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 import { Loader } from '@/components';
 import { selectIsRefreshing } from '@/app/redux/auth/selectors';
+import { useAppSelector } from '@/app/redux/hooks';
 
 const PublicRoute = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const isRefreshing = useSelector(selectIsRefreshing);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const isRefreshing = useAppSelector(selectIsRefreshing);
 
   if (isRefreshing) {
     return <Loader />;

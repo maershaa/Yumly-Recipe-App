@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ESNext", // Использовать возможности современного JavaScript.
+
+    "module": "ESNext", // Использовать ES Modules.
+    "moduleResolution": "Bundler", // Искать модули так же, как Vite.
+
+    "jsx": "react-jsx",
+
+    "strict": true, // Строгая проверка типов.
+
+    "baseUrl": ".", // Корень проекта для абсолютных импортов.
+
+    "paths": {
+      "@/*": ["src/*"] // Алиас @ → src.
+    },
+
+    "allowJs": true, // Разрешить использовать .js и .jsx.
+    "checkJs": false, // Не проверять JS-файлы на ошибки типов.
+
+    "resolveJsonModule": true, // Разрешить импорт JSON.
+
+    "isolatedModules": true, // Проверять каждый файл отдельно (требование Vite).
+
+    "noEmit": true, // Не компилировать JS. Это делает Vite.
+
+    "skipLibCheck": true, // Не проверять типы библиотек.
+
+    "ignoreDeprecations": "6.0" // Скрыть предупреждение о будущем устаревании baseUrl.
+  },
+
+  "include": ["src"] // Проверять только папку src.
+}

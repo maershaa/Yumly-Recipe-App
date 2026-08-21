@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 
@@ -12,6 +11,8 @@ import {
   prepareRecipeForUpdate,
 } from '@/features/recipes/helpers';
 import { recipeCategories } from '@/features/recipes/constants';
+import { useAppSelector } from '@/app/redux/hooks';
+
 const EditRecipePage = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,7 +34,7 @@ const EditRecipePage = () => {
     instructions: [],
   });
 
-  const { id: currentUserId } = useSelector(selectUser);
+  const { id: currentUserId } = useAppSelector(selectUser);
   const { recipeId } = useParams();
 
   const { isFormValid, errors: validationErrors } =

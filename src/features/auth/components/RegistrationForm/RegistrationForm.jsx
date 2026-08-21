@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 import { Form, RedirectComponent, FieldErrorMessage } from '@/components';
 import { registerNewUser } from '@/app/redux/auth/operations';
 import { validateRegistrationForm } from '@/features/auth/helpers';
+import { useAppDispatch } from '@/app/redux/hooks';
 
 const RegistrationForm = () => {
   const initialForm = {
@@ -29,7 +29,7 @@ const RegistrationForm = () => {
     validateRegistrationForm(registrationForm);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleFormChange = (evt) => {
     const { name, value } = evt.target;
