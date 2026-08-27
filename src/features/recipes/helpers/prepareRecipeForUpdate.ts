@@ -3,9 +3,11 @@ import {
   generateRecipeTags,
 } from '@/features/recipes/utils';
 
-import { CreateRecipePayload, UpdateRecipePayload } from '@/types';
+import { RecipeFormState, UpdateRecipePayload, Cuisines } from '@/types';
 
-export const prepareRecipeForUpdate = (formData) => {
+export const prepareRecipeForUpdate = (
+  formData: RecipeFormState,
+): UpdateRecipePayload => {
   const difficultyValue = calculateDifficulty(Number(formData.cooking_time));
 
   return {
@@ -13,7 +15,7 @@ export const prepareRecipeForUpdate = (formData) => {
 
     recipe_name: formData.recipe_name.trim(),
     description: formData.description.trim(),
-    cuisine: formData.cuisine.trim(),
+    cuisine: formData.cuisine as Cuisines,
     servings: Number(formData.servings) || 1,
     cooking_time: Number(formData.cooking_time),
 
@@ -34,6 +36,9 @@ export const prepareRecipeForUpdate = (formData) => {
     }),
 
     difficulty: difficultyValue,
+    //     Тип ""easy" | "medium" | "hard" | null" не может быть назначен для типа "Difficulty".
+    //   Тип "null" не может быть назначен для типа "Difficulty".
+    // recipe-payload.ts(35, 3): Ожидаемый тип поступает из свойства "difficulty", объявленного здесь в типе "UpdateRecipePayload"
     tips: formData.tips.trim(),
     tags: generateRecipeTags(
       formData.tags,

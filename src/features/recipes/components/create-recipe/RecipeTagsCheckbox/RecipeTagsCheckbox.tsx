@@ -1,10 +1,11 @@
 import { recipeCategories } from '@/features/recipes/constants';
 import { TagsWrapper } from './RecipeTagsCheckbox.styled';
-import { recipeCategoriesValue } from '@/types';
+import { RecipeCategoryValue } from '@/types';
+import type { ChangeEvent } from 'react';
 
 interface RecipeTagsCheckboxProps {
-  onChange: () => void;
-  tags: recipeCategoriesValue[];
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  tags: RecipeCategoryValue[];
 }
 const RecipeTagsCheckbox = ({ onChange, tags }: RecipeTagsCheckboxProps) => {
   return (

@@ -1,6 +1,6 @@
 import type { Tables } from '@/types/supabase';
 
-export type Difficulty = 'easy' | 'medium' | 'hard';
+export type Difficulty = 'easy' | 'medium' | 'hard' | null;
 
 export interface Ingredient {
   name: string;

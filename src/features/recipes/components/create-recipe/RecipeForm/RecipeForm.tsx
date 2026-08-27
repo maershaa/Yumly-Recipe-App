@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { FaUtensils } from 'react-icons/fa';
 
 import { Form, FormSectionWrapper } from './RecipeForm.styled';
@@ -15,19 +17,25 @@ import { GeneralBtn } from '@/components';
 
 import { uploadRecipeImage } from '@/features/recipes/api';
 import { createIngredient, createStep } from '@/features/recipes/helpers';
-import { useState, SubmitEvent, ChangeEvent, FocusEvent } from 'react';
-import type { RecipeFormState } from '@/types';
+
+import type { RecipeFormState, RecipeFormErrors } from '@/types';
+import type {
+  Dispatch,
+  SetStateAction,
+  SubmitEvent,
+  ChangeEvent,
+  FocusEvent,
+} from 'react';
 
 interface RecipeFormProps {
   recipeForm: RecipeFormState;
-  setRecipeForm: (form: RecipeFormState) => void;
+  setRecipeForm: Dispatch<SetStateAction<RecipeFormState>>;
   handleSubmit: (e: SubmitEvent<HTMLFormElement>) => void;
   currentUserId: string;
   isSubmitting: boolean;
   isFormValid: boolean;
   submitButtonText: string;
-
-  validationErrors: Record<string, string>;
+  validationErrors: RecipeFormErrors;
 }
 
 const RecipeForm = ({
@@ -50,11 +58,16 @@ const RecipeForm = ({
     tips: false,
   };
 
+  type TabId = 'generalInfo' | 'ingredients' | 'cooking';
+
   const [isTouched, setIsTouched] = useState(FORM_FIELDS);
   const [activeTab, setActiveTab] = useState('generalInfo');
 
-  console.log('recipeForm', recipeForm);
-  const handleInfoChange = (e: ChangeEvent<HTMLFormElement>) => {
+  type FieldChangeEvent = ChangeEvent<
+    HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+  >;
+
+  const handleInfoChange = (e: FieldChangeEvent) => {
     const { name, value } = e.target;
 
     setRecipeForm((prevValue) => ({ ...prevValue, [name]: value }));
@@ -62,7 +75,8 @@ const RecipeForm = ({
 
   const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     const maxFileSizeInMb = 5;
-    const uploadedFile = event.target.files[0];
+    const uploadedFile = event.target.files?.[0];
+
     if (!uploadedFile) return;
 
     if (
@@ -89,10 +103,7 @@ const RecipeForm = ({
     }
   };
 
-  const handleIngredientChange = (
-    id: string,
-    e: ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleIngredientChange = (id: string, e: FieldChangeEvent) => {
     const { name, value } = e.target;
 
     setRecipeForm((prevValue) => ({
@@ -103,7 +114,7 @@ const RecipeForm = ({
     }));
   };
 
-  const handleStepChange = (id: string, e: ChangeEvent<HTMLInputElement>) => {
+  const handleStepChange = (id: string, e: FieldChangeEvent) => {
     const { value } = e.target;
 
     setRecipeForm((prevValue) => ({
@@ -156,7 +167,9 @@ const RecipeForm = ({
     setIsTouched((prev) => ({ ...prev, [name]: true }));
   };
 
-  const handleToggleTags = ({ target: { value } }) => {
+  const handleToggleTags = ({
+    target: { value },
+  }: ChangeEvent<HTMLInputElement>) => {
     // Если тег уже выбран — удаляем его из массива.
     // Если нет — добавляем в конец массива.
     setRecipeForm((prev) => ({
@@ -196,9 +209,9 @@ const RecipeForm = ({
               image_url={recipeForm.image_url}
               handleImageUpload={handleImageUpload}
               removeImage={removeImage}
-              isImgError={validationErrors.image}
+              isImgError={validationErrors.image_url}
               handleInputBlur={handleInputBlur}
-              isTouched={isTouched}
+              isTouched={isTouched.image_url}
             />
           </FormSectionWrapper>
 

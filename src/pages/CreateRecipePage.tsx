@@ -1,4 +1,4 @@
-import { useState, SubmitEvent } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
@@ -16,6 +16,7 @@ import { useAppSelector } from '@/app/redux/hooks';
 import { getErrorMessage } from '@/features/recipes/utils';
 
 import type { RecipeFormState } from '@/types';
+import type { SubmitEvent } from 'react';
 
 const CreateRecipePage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);

@@ -1,16 +1,15 @@
 import { TabsBar, TabButton } from './RecipeFormTabs.styled';
+import type { RecipeFormTabsId, RecipeFormTabsLabel } from '@/types';
 
-type TabId = 'generalInfo' | 'ingredients' | 'cooking';
-type TabLabel = 'Basic Info' | 'Ingredients' | 'Cooking Steps';
 interface Tab {
-  id: TabId;
-  label: TabLabel;
+  id: RecipeFormTabsId;
+  label: RecipeFormTabsLabel;
 }
 type Tabs = Tab[];
 
 interface RecipeFormTabsProps {
-  activeTab: TabId;
-  onTabChange: (id: TabId) => void;
+  activeTab: RecipeFormTabsId;
+  onTabChange: (id: RecipeFormTabsId) => void;
 }
 
 const RecipeFormTabs = ({ activeTab, onTabChange }: RecipeFormTabsProps) => {

@@ -1,13 +1,18 @@
 import { ImgWrapper, ReplaceImageWrapper } from './AddImageSection.styled';
 import { GeneralBtn, FieldErrorMessage } from '@/components';
-import type { Recipe } from '@/types'; //!или тут все таик данные с формы (recipeForm) а не с просто рецепта?
+import type { RecipeFormState } from '@/types';
+import type { ChangeEvent, FocusEvent } from 'react';
 
-type RecipeAddImageSectionInfo = Pick<Recipe, 'recipe_name' | 'image_url'>;
+type RecipeAddImageSectionInfo = Pick<
+  RecipeFormState,
+  'recipe_name' | 'image_url'
+>;
+
 type AddImageSectionProps = RecipeAddImageSectionInfo & {
-  handleImageUpload: () => void;
+  handleImageUpload: (event: ChangeEvent<HTMLInputElement>) => void;
   removeImage: () => void;
-  isImgError: boolean;
-  handleInputBlur: () => void;
+  isImgError: string;
+  handleInputBlur: (evt: FocusEvent<HTMLInputElement>) => void;
   isTouched: boolean;
 };
 
@@ -20,8 +25,6 @@ const AddImageSection = ({
   handleInputBlur,
   isTouched,
 }: AddImageSectionProps) => {
-  const { image_url: isImageUrlTouched } = isTouched;
-
   return (
     <>
       {!image_url ? (
@@ -49,7 +52,7 @@ const AddImageSection = ({
           </GeneralBtn>
         </ReplaceImageWrapper>
       )}
-      {isImgError && isImageUrlTouched && (
+      {isImgError && isTouched && (
         <FieldErrorMessage errorMessage={isImgError} />
       )}
     </>

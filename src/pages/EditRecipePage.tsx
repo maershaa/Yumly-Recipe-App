@@ -13,12 +13,25 @@ import {
 import { recipeCategories } from '@/features/recipes/constants';
 import { useAppSelector } from '@/app/redux/hooks';
 
+import type { SubmitEvent } from 'react';
+import { getErrorMessage } from '@/features/recipes/utils';
+
+import type {
+  RecipeFormState,
+  FormIngredient,
+  Ingredient,
+  FormInstruction,
+  Instruction,
+  Recipe,
+  Cuisines,
+} from '@/types';
+
 const EditRecipePage = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const [recipeForm, setRecipeForm] = useState({
+  const [recipeForm, setRecipeForm] = useState<RecipeFormState>({
     recipe_name: '',
     description: '',
 
@@ -44,47 +57,50 @@ const EditRecipePage = () => {
 
   useEffect(() => {
     const loadRecipeDetails = async () => {
+      if (!recipeId) return;
+
       try {
-        const data = await getRecipeById(recipeId);
+        const data: Recipe = await getRecipeById(recipeId);
 
         setRecipeForm({
-          recipe_name: data.recipe_name,
-          description: data.description,
+          recipe_name: data.recipe_name ?? '',
+          description: data.description ?? '',
+          cuisine: (data.cuisine as Cuisines) ?? '',
+          cooking_time: String(data.cooking_time ?? ''),
+          servings: String(data.servings ?? ''),
+          image_url: data.image_url ?? '',
+          tips: data.tips ?? '',
 
-          cuisine: data.cuisine,
-          cooking_time: data.cooking_time,
-          servings: data.servings,
+          ingredients: (data.ingredients ?? []).map(
+            (el: Ingredient): FormIngredient => {
+              return {
+                id: crypto.randomUUID(), // Временный id для работы формы. Используется React как key, а также для поиска,
+                // изменения и удаления элементов. На бэкенд этот id не отправляется.
+                name: el.name.trim(),
+                amount: String(el.amount),
+                unit: el.unit,
+              };
+            },
+          ),
 
-          image_url: data.image_url,
-
-          tips: data.tips,
-
-          ingredients: data.ingredients.map((el) => {
-            return {
-              id: crypto.randomUUID(), // Временный id для работы формы. Используется React как key, а также для поиска,
-              // изменения и удаления элементов. На бэкенд этот id не отправляется.
-              name: el.name.trim(),
-              amount: parseFloat(el.amount),
-              unit: el.unit,
-            };
-          }),
-
-          instructions: data.instructions.map((el, index) => {
-            return {
-              id: crypto.randomUUID(), // Временный id для работы формы. Используется React как key, а также для поиска,
-              // изменения и удаления элементов. На бэкенд этот id не отправляется.
-              step: index + 1,
-              text: el.text.trim(),
-            };
-          }),
+          instructions: (data.instructions ?? []).map(
+            (el: Instruction, index: number): FormInstruction => {
+              return {
+                id: crypto.randomUUID(), // Временный id для работы формы. Используется React как key, а также для поиска,
+                // изменения и удаления элементов. На бэкенд этот id не отправляется.
+                step: index + 1,
+                text: el.text.trim(),
+              };
+            },
+          ),
 
           // В состоянии формы храним только теги, которые пользователь может изменить через чекбоксы. Автоматически вычисляемые теги (difficulty, cuisine) сюда не включаем
-          tags: data.tags.filter((tag) =>
+          tags: (data.tags ?? []).filter((tag) =>
             recipeCategories.some((category) => category.value === tag),
           ),
 
-          likes: data.likes,
-          created_at: data.created_at,
+          // likes: data.likes, // ❌ нет такого поля в RecipeFormState. Только на бекенде есть.
+          // created_at: data.created_at, //❌ нет такого поля в RecipeFormState. Только на бекенде есть.
         });
       } catch (error) {
         console.error(error);
@@ -98,7 +114,7 @@ const EditRecipePage = () => {
     }
   }, [navigate, recipeId]);
 
-  const handleSubmit = async (evt) => {
+  const handleSubmit = async (evt: SubmitEvent<HTMLFormElement>) => {
     evt.preventDefault();
     if (isSubmitting) return;
     if (!isFormValid) return;
@@ -116,14 +132,14 @@ const EditRecipePage = () => {
       navigate(`/recipes/${recipeId}`); //!но при переходе на страницу не отображается уже обновленный рецепт. для этого нужно перезагружать страницу.
     } catch (error) {
       toast.error('Failed to edit the recipe. Please try again.');
-      setError(error.message);
+      setError(getErrorMessage(error));
     } finally {
       setIsSubmitting(false);
     }
   };
   return (
     <div>
-      <PageTitle title={'Make Changes to Your Recipe'}> </PageTitle>
+      <PageTitle title={'Make Changes to Your Recipe'} />
       <BackButton />
 
       <RecipeForm
@@ -135,7 +151,6 @@ const EditRecipePage = () => {
         isFormValid={isFormValid}
         validationErrors={validationErrors}
         submitButtonText="Save Changes"
-        error={error}
       />
     </div>
   );

@@ -2,7 +2,14 @@ export type { ThemeMode, ThemeContextType, Theme } from './theme';
 
 export type { RegisterFormData, LoginFormData, User } from './auth';
 
-export type { RecipeFormState, FormIngredient, FormInstruction } from './form';
+export type {
+  RecipeFormState,
+  FormIngredient,
+  FormInstruction,
+  RecipeFormErrors,
+  RecipeFormTabsId,
+  RecipeFormTabsLabel,
+} from './form-recipe';
 
 export type {
   CreateRecipePayload,

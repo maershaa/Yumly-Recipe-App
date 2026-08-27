@@ -3,6 +3,7 @@ import type {
   RecipeFormState,
   FormIngredient,
   FormInstruction,
+  RecipeFormErrors,
 } from '@/types';
 
 /*
@@ -86,7 +87,7 @@ import type {
 
 interface validationErrorsType {
   isFormValid: boolean;
-  errors: Record<string, string>;
+  errors: RecipeFormErrors;
 }
 
 const validateRecipeName = (recipeName: string): boolean =>
@@ -158,7 +159,7 @@ export const validateRecipeForm = (
 
       servings: !servingsValid ? 'Please specify the number of servings.' : '',
 
-      image: !imageValid ? 'Please add an image.' : '',
+      image_url: !imageValid ? 'Please add an image.' : '',
 
       tips: !tipsValid ? 'Please add a tip.' : '',
 

@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 
 import { selectUser } from '@/app/redux/auth/selectors.js';
 import { getUserRecipes } from '@/features/recipes/api';
+import { getErrorMessage } from '@/features/recipes/utils';
 
 import {
   RecipesList,
@@ -24,7 +25,8 @@ const MyRecipesPage = () => {
   const [filter, setFilter] = useState('');
   const [userRecipes, setUserRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+
   const navigate = useNavigate();
 
   const filteredRecipes = useMemo(
@@ -45,7 +47,7 @@ const MyRecipesPage = () => {
       const data = await getUserRecipes(userId);
       setUserRecipes(data);
     } catch (error) {
-      setError(error.message);
+      setError(getErrorMessage(error));
     } finally {
       setIsLoading(false);
     }

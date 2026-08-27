@@ -1,6 +1,9 @@
 // Формирует итоговый массив тегов для сохранения в базе данных.
 
-export const generateRecipeTags = (selectedTags = [], ...additionalTags) => {
+export const generateRecipeTags = (
+  selectedTags: string[] = [],
+  ...additionalTags: (string | null | undefined)[]
+) => {
   return [
     ...new Set([
       ...selectedTags,

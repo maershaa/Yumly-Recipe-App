@@ -3,18 +3,18 @@ import {
   generateRecipeTags,
 } from '@/features/recipes/utils';
 
-import type { RecipeForm, RecipeFormToSubmit } from '@/types';
+import type { RecipeFormState, CreateRecipePayload, Cuisines } from '@/types';
 
 export const prepareRecipeForSave = (
-  formData: RecipeForm,
-): RecipeFormToSubmit => {
+  formData: RecipeFormState,
+): CreateRecipePayload => {
   const difficultyValue = calculateDifficulty(Number(formData.cooking_time));
 
   return {
     ...formData, //надо ли?
     recipe_name: formData.recipe_name.trim(),
     description: formData.description.trim(),
-    cuisine: formData.cuisine.trim(),
+    cuisine: formData.cuisine as Cuisines,
     servings: Number(formData.servings) || 1,
     cooking_time: Number(formData.cooking_time),
 
@@ -34,6 +34,7 @@ export const prepareRecipeForSave = (
     }),
 
     difficulty: difficultyValue,
+
     likes: 0,
     tips: formData.tips.trim(),
 

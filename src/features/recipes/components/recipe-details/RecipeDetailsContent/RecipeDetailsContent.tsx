@@ -1,10 +1,10 @@
 import { RecipeDetailsWrapper } from './RecipeDetailsContent.styled';
 import { RecipeHeader, MainContent } from '@/features/recipes/components';
 import type { Recipe } from '@/types';
-
+import type { Dispatch, SetStateAction } from 'react';
 interface RecipeDetailsContentProps {
   recipe: Recipe;
-  setRecipe: () => void;
+  setRecipe: Dispatch<SetStateAction<Recipe | null>>;
 }
 
 const RecipeDetailsContent = ({

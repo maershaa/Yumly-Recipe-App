@@ -2,10 +2,11 @@ import { Header } from './RecipeHeader.styled';
 import { ImageSection, SummarySection } from '@/features/recipes/components';
 import { convertMinutes } from '@/features/recipes/helpers';
 import type { Recipe } from '@/types';
+import type { Dispatch, SetStateAction } from 'react';
 
 interface RecipeHeaderProps {
   recipe: Recipe;
-  setRecipe: () => void;
+  setRecipe: Dispatch<SetStateAction<Recipe | null>>;
 }
 
 const RecipeHeader = ({ recipe, setRecipe }: RecipeHeaderProps) => {

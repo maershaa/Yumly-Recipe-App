@@ -8,7 +8,7 @@ import {
 } from 'react-icons/fa';
 import { JSX } from 'react';
 
-import { recipeCategoriesValue } from '@/types';
+import { RecipeCategoryValue } from '@/types';
 
 type recipeCategoriesLabel =
   | 'Breakfast'
@@ -19,7 +19,7 @@ type recipeCategoriesLabel =
   | 'Dessert';
 
 interface recipeCategory {
-  value: recipeCategoriesValue;
+  value: RecipeCategoryValue;
   label: recipeCategoriesLabel;
   icon: JSX.Element;
 }
