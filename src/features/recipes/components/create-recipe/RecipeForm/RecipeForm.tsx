@@ -16,17 +16,18 @@ import { GeneralBtn } from '@/components';
 import { uploadRecipeImage } from '@/features/recipes/api';
 import { createIngredient, createStep } from '@/features/recipes/helpers';
 import { useState, SubmitEvent, ChangeEvent, FocusEvent } from 'react';
-import type { RecipeForm as RecipeFormType } from '@/types';
+import type { RecipeFormState } from '@/types';
 
 interface RecipeFormProps {
-  recipeForm: RecipeFormType;
-  setRecipeForm: (form: RecipeFormType) => void;
+  recipeForm: RecipeFormState;
+  setRecipeForm: (form: RecipeFormState) => void;
   handleSubmit: (e: SubmitEvent<HTMLFormElement>) => void;
   currentUserId: string;
   isSubmitting: boolean;
   isFormValid: boolean;
   submitButtonText: string;
-  validationErrors: { [key: string]: string }[];
+
+  validationErrors: Record<string, string>;
 }
 
 const RecipeForm = ({

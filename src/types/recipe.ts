@@ -1,10 +1,14 @@
+import type { Tables } from '@/types/supabase';
+
+export type Difficulty = 'easy' | 'medium' | 'hard';
+
 export interface Ingredient {
   name: string;
   unit: string;
   amount: number;
 }
 
-export interface Instructions {
+export interface Instruction {
   step: number;
   text: string;
 }
@@ -13,43 +17,15 @@ export interface FavoriteRecipe {
   user_id: string;
 }
 
-export interface Recipe {
-  id: number;
-  created_at: string;
-  recipe_name: string;
-  ingredients: Ingredient[];
-  user_id: string;
-  image_url: string;
-  cuisine: string;
-  difficulty: string;
-  cooking_time: number;
-  likes: number;
-  tags: string[];
-  updated_at: string;
-  instructions: Instructions[];
-  description: string;
-  servings: number;
-  tips: string;
-  favorites?: FavoriteRecipe[];
-}
-
-export type MainTagsValue =
-  | 'all'
-  | 'italian'
-  | 'breakfast'
-  | 'lunch'
-  | 'dinner'
-  | 'easy'
-  | 'medium'
-  | 'hard'
-  | 'healthy'
-  | 'vegetarian'
-  | 'dessert';
-
-export type recipeCategoriesValue =
-  | 'breakfast'
-  | 'lunch'
-  | 'dinner'
-  | 'healthy'
-  | 'vegan'
-  | 'dessert';
+// JSONB-колонки Supabase приходят как generic Json, так как TS не знает их структуру из схемы БД.
+// Поэтому мы комбинируем типы: базовые поля таблицы (те что id (число), recipe_name (строка), created_at (строка)) берутся автоматически через Tables<'recipes'>,
+// а JSON-поля (ingredients и instructions) мы переопределяем вручную.
+export type Recipe = Omit<
+  Tables<'recipes'>,
+  'ingredients' | 'instructions' | 'difficulty'
+> & {
+  ingredients: Ingredient[] | null;
+  instructions: Instruction[] | null;
+  difficulty: Difficulty;
+  favorites?: FavoriteRecipe[]; //!пока не понимаю надо ли
+};

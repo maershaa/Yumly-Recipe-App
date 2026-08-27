@@ -3,6 +3,8 @@ import {
   generateRecipeTags,
 } from '@/features/recipes/utils';
 
+import { CreateRecipePayload, UpdateRecipePayload } from '@/types';
+
 export const prepareRecipeForUpdate = (formData) => {
   const difficultyValue = calculateDifficulty(Number(formData.cooking_time));
 

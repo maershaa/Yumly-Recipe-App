@@ -7,21 +7,20 @@ export interface FormIngredient {
   amount: string;
 }
 
-export interface FormInstructions {
+export interface FormInstruction {
   id: string;
   text: string;
 }
 
-export interface RecipeForm {
+export interface RecipeFormState {
   recipe_name: string;
   description: string;
-  cuisine: Cuisines[];
-  cooking_time: number;
-  servings: number;
+  cuisine: Cuisines | ''; //распространённая модель для select в формах
+  cooking_time: string;
+  servings: string;
   image_url: string;
   ingredients: FormIngredient[];
-  instructions: FormInstructions[];
-
+  instructions: FormInstruction[];
   tags: string[];
   tips: string;
 }

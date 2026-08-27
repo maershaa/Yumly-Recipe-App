@@ -1,24 +1,24 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import {
   registerNewUser,
   loginUser,
   logOutUser,
   refreshUser,
 } from './operations';
-import { User } from '@/types';
+import type { User } from '@/types';
 
-interface initialState {
+interface AuthState {
   user: User;
-  token: null | string;
+  token: string | null;
   isLoggedIn: boolean;
   isRefreshing: boolean;
-  error: null | string;
+  error: string | null;
   loading: boolean;
 }
 
-const initialState: initialState = {
+const initialState: AuthState = {
   user: { id: '', name: '', email: '' },
-  token: null, //! на самом деле он тут не нужен так как supabase.auth.getSession() - сам достанет токен. это чисто для примера что обычно нужно.
+  token: null, // на самом деле он тут не нужен так как supabase.auth.getSession() - сам достанет токен. это чисто для примера что обычно нужно.
 
   isLoggedIn: false,
   isRefreshing: true, //НЕ делаем вывод об авторизации сразу. сначала ждём refreshUser(). по сути isRefreshing отвечает на  вопрос: «мы уже закончили проверять авторизацию?»
@@ -38,13 +38,10 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(
-        registerNewUser.rejected,
-        (state, action: PayloadAction<null | string>) => {
-          state.loading = false;
-          state.error = action.payload;
-        },
-      )
+      .addCase(registerNewUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload ?? 'Unknown error';
+      })
       .addCase(registerNewUser.fulfilled, (state) => {
         state.loading = false;
       })
@@ -54,24 +51,18 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(
-        loginUser.rejected,
-        (state, action: PayloadAction<null | string>) => {
-          state.loading = false;
-          state.error = action.payload;
-        },
-      )
-      .addCase(loginUser.fulfilled, (state, action: PayloadAction<any>) => {
+      .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.user.name = action.payload.user.user_metadata.userName;
-        // console.log('🚀 ~ action.payload:', action.payload);
-        //         session
-        // :
-        // {access_token: 'eyJhbGciOiJFUzI1NiIsImtpZCI6ImJiZDJjMzFlLTRjY2YtND…tDPGvmrizCMeH4Q-ltEc02i43gLPEAWx5cNt3Dhw7ooPU5P7A', token_type: 'bearer', expires_in: 3600, expires_at: 1787138996, refresh_token: 'ryog6uknsllk', …}
-        // user
-        // :
-        // {id: '11d715f6-76b9-49e9-8988-967f6e924a40', aud: 'authenticated', role: 'authenticated', email: 'efremovav.s@gmail.com', email_confirmed_at: '2026-06-15T12:55:53.605304Z', …}
-        state.user.email = action.payload.user.email;
+        state.error = action.payload ?? 'Unknown error';
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        const userName = action.payload.user.user_metadata.userName;
+
+        state.loading = false;
+
+        state.user.id = action.payload.user.id;
+        state.user.name = typeof userName === 'string' ? userName : '';
+        state.user.email = action.payload.user.email ?? '';
         state.token = action.payload.session.access_token;
         state.isLoggedIn = true;
       })
@@ -83,11 +74,13 @@ const authSlice = createSlice({
       })
       .addCase(logOutUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload ?? 'Unknown error';
       })
       .addCase(logOutUser.fulfilled, (state) => {
         state.loading = false;
+
         state.user = { id: '', name: '', email: '' };
+
         state.token = null;
         state.isLoggedIn = false;
       })
@@ -99,17 +92,22 @@ const authSlice = createSlice({
       .addCase(refreshUser.rejected, (state, action) => {
         state.isRefreshing = false;
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload ?? 'Unknown error';
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
         state.isRefreshing = false;
+
         if (!action.payload) {
           return;
         }
-        state.user.name = action.payload.user.user_metadata.userName;
+
+        const userName = action.payload.user.user_metadata.userName;
+
+        state.user.name = typeof userName === 'string' ? userName : '';
         state.user.id = action.payload.user.id;
-        state.user.email = action.payload.user.email;
+        state.user.email = action.payload.user.email ?? '';
         state.token = action.payload.access_token;
+
         state.isLoggedIn = true;
       });
   },

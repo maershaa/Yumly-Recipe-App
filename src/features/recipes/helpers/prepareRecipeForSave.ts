@@ -3,11 +3,15 @@ import {
   generateRecipeTags,
 } from '@/features/recipes/utils';
 
-export const prepareRecipeForSave = (formData) => {
+import type { RecipeForm, RecipeFormToSubmit } from '@/types';
+
+export const prepareRecipeForSave = (
+  formData: RecipeForm,
+): RecipeFormToSubmit => {
   const difficultyValue = calculateDifficulty(Number(formData.cooking_time));
 
   return {
-    ...formData,
+    ...formData, //надо ли?
     recipe_name: formData.recipe_name.trim(),
     description: formData.description.trim(),
     cuisine: formData.cuisine.trim(),

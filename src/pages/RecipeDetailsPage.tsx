@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { RecipeDetailsContent } from '@/features/recipes/components';
+import { toast } from 'sonner';
+
+import type { Recipe } from '@/types';
+
 import { RecipeDetailsSkeleton } from '@/components';
 import { getRecipeById } from '@/features/recipes/api';
-import { toast } from 'sonner';
-import type { Recipe } from '@/types';
+import { RecipeDetailsContent } from '@/features/recipes/components';
+import { getErrorMessage } from '@/features/recipes/utils';
 
 const RecipeDetailsPage = () => {
   const { recipeId } = useParams();
@@ -17,10 +20,10 @@ const RecipeDetailsPage = () => {
       setLoading(true);
 
       try {
-        const data = await getRecipeById(id);
+        const data: Recipe = await getRecipeById(id);
         setRecipe(data);
       } catch (error) {
-        toast.error(`Error: ${error.message}`);
+        toast.error(`Error: ${getErrorMessage(error)}`);
       } finally {
         setLoading(false);
       }

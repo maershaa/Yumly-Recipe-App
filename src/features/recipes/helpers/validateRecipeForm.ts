@@ -1,3 +1,10 @@
+import type {
+  Cuisines,
+  RecipeFormState,
+  FormIngredient,
+  FormInstruction,
+} from '@/types';
+
 /*
   ============================
   Алгоритм валидации формы
@@ -77,31 +84,42 @@
   isTouched.field === true && errors.field !== ''
 */
 
-const validateRecipeName = (recipeName) => recipeName?.trim().length >= 3;
+interface validationErrorsType {
+  isFormValid: boolean;
+  errors: Record<string, string>;
+}
 
-const validateCuisine = (cuisine) => cuisine !== '';
+const validateRecipeName = (recipeName: string): boolean =>
+  recipeName?.trim().length >= 3;
 
-const validateCookingTime = (cookingTime) => Number(cookingTime) > 0;
+const validateCuisine = (cuisine: Cuisines | ''): boolean => cuisine !== '';
 
-const validateIngredients = (ingredients) =>
+const validateCookingTime = (cookingTime: string): boolean =>
+  Number(cookingTime) > 0;
+
+const validateIngredients = (ingredients: FormIngredient[]): boolean =>
   ingredients.length >= 3 &&
   ingredients.every(
     (ingredient) => ingredient.name.trim() && Number(ingredient.amount) > 0,
   );
 
-const validateInstructions = (instructions) =>
+const validateInstructions = (instructions: FormInstruction[]) =>
   instructions.length >= 3 &&
   instructions.every((step) => step.text.trim().length > 0);
 
-const validateDescription = (description) => description.trim().length >= 5;
+const validateDescription = (description: string): boolean =>
+  description.trim().length >= 5;
 
-const validateServings = (servings) => Number(servings) > 0;
+const validateServings = (servings: string): boolean => Number(servings) > 0;
 
-const validateImage_url = (image_url) => image_url.trim() !== '';
+const validateImage_url = (image_url: string): boolean =>
+  image_url.trim() !== '';
 
-const validateTips = (tips) => tips.trim().length >= 10;
+const validateTips = (tips: string): boolean => tips.trim().length >= 10;
 
-export const validateRecipeForm = (form) => {
+export const validateRecipeForm = (
+  form: RecipeFormState,
+): validationErrorsType => {
   const recipeNameValid = validateRecipeName(form.recipe_name);
   const cuisineValid = validateCuisine(form.cuisine);
   const cookingTimeValid = validateCookingTime(form.cooking_time);

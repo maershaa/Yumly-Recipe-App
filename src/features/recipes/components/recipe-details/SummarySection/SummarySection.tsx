@@ -1,29 +1,28 @@
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+
 import { AiOutlineClockCircle } from 'react-icons/ai';
+import { FiEdit3 } from 'react-icons/fi';
+import { MdDeleteForever } from 'react-icons/md';
+
+import { selectUser } from '@/app/redux/auth/selectors';
+import { useAppSelector } from '@/app/redux/hooks';
+
 import {
   SummaryWrapper,
   RecipeHeaderBar,
   Actions,
 } from './SummarySection.styled';
-import { FiEdit3 } from 'react-icons/fi';
-import { MdDeleteForever } from 'react-icons/md';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+
 import { deleteRecipe } from '@/features/recipes/api';
-import { selectUser } from '@/app/redux/auth/selectors';
-import { toast } from 'sonner';
 import { mainTags } from '@/features/recipes/constants';
-import { useAppSelector } from '@/app/redux/hooks';
+import { getErrorMessage } from '@/features/recipes/utils';
 
 import type { Recipe } from '@/types';
 
 type SummarySectionProps = Pick<
   Recipe,
-  | 'id'
-  | 'user_id'
-  | 'recipe_name'
-  | 'servings'
-  | 'cooking_time'
-  | 'description'
-  | 'tags'
+  'id' | 'user_id' | 'recipe_name' | 'cooking_time' | 'description' | 'tags'
 >;
 
 const SummarySection = ({
@@ -50,12 +49,10 @@ const SummarySection = ({
   const handleDeleteRecipe = async (recipeId: number, userId: string) => {
     try {
       await deleteRecipe(recipeId, userId);
-
       toast.success('Recipe deleted successfully.');
-
       navigate('/my-recipes');
     } catch (error) {
-      console.error('Failed to delete recipe:', error);
+      console.error('Failed to delete recipe:', getErrorMessage(error));
       toast.error('Failed to delete the recipe. Please try again.');
     }
   };

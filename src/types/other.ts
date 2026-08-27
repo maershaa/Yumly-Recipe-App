@@ -15,3 +15,24 @@ export type Cuisines =
   | 'Spanish'
   | 'Thai'
   | 'Vietnamese';
+
+export type MainTagsValue =
+  | 'all'
+  | 'italian'
+  | 'breakfast'
+  | 'lunch'
+  | 'dinner'
+  | 'easy'
+  | 'medium'
+  | 'hard'
+  | 'healthy'
+  | 'vegetarian'
+  | 'dessert';
+
+export type RecipeCategoryValue =
+  | 'breakfast'
+  | 'lunch'
+  | 'dinner'
+  | 'healthy'
+  | 'vegan'
+  | 'dessert';

@@ -1,15 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchRecipes } from './operations';
+
 import type { Recipe } from '@/types';
 
-interface initialState {
+interface RecipesState {
   items: Recipe[];
   totalCount: number;
   loading: boolean;
-  error: null | string;
+  error: string | null;
 }
 
-const initialState: initialState = {
+const initialState: RecipesState = {
   items: [],
   totalCount: 0,
   loading: false,
@@ -27,7 +28,7 @@ const recipesSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchRecipes.rejected, (state, action) => {
-        state.error = action.payload;
+        state.error = action.payload ?? 'Unknown error';
         state.loading = false;
       })
       .addCase(fetchRecipes.fulfilled, (state, action) => {

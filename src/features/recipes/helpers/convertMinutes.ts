@@ -1,4 +1,4 @@
-export const convertMinutes = (minutes) => {
+export const convertMinutes = (minutes: number): string => {
   if (minutes < 60) return minutes + 'min';
   else {
     const hours = Math.floor(minutes / 60);
