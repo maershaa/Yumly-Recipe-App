@@ -104,7 +104,7 @@ const EditRecipePage = () => {
           // created_at: data.created_at, //❌ нет такого поля в RecipeFormState. Только на бекенде есть.
         });
       } catch (error) {
-        console.error(error);
+        console.error(getErrorMessage(error));
         toast.error('Failed to load recipe.');
         navigate('/recipes');
       }

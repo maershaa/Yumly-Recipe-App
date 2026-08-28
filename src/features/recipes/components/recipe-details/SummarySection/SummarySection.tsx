@@ -52,7 +52,7 @@ const SummarySection = ({
       toast.success('Recipe deleted successfully.');
       navigate('/my-recipes');
     } catch (error) {
-      console.error('Failed to delete recipe:', getErrorMessage(error));
+      console.error(getErrorMessage(error));
       toast.error('Failed to delete the recipe. Please try again.');
     }
   };

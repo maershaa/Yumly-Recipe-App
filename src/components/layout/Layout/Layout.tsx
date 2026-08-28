@@ -25,7 +25,7 @@ const Layout = () => {
       <Toaster
         richColors
         position="top-right"
-        onAutoClose
+        duration={4000} //длительность автозакрытия
         expand={true} // <--- Включает отображение друг за другом
         visibleToasts={3} // <--- (Опционально) Сколько уведомлений показывать одновременно перед тем, как они начнут скрываться
         toastOptions={{

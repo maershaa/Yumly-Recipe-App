@@ -24,6 +24,7 @@ const RecipeDetailsPage = () => {
         setRecipe(data);
       } catch (error) {
         toast.error(`Error: ${getErrorMessage(error)}`);
+        console.error(getErrorMessage(error));
       } finally {
         setLoading(false);
       }

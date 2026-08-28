@@ -7,6 +7,8 @@ import { registerNewUser } from '@/app/redux/auth/operations';
 import { validateRegistrationForm } from '@/features/auth/helpers';
 import { useAppDispatch } from '@/app/redux/hooks';
 
+import { getErrorMessage } from '@/features/recipes/utils';
+
 const RegistrationForm = () => {
   const initialForm = {
     userName: '',
@@ -82,7 +84,7 @@ const RegistrationForm = () => {
       navigate('/auth/verify-email');
     } catch (error) {
       toast.error(error);
-      console.error(error);
+      console.error(getErrorMessage(error));
     }
   };
 

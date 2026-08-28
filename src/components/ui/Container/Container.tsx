@@ -3,7 +3,7 @@ import { JSX } from 'react';
 
 interface ContainerProps {
   children: JSX.Element;
-  className: string;
+  className?: string;
 }
 export const Container = ({ children, className }: ContainerProps) => {
   return <ContainerWrapper className={className}>{children}</ContainerWrapper>;

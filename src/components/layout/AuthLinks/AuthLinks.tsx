@@ -1,6 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { AuthLinksList } from './AuthLinks.styled';
-const AuthLinks = ({ onLinkClick }) => {
+
+interface AuthLinksProps {
+  onLinkClick?: () => void;
+}
+
+const AuthLinks = ({ onLinkClick }: AuthLinksProps) => {
   return (
     <AuthLinksList>
       <li>

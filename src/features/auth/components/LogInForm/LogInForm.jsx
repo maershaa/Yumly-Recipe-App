@@ -8,6 +8,7 @@ import { refreshUser } from '@/app/redux/auth/operations';
 import { useAppDispatch } from '@/app/redux/hooks';
 
 import { validateLoginForm } from '@/features/auth/helpers';
+import { getErrorMessage } from '@/features/recipes/utils';
 
 const LogInForm = () => {
   const initialForm = {
@@ -67,6 +68,8 @@ const LogInForm = () => {
       toast.success('You are successfully logged in');
     } catch (error) {
       setLoginForm(initialForm);
+      console.error(getErrorMessage(error));
+
       if (error === 'Email not confirmed') {
         toast.error(error);
       } else if (error === 'Invalid login credentials') {

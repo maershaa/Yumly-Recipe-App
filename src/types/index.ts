@@ -27,4 +27,8 @@ export type {
   FavoriteRecipe,
 } from './recipe';
 
-export type { Cuisines, MainTagsValue, RecipeCategoryValue } from './other';
+export type {
+  Cuisines,
+  MainTagsValue,
+  RecipeCategoryValue,
+} from './recipe-options';

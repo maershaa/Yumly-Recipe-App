@@ -1,17 +1,24 @@
 import { NavLink } from 'react-router-dom';
 import { NavListComponent } from './NavList.styled';
 
-const guestLinks = [{ to: 'recipes', label: 'Recipes' }];
+type NavLinkItem = { to: string; label: string; end?: boolean };
 
-const userLinks = [
+const guestLinks: NavLinkItem[] = [{ to: 'recipes', label: 'Recipes' }];
+
+const userLinks: NavLinkItem[] = [
   { to: 'recipes', label: 'Recipes' },
   { to: 'my-recipes', label: 'My recipes', end: true },
   { to: 'my-recipes/favorites', label: 'Favorites' },
   { to: 'my-recipes/new', label: 'Create recipe' },
 ];
 
-const NavList = ({ onClick, isLoggedIn }) => {
-  const activeLinks = isLoggedIn ? userLinks : guestLinks;
+interface NavListProps {
+  onClick?: () => void;
+  isLoggedIn: boolean;
+}
+
+const NavList = ({ onClick, isLoggedIn }: NavListProps) => {
+  const activeLinks: NavLinkItem[] = isLoggedIn ? userLinks : guestLinks;
 
   return (
     <NavListComponent>

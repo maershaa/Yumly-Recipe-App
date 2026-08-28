@@ -16,7 +16,17 @@ import {
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { IoMdClose } from 'react-icons/io';
 
-const MobileNavigation = ({ name, isLoggedIn, onLogOutClick }) => {
+interface MobileNavigationProps {
+  name: string;
+  isLoggedIn: boolean;
+  onLogOutClick: () => void;
+}
+
+const MobileNavigation = ({
+  name,
+  isLoggedIn,
+  onLogOutClick,
+}: MobileNavigationProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleBurgerMenuClick = () => {
@@ -62,7 +72,7 @@ const MobileNavigation = ({ name, isLoggedIn, onLogOutClick }) => {
 
           <section className="userSection">
             {!isLoggedIn ? (
-              <AuthLinks onClick={handleCloseBurgerMenu} />
+              <AuthLinks onLinkClick={handleCloseBurgerMenu} />
             ) : (
               <UserProfile name={name} onClick={onLogOutClick} />
             )}

@@ -12,6 +12,7 @@ import { selectUser } from '@/app/redux/auth/selectors';
 import { useState } from 'react';
 import { useAppSelector } from '@/app/redux/hooks';
 import type { Recipe } from '@/types';
+import { getErrorMessage } from '@/features/recipes/utils';
 
 type RecipeImageSectionInfo = Pick<
   Recipe,
@@ -79,6 +80,7 @@ const ImageSection = ({
       }
     } catch (error) {
       toast.error(error.message || 'Something went wrong');
+      console.error(getErrorMessage(error));
     } finally {
       setIsLoading(false);
     }

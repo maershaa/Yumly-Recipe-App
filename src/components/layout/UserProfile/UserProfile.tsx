@@ -14,7 +14,7 @@ const UserProfile = ({ name, onClick }: UserProfileProps) => {
     <UserMenu>
       <div className="userInfoBlock">
         <UserAvatarWrapper>
-          <span className="avatarLetter">{name?.[0]?.toUpperCase()}</span>
+          <span className="avatarLetter">{name[0]?.toUpperCase()}</span>
           <StyledTooltip text={name} />
         </UserAvatarWrapper>
         <span className="fullName">{name}</span>

@@ -7,7 +7,16 @@ import {
 } from '@/components';
 import { Header } from './DesktopNavigation.styled';
 
-const DesktopNavigation = ({ name, isLoggedIn, onLogOutClick }) => {
+interface DesktopNavigationProps {
+  name: string;
+  isLoggedIn: boolean;
+  onLogOutClick: () => void;
+}
+const DesktopNavigation = ({
+  name,
+  isLoggedIn,
+  onLogOutClick,
+}: DesktopNavigationProps) => {
   return (
     <Header>
       <Logo />
@@ -18,7 +27,7 @@ const DesktopNavigation = ({ name, isLoggedIn, onLogOutClick }) => {
       {!isLoggedIn ? (
         <AuthLinks />
       ) : (
-        <UserProfile showFullName={false} name={name} onClick={onLogOutClick} />
+        <UserProfile name={name} onClick={onLogOutClick} />
       )}
 
       <ThemeButton />
