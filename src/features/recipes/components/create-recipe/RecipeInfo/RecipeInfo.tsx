@@ -1,13 +1,29 @@
 import { DetailsMeta } from './RecipeInfo.styled';
 import { FieldErrorMessage } from '@/components';
 import { cuisines } from '@/features/recipes/constants';
+import type {
+  RecipeFormState,
+  RecipeFormErrors,
+  RecipeFormTouched,
+  FieldChangeEvent,
+  FieldBlurEvent,
+} from '@/types';
+
+interface RecipeInfoProps {
+  values: RecipeFormState;
+  onChange: (e: FieldChangeEvent) => void;
+  validationErrors: RecipeFormErrors;
+  handleInputBlur: (evt: FieldBlurEvent) => void;
+  isTouched: RecipeFormTouched;
+}
+
 const RecipeInfo = ({
   values,
   onChange,
   validationErrors,
   handleInputBlur,
   isTouched,
-}) => {
+}: RecipeInfoProps) => {
   const {
     recipe_name,
     description,

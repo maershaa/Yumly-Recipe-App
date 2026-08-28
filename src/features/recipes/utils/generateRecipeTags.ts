@@ -3,12 +3,13 @@
 export const generateRecipeTags = (
   selectedTags: string[] = [],
   ...additionalTags: (string | null | undefined)[]
-) => {
+): string[] => {
   return [
     ...new Set([
       ...selectedTags,
       ...additionalTags.filter(
-        (tag) => typeof tag === 'string' && tag.trim().length > 0,
+        (tag): tag is string =>
+          typeof tag === 'string' && tag.trim().length > 0,
       ),
     ]),
   ];
@@ -18,3 +19,5 @@ export const generateRecipeTags = (
 // additionalTags - теги которые я добавляю сама (сложность блюда в зависимости от времени приготовления, тип кухни (страна))
 // Из additionalTags добавляются только непустые строки.
 // Set гарантирует отсутствие дублирующихся тегов в итоговом массиве.
+
+// : tag is string -специальный синтаксис, который явно говорит компилятору: "если эта функция вернула true для элемента - считай его типом string

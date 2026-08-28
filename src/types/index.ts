@@ -9,6 +9,9 @@ export type {
   RecipeFormErrors,
   RecipeFormTabsId,
   RecipeFormTabsLabel,
+  RecipeFormTouched,
+  FieldChangeEvent,
+  FieldBlurEvent,
 } from './form-recipe';
 
 export type {

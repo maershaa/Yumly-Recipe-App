@@ -2,6 +2,15 @@ import { FaPlus, FaTrash } from 'react-icons/fa';
 import { IngredientRow } from './Ingredients.styled';
 import { GeneralBtn, FieldErrorMessage } from '@/components';
 import { units } from '@/features/recipes/constants';
+import type { FormIngredient, FieldChangeEvent } from '@/types';
+
+interface IngredientsProps {
+  ingredients: FormIngredient[];
+  onChange: (id: string, e: FieldChangeEvent) => void;
+  addIngredient: () => void;
+  removeIngredient: (id: string) => void;
+  isIngredientsError: string;
+}
 
 const Ingredients = ({
   ingredients,
@@ -9,7 +18,7 @@ const Ingredients = ({
   addIngredient,
   removeIngredient,
   isIngredientsError,
-}) => {
+}: IngredientsProps) => {
   return (
     <>
       <h2>Ingredients</h2>
@@ -39,6 +48,7 @@ const Ingredients = ({
             ))}
           </select>
           <GeneralBtn
+            type="button"
             variant="delete"
             onClick={() => removeIngredient(id)}
             disabled={ingredients.length <= 3}
@@ -50,7 +60,7 @@ const Ingredients = ({
       {isIngredientsError && (
         <FieldErrorMessage errorMessage={isIngredientsError} />
       )}
-      <GeneralBtn variant="add" onClick={addIngredient}>
+      <GeneralBtn type="button" variant="add" onClick={addIngredient}>
         <FaPlus />
         Add Ingredient
       </GeneralBtn>

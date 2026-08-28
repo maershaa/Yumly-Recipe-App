@@ -4,7 +4,12 @@ import {
   StyledTooltip,
 } from './UserProfile.styled';
 
-const UserProfile = ({ name, onClick }) => {
+interface UserProfileProps {
+  name: string;
+  onClick: () => void;
+}
+
+const UserProfile = ({ name, onClick }: UserProfileProps) => {
   return (
     <UserMenu>
       <div className="userInfoBlock">

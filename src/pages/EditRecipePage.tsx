@@ -24,6 +24,7 @@ import type {
   Instruction,
   Recipe,
   Cuisines,
+  RecipeCategoryValue,
 } from '@/types';
 
 const EditRecipePage = () => {
@@ -46,6 +47,7 @@ const EditRecipePage = () => {
     ingredients: [],
     instructions: [],
   });
+  console.log('🚀 ~ EditRecipePage ~ recipeForm:', recipeForm);
 
   const { id: currentUserId } = useAppSelector(selectUser);
   const { recipeId } = useParams();
@@ -88,14 +90,13 @@ const EditRecipePage = () => {
               return {
                 id: crypto.randomUUID(), // Временный id для работы формы. Используется React как key, а также для поиска,
                 // изменения и удаления элементов. На бэкенд этот id не отправляется.
-                step: index + 1,
                 text: el.text.trim(),
               };
             },
           ),
 
           // В состоянии формы храним только теги, которые пользователь может изменить через чекбоксы. Автоматически вычисляемые теги (difficulty, cuisine) сюда не включаем
-          tags: (data.tags ?? []).filter((tag) =>
+          tags: (data.tags ?? []).filter((tag): tag is RecipeCategoryValue =>
             recipeCategories.some((category) => category.value === tag),
           ),
 
@@ -129,7 +130,7 @@ const EditRecipePage = () => {
 
       toast.success('Your recipe has been successfully editing.');
 
-      navigate(`/recipes/${recipeId}`); //!но при переходе на страницу не отображается уже обновленный рецепт. для этого нужно перезагружать страницу.
+      navigate(`/recipes/${recipeId}`);
     } catch (error) {
       toast.error('Failed to edit the recipe. Please try again.');
       setError(getErrorMessage(error));

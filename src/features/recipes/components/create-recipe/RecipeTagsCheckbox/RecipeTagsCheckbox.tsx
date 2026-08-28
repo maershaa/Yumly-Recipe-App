@@ -8,6 +8,7 @@ interface RecipeTagsCheckboxProps {
   tags: RecipeCategoryValue[];
 }
 const RecipeTagsCheckbox = ({ onChange, tags }: RecipeTagsCheckboxProps) => {
+  console.log('🚀 ~ RecipeTagsCheckbox ~ tags:', tags);
   return (
     <TagsWrapper>
       {recipeCategories.map(({ value, icon, label }) => {

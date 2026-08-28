@@ -1,4 +1,5 @@
-import type { Cuisines } from '@/types';
+import type { Cuisines, RecipeCategoryValue } from '@/types';
+import type { ChangeEvent, FocusEvent } from 'react';
 
 export interface FormIngredient {
   id: string;
@@ -21,7 +22,7 @@ export interface RecipeFormState {
   image_url: string;
   ingredients: FormIngredient[];
   instructions: FormInstruction[];
-  tags: string[];
+  tags: RecipeCategoryValue[];
   tips: string;
 }
 
@@ -37,8 +38,29 @@ export interface RecipeFormErrors {
   instructions: string;
 }
 
+export type RecipeFormTouched = Record<
+  | 'recipe_name'
+  | 'description'
+  | 'cuisine'
+  | 'cooking_time'
+  | 'servings'
+  | 'image_url'
+  | 'tips',
+  boolean
+>;
+
 export type RecipeFormTabsId = 'generalInfo' | 'ingredients' | 'cooking';
 export type RecipeFormTabsLabel =
   | 'Basic Info'
   | 'Ingredients'
   | 'Cooking Steps';
+
+// Общие типы событий для полей формы рецепта — используются
+// во всех дочерних компонентах формы (RecipeForm, RecipeInfo, Ingredients, CookingSteps...)
+export type FieldChangeEvent = ChangeEvent<
+  HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+>;
+
+export type FieldBlurEvent = FocusEvent<
+  HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+>;

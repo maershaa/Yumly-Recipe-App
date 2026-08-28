@@ -18,14 +18,16 @@ import { GeneralBtn } from '@/components';
 import { uploadRecipeImage } from '@/features/recipes/api';
 import { createIngredient, createStep } from '@/features/recipes/helpers';
 
-import type { RecipeFormState, RecipeFormErrors } from '@/types';
 import type {
-  Dispatch,
-  SetStateAction,
-  SubmitEvent,
-  ChangeEvent,
-  FocusEvent,
-} from 'react';
+  RecipeFormState,
+  RecipeFormErrors,
+  RecipeFormTabsId,
+  RecipeCategoryValue,
+  RecipeFormTouched,
+  FieldChangeEvent,
+  FieldBlurEvent,
+} from '@/types';
+import type { Dispatch, SetStateAction, SubmitEvent, ChangeEvent } from 'react';
 
 interface RecipeFormProps {
   recipeForm: RecipeFormState;
@@ -58,14 +60,8 @@ const RecipeForm = ({
     tips: false,
   };
 
-  type TabId = 'generalInfo' | 'ingredients' | 'cooking';
-
-  const [isTouched, setIsTouched] = useState(FORM_FIELDS);
-  const [activeTab, setActiveTab] = useState('generalInfo');
-
-  type FieldChangeEvent = ChangeEvent<
-    HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-  >;
+  const [isTouched, setIsTouched] = useState<RecipeFormTouched>(FORM_FIELDS);
+  const [activeTab, setActiveTab] = useState<RecipeFormTabsId>('generalInfo');
 
   const handleInfoChange = (e: FieldChangeEvent) => {
     const { name, value } = e.target;
@@ -162,7 +158,7 @@ const RecipeForm = ({
     }));
   };
 
-  const handleInputBlur = (evt: FocusEvent<HTMLInputElement>) => {
+  const handleInputBlur = (evt: FieldBlurEvent) => {
     const name = evt.currentTarget.name;
     setIsTouched((prev) => ({ ...prev, [name]: true }));
   };
@@ -170,13 +166,15 @@ const RecipeForm = ({
   const handleToggleTags = ({
     target: { value },
   }: ChangeEvent<HTMLInputElement>) => {
+    const tagValue = value as RecipeCategoryValue;
+
     // Если тег уже выбран — удаляем его из массива.
     // Если нет — добавляем в конец массива.
     setRecipeForm((prev) => ({
       ...prev,
-      tags: prev.tags.includes(value)
-        ? prev.tags.filter((tag) => tag !== value)
-        : [...prev.tags, value],
+      tags: prev.tags.includes(tagValue)
+        ? prev.tags.filter((tag) => tag !== tagValue)
+        : [...prev.tags, tagValue],
     }));
   };
 

@@ -1,6 +1,10 @@
 import styled, { css } from 'styled-components';
 
-export const Button = styled.button`
+type ButtonProps = {
+  variant: 'primary' | 'submit' | 'add' | 'delete';
+};
+
+export const Button = styled.button<ButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;

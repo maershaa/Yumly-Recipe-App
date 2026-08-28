@@ -47,7 +47,7 @@ const AddImageSection = ({
             alt={recipe_name || 'Recipe image'}
             loading="lazy"
           />
-          <GeneralBtn variant="delete" onClick={removeImage}>
+          <GeneralBtn type="button" variant="delete" onClick={removeImage}>
             Replace image
           </GeneralBtn>
         </ReplaceImageWrapper>
