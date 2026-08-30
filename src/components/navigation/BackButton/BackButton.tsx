@@ -3,9 +3,13 @@ import { IoMdArrowBack } from 'react-icons/io';
 import { useState } from 'react';
 import { BackButtonWrapper } from './BackButton.styled';
 
-const BackButton = ({ fallback = '/' }) => {
+interface BackButtonProps {
+  fallback?: string;
+}
+
+const BackButton = ({ fallback = '/' }: BackButtonProps) => {
   const location = useLocation();
-  const [backLink] = useState(location.state?.from || fallback);
+  const [backLink] = useState<string>(location.state?.from || fallback);
 
   /*
     Как работает кнопка Back:

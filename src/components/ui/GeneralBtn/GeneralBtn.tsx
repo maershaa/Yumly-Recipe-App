@@ -3,10 +3,10 @@ import { ReactNode } from 'react';
 import { ButtonHTMLAttributes } from 'react';
 
 type ButtonTypes = 'button' | 'submit' | 'reset';
-type ButtonVariants = 'primary' | 'submit' | 'add' | 'delete';
+type ButtonVariants = 'submit' | 'add' | 'delete';
 
 interface GeneralBtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  type: ButtonTypes;
+  type?: ButtonTypes;
   onClick?: () => void;
   disabled?: boolean;
   variant: ButtonVariants;
@@ -17,7 +17,7 @@ const GeneralBtn = ({
   type = 'button',
   onClick,
   disabled = false,
-  variant = 'primary',
+  variant,
   children,
 }: GeneralBtnProps) => {
   return (

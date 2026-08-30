@@ -6,8 +6,7 @@ import {
   FaBirthdayCake,
   FaConciergeBell,
 } from 'react-icons/fa';
-import { JSX } from 'react';
-
+import type { JSX } from 'react';
 import { RecipeCategoryValue } from '@/types';
 
 type recipeCategoriesLabel =

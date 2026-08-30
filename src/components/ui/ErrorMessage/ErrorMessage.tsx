@@ -10,8 +10,8 @@ import { BackButton } from '@/components';
 import { FaClapperboard } from 'react-icons/fa6';
 
 interface ErrorMessageProps {
-  message: string;
-  onRetry: () => void;
+  message?: string;
+  onRetry?: () => void;
 }
 const ErrorMessage = ({
   message = 'Please try again later',

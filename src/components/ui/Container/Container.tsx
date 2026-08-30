@@ -1,6 +1,5 @@
 import { ContainerWrapper } from './Container.styled';
-import { JSX } from 'react';
-
+import type { JSX } from 'react';
 interface ContainerProps {
   children: JSX.Element;
   className?: string;

@@ -60,9 +60,12 @@ const authSlice = createSlice({
 
         state.loading = false;
 
-        state.user.id = action.payload.user.id;
-        state.user.name = typeof userName === 'string' ? userName : '';
-        state.user.email = action.payload.user.email ?? '';
+        state.user = {
+          id: action.payload.user.id,
+          name: typeof userName === 'string' ? userName : '',
+          email: action.payload.user.email ?? '',
+        };
+
         state.token = action.payload.session.access_token;
         state.isLoggedIn = true;
       })
@@ -103,9 +106,12 @@ const authSlice = createSlice({
 
         const userName = action.payload.user.user_metadata.userName;
 
-        state.user.name = typeof userName === 'string' ? userName : '';
-        state.user.id = action.payload.user.id;
-        state.user.email = action.payload.user.email ?? '';
+        state.user = {
+          id: action.payload.user.id,
+          name: typeof userName === 'string' ? userName : '',
+          email: action.payload.user.email ?? '',
+        };
+
         state.token = action.payload.access_token;
 
         state.isLoggedIn = true;

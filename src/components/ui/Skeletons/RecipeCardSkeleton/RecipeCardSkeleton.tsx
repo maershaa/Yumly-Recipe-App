@@ -1,9 +1,13 @@
 import {
   RecipeCardSkeletonWrapper,
   RecipeCardSkeletonItem,
-} from './RecipeCardSkeleton.styled.jsx';
+} from './RecipeCardSkeleton.styled.js';
 
-const RecipeCardSkeleton = ({ count = 6 }) => {
+interface RecipeCardSkeletonProps {
+  count?: number;
+}
+
+const RecipeCardSkeleton = ({ count = 6 }: RecipeCardSkeletonProps) => {
   return (
     <RecipeCardSkeletonWrapper>
       {Array.from({ length: count }).map((_, index) => (

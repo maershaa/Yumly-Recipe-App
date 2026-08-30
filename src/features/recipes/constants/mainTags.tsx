@@ -8,7 +8,7 @@ import {
   FaConciergeBell,
 } from 'react-icons/fa';
 import { PiLightning, PiGauge, PiFireSimple } from 'react-icons/pi';
-import { JSX } from 'react';
+import type { JSX } from 'react';
 import type { MainTagsValue } from '@/types';
 
 interface mainTag {
