@@ -8,23 +8,41 @@ import { selectRecipes } from '@/app/redux/recipes/selectors';
 import { fetchRecipes } from '@/app/redux/recipes/operations';
 import { useAppSelector, useAppDispatch } from '@/app/redux/hooks';
 
-interface datePartProps {
-  title: string;
-  emoji: string;
-  tag: null | string;
-}
+const getDayPart = () => {
+  const hour = new Date().getHours();
+
+  if (hour > 6 && hour <= 12) {
+    return {
+      title: 'Good morning! What’s for breakfast?',
+      emoji: '🍳',
+      tag: 'breakfast',
+    };
+  } else if (hour > 12 && hour <= 16) {
+    return {
+      title: 'Hungry? Time for a hearty lunch!',
+      emoji: '🍲',
+      tag: 'lunch',
+    };
+  } else {
+    return {
+      title: 'Cozy dinners for tonight',
+      emoji: '🌙',
+      tag: 'dinner',
+    };
+  }
+};
+
 const SmartRecommendations = () => {
   const dispatch = useAppDispatch();
   const recipes = useAppSelector(selectRecipes);
 
-  const [datePart, setDatePart] = useState<datePartProps>({
-    title: '',
-    emoji: '',
-    tag: null,
-  });
+  const { tag, title, emoji } = getDayPart();
+
+  useEffect(() => {
+    dispatch(fetchRecipes());
+  }, [dispatch]);
 
   const recipesToRender = useMemo(() => {
-    const tag = datePart.tag;
     if (!tag) return [];
 
     return recipes
@@ -35,39 +53,9 @@ const SmartRecommendations = () => {
             index && recipe.tags?.includes(tag),
       )
       .slice(0, 3);
-  }, [datePart.tag, recipes]);
+  }, [tag, recipes]);
 
-  useEffect(() => {
-    dispatch(fetchRecipes());
-
-    const getPartOfDay = () => {
-      const hour = new Date().getHours();
-
-      if (hour > 6 && hour <= 11) {
-        setDatePart({
-          title: 'Good morning! What’s for breakfast?',
-          emoji: '🍳',
-          tag: 'breakfast',
-        });
-      } else if (hour > 11 && hour <= 16) {
-        setDatePart({
-          title: 'Hungry? Time for a hearty lunch!',
-          emoji: '🍲',
-          tag: 'lunch',
-        });
-      } else {
-        setDatePart({
-          title: 'Cozy dinners for tonight',
-          emoji: '🌙',
-          tag: 'dinner',
-        });
-      }
-    };
-
-    getPartOfDay();
-  }, [dispatch]);
-
-  if (!datePart.tag || !recipes) {
+  if (!tag || !recipes.length) {
     return (
       <SmartRecommendationsSection>
         <Header>
@@ -83,8 +71,8 @@ const SmartRecommendations = () => {
         <div className="title-wrapper">
           <h2>Smart Recommendation</h2>
           <h3>
-            {datePart.title}
-            <span>{datePart.emoji}</span>
+            {title}
+            <span>{emoji}</span>
           </h3>
         </div>
         <p className="subtitle">

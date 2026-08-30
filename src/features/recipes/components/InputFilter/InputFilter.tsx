@@ -1,6 +1,5 @@
 import { FiSearch } from 'react-icons/fi';
 import { Input, InputWrapper, SearchIcon } from './InputFilter.styled';
-import { ChangeEvent } from 'react';
 
 type InputTypes = 'text' | 'password' | 'email';
 
@@ -9,7 +8,7 @@ interface InputFilterProps {
   name: string;
   placeholder: string;
   filterValue: string;
-  setFilterValue: (value: string) => void;
+  setFilterValue: (e: string) => void;
 }
 
 const InputFilter = ({

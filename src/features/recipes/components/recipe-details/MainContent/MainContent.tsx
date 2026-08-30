@@ -9,9 +9,13 @@ import {
   StepsList,
 } from './MainContent.styled';
 
-import type { Recipe } from '@/types';
+import type { Ingredient, Instruction } from '@/types';
 
-type MainContentProps = Pick<Recipe, 'ingredients' | 'instructions' | 'tips'>;
+type MainContentProps = {
+  ingredients: Ingredient[];
+  instructions: Instruction[];
+  tips: string;
+};
 
 const MainContent = ({ ingredients, instructions, tips }: MainContentProps) => {
   return (

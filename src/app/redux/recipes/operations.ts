@@ -3,6 +3,12 @@ import { supabase } from '@/supabase/supabaseClient';
 import type { Recipe } from '@/types';
 import { getErrorMessage } from '@/features/recipes/utils';
 
+// ! тут Recipe[] это ошибка. надо разобраться. отвте приходит такой data: {
+//   ingredients: Json | null;   // ← реальный тип, который вычислил TS
+//   instructions: Json | null;
+//   difficulty: string | null;
+// ...остальные поля
+// }[]
 const fetchRecipes = createAsyncThunk<Recipe[], void, { rejectValue: string }>(
   'recipes/getRecipes',
   async (_, thunkApi) => {

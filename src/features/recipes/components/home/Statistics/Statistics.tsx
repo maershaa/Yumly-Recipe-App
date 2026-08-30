@@ -16,14 +16,13 @@ import {
   chefPhoto4,
 } from '@/assets/images';
 
-// Временные заглушки для аватарок пользователей (в продакшене заменяются на реальные линки)
+// Временные заглушки для аватарок пользователей
 const avatars = [chefPhoto1, chefPhoto2, chefPhoto3, chefPhoto4];
 
 const Statistics = () => {
   return (
     <StatsSection>
       <StatsContainer>
-        {/* Левая часть: Социальное доказательство и текст */}
         <SocialProof>
           <h2>Our Growing Family</h2>
           <p>

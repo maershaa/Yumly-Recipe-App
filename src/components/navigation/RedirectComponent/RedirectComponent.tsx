@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Redirect } from './RedirectComponent.styled';
 
 interface RedirectComponentProps {
-  spanText: string;
+  spanText?: string;
   linkText: string;
   to: string;
 }

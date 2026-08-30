@@ -1,4 +1,4 @@
-import { Cuisines, Ingredient, Instruction, Difficulty } from '@/types';
+import type { Cuisines, Ingredient, Instruction, Difficulty } from '@/types';
 
 interface RecipeBasePayload {
   recipe_name: string;
