@@ -9,6 +9,14 @@ import { useAppDispatch } from '@/app/redux/hooks';
 
 import { getErrorMessage } from '@/features/recipes/utils';
 
+import type {
+  RegistrationFormState,
+  RegistrationFormTouched,
+  RegistrationFormErrors,
+} from '@/types';
+
+import type { SubmitEvent, ChangeEvent, FocusEvent } from 'react';
+
 const RegistrationForm = () => {
   const initialForm = {
     userName: '',
@@ -24,8 +32,11 @@ const RegistrationForm = () => {
     confirmPassword: false,
   };
 
-  const [registrationForm, setRegistrationForm] = useState(initialForm);
-  const [isTouched, setIsTouched] = useState(INITIAL_TOUCHED_STATE);
+  const [registrationForm, setRegistrationForm] =
+    useState<RegistrationFormState>(initialForm);
+  const [isTouched, setIsTouched] = useState<RegistrationFormTouched>(
+    INITIAL_TOUCHED_STATE,
+  );
 
   const { isFormValid, errors: formErrors } =
     validateRegistrationForm(registrationForm);
@@ -33,7 +44,7 @@ const RegistrationForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const handleFormChange = (evt) => {
+  const handleFormChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target;
     setRegistrationForm((prevValue) => ({ ...prevValue, [name]: value }));
   };
@@ -43,7 +54,7 @@ const RegistrationForm = () => {
     email: emailError,
     password: passwordError,
     confirmPassword: confirmPasswordError,
-  } = formErrors;
+  }: RegistrationFormErrors = formErrors;
 
   const {
     userName: isUserNameTouched,
@@ -58,14 +69,9 @@ const RegistrationForm = () => {
   const showConfirmPasswordError =
     confirmPasswordError && isConfirmPasswordTouched;
 
-  const canSubmit =
-    isFormValid &&
-    isConfirmPasswordTouched &&
-    isPasswordTouched &&
-    isUserNameTouched &&
-    isEmailTouched;
+  const canSubmit = isFormValid && isConfirmPasswordTouched; //форма может автозаполнится но второй пароль внеси будь любезен сам
 
-  const handleSubmit = async (evt) => {
+  const handleSubmit = async (evt: SubmitEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (!isFormValid) return;
@@ -83,12 +89,11 @@ const RegistrationForm = () => {
       setRegistrationForm(initialForm);
       navigate('/auth/verify-email');
     } catch (error) {
-      toast.error(error);
-      console.error(getErrorMessage(error));
+      toast.error(getErrorMessage(error));
     }
   };
 
-  const handleInputBlur = (evt) => {
+  const handleInputBlur = (evt: FocusEvent<HTMLInputElement>) => {
     const { name } = evt.target;
     setIsTouched((prev) => ({ ...prev, [name]: true }));
   };

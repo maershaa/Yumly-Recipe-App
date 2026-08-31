@@ -1,7 +1,17 @@
-const validateUserEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-const validatePassword = (password) => password?.length >= 6;
+import type { LogInFormState, LogInFormErrors } from '@/types';
 
-export const validateLoginForm = (form) => {
+interface ValidationErrorsType {
+  isFormValid: boolean;
+  errors: LogInFormErrors;
+}
+
+const validateUserEmail = (email: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+const validatePassword = (password: string) => password.length >= 6;
+
+export const validateLoginForm = (
+  form: LogInFormState,
+): ValidationErrorsType => {
   const emailValid = validateUserEmail(form.email);
   const passwordValid = validatePassword(form.password);
   const isFormValid = emailValid && passwordValid;

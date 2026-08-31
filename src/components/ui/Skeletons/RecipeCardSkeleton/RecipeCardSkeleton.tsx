@@ -1,7 +1,7 @@
 import {
   RecipeCardSkeletonWrapper,
   RecipeCardSkeletonItem,
-} from './RecipeCardSkeleton.styled.js';
+} from './RecipeCardSkeleton.styled';
 
 interface RecipeCardSkeletonProps {
   count?: number;

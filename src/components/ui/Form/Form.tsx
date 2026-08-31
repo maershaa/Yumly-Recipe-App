@@ -1,9 +1,9 @@
 import { FormWrapper } from './Form.styled';
 import { PageTitle } from '@/components';
-import type { JSX, SubmitEvent } from 'react';
+import type { ReactNode, SubmitEvent } from 'react';
 
 interface FormProps {
-  children: JSX.Element;
+  children: ReactNode;
   handleSubmit: (evt: SubmitEvent<HTMLFormElement>) => void;
   title: string;
 }

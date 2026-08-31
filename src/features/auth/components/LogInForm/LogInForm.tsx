@@ -10,6 +10,14 @@ import { useAppDispatch } from '@/app/redux/hooks';
 import { validateLoginForm } from '@/features/auth/helpers';
 import { getErrorMessage } from '@/features/recipes/utils';
 
+import type { ChangeEvent, FocusEvent, SubmitEvent } from 'react';
+
+import type {
+  LogInFormState,
+  LogInFormTouched,
+  LogInFormErrors,
+} from '@/types';
+
 const LogInForm = () => {
   const initialForm = {
     email: '',
@@ -21,33 +29,36 @@ const LogInForm = () => {
     password: false,
   };
 
-  const [loginForm, setLoginForm] = useState(initialForm);
-  const [isTouched, setIsTouched] = useState(INITIAL_TOUCHED_STATE);
+  const [loginForm, setLoginForm] = useState<LogInFormState>(initialForm);
+  const [isTouched, setIsTouched] = useState<LogInFormTouched>(
+    INITIAL_TOUCHED_STATE,
+  );
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const { isFormValid, errors: formErrors } = validateLoginForm(loginForm);
 
-  const { email: emailError, password: passwordError } = formErrors;
+  const { email: emailError, password: passwordError }: LogInFormErrors =
+    formErrors;
 
   const { email: isEmailTouched, password: isPasswordTouched } = isTouched;
 
   const showEmailError = emailError && isEmailTouched;
   const showPasswordError = passwordError && isPasswordTouched;
 
-  const handleFormChange = (evt) => {
+  const handleFormChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target;
 
     setLoginForm((prevValue) => ({ ...prevValue, [name]: value }));
   };
 
-  const handleInputBlur = (evt) => {
+  const handleInputBlur = (evt: FocusEvent<HTMLInputElement>) => {
     const { name } = evt.target;
     setIsTouched((prev) => ({ ...prev, [name]: true }));
   };
 
-  const handleSignIn = async (evt) => {
+  const handleSignIn = async (evt: SubmitEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (!isFormValid) return;
@@ -68,14 +79,16 @@ const LogInForm = () => {
       toast.success('You are successfully logged in');
     } catch (error) {
       setLoginForm(initialForm);
-      console.error(getErrorMessage(error));
 
-      if (error === 'Email not confirmed') {
-        toast.error(error);
-      } else if (error === 'Invalid login credentials') {
+      const message = getErrorMessage(error);
+      console.error(message);
+
+      if (message === 'Email not confirmed') {
+        toast.error(message);
+      } else if (message === 'Invalid login credentials') {
         toast.error('Invalid email or password');
       } else {
-        toast.error(error);
+        toast.error(message);
       }
     }
   };

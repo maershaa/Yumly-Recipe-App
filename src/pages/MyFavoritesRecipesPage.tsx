@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { getUserFavorites } from '@/features/favorites/api';
-import { selectUser } from '@/app/redux/auth/selectors.js';
+import { selectIsLoggedIn, selectUser } from '@/app/redux/auth/selectors';
 
 import {
   PageTitle,
@@ -15,27 +15,24 @@ import { useAppSelector } from '@/app/redux/hooks';
 import type { Recipe } from '@/types';
 import { getErrorMessage } from '@/features/recipes/utils';
 
-interface Error {
-  code: string;
-  details: null;
-  hint: null;
-  message: string;
-}
-
 const MyFavoritesRecipesPage = () => {
   const [favorites, setFavorites] = useState<Recipe[]>([]);
+
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const { id: currentUserId } = useAppSelector(selectUser);
   const [filter, setFilter] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const filteredRecipes = useMemo(
     () =>
-      favorites.filter((r) =>
-        r.recipe_name
-          .trim()
-          .toLowerCase()
-          .includes(filter.trim().toLowerCase()),
+      favorites.filter(
+        ({ recipe_name }) =>
+          recipe_name &&
+          recipe_name
+            .trim()
+            .toLowerCase()
+            .includes(filter.trim().toLowerCase()),
       ),
     [filter, favorites],
   );
@@ -47,17 +44,16 @@ const MyFavoritesRecipesPage = () => {
       const data = await getUserFavorites(currentUserId);
       setFavorites(data);
     } catch (error) {
-      console.log('🚀 ~ MyFavoritesRecipesPage ~ error:', error);
-      setError(error.message);
+      setError(getErrorMessage(error));
     } finally {
       setIsLoading(false);
     }
   }, [currentUserId]);
 
   useEffect(() => {
-    if (!currentUserId) return;
+    if (!isLoggedIn) return;
     loadUserFavorites();
-  }, [currentUserId, loadUserFavorites]);
+  }, [isLoggedIn, currentUserId, loadUserFavorites]);
 
   if (isLoading) {
     return (
@@ -72,10 +68,7 @@ const MyFavoritesRecipesPage = () => {
     return (
       <div>
         <PageTitle title={'Favorites'} />
-        <ErrorMessage
-          message={getErrorMessage(error)}
-          onRetry={() => loadUserFavorites()}
-        />
+        <ErrorMessage message={error} onRetry={() => loadUserFavorites()} />
       </div>
     );
   }

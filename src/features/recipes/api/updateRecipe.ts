@@ -6,7 +6,7 @@ import type { TablesUpdate } from '@/types/supabase';
 export const updateRecipe = async (
   updatedRecipe: UpdateRecipePayload,
   currentUserId: string,
-  recipeId: number,
+  recipeId: string,
 ): Promise<Recipe> => {
   const { data, error } = await supabase
     .from('recipes')

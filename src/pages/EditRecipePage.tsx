@@ -137,6 +137,11 @@ const EditRecipePage = () => {
       setIsSubmitting(false);
     }
   };
+
+  if (error) {
+    //!  как обработать если ошибка? не хочкется же чтобы форма слетела.или как лучше.
+  }
+
   return (
     <div>
       <PageTitle title={'Make Changes to Your Recipe'} />

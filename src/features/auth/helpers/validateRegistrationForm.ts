@@ -1,10 +1,20 @@
-const validateUserName = (name) => name?.trim().length >= 3;
-const validateUserEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-const validatePassword = (password) => password?.length >= 6;
-const validateConfirmPassword = (password, confirmPassword) =>
+import type { RegistrationFormState, RegistrationFormErrors } from '@/types';
+
+interface ValidationErrorsType {
+  isFormValid: boolean;
+  errors: RegistrationFormErrors;
+}
+
+const validateUserName = (name: string) => name.trim().length >= 3;
+const validateUserEmail = (email: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+const validatePassword = (password: string) => password.length >= 6;
+const validateConfirmPassword = (password: string, confirmPassword: string) =>
   password === confirmPassword;
 
-export const validateRegistrationForm = (form) => {
+export const validateRegistrationForm = (
+  form: RegistrationFormState,
+): ValidationErrorsType => {
   const nameValid = validateUserName(form.userName);
   const emailValid = validateUserEmail(form.email);
   const passwordValid = validatePassword(form.password);

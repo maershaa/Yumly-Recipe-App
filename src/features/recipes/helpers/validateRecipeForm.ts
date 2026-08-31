@@ -85,7 +85,7 @@ import type {
   isTouched.field === true && errors.field !== ''
 */
 
-interface validationErrorsType {
+interface ValidationErrorsType {
   isFormValid: boolean;
   errors: RecipeFormErrors;
 }
@@ -120,7 +120,7 @@ const validateTips = (tips: string): boolean => tips.trim().length >= 10;
 
 export const validateRecipeForm = (
   form: RecipeFormState,
-): validationErrorsType => {
+): ValidationErrorsType => {
   const recipeNameValid = validateRecipeName(form.recipe_name);
   const cuisineValid = validateCuisine(form.cuisine);
   const cookingTimeValid = validateCookingTime(form.cooking_time);

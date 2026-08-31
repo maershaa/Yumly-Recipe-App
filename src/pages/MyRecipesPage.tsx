@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import { selectUser } from '@/app/redux/auth/selectors.js';
+import { selectIsLoggedIn, selectUser } from '@/app/redux/auth/selectors';
 import { getUserRecipes } from '@/features/recipes/api';
 import { getErrorMessage } from '@/features/recipes/utils';
 
@@ -19,11 +19,13 @@ import {
 } from '@/components';
 
 import { useAppSelector } from '@/app/redux/hooks';
+import type { Recipe } from '@/types';
 
 const MyRecipesPage = () => {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const { id: currentUserId } = useAppSelector(selectUser);
   const [filter, setFilter] = useState('');
-  const [userRecipes, setUserRecipes] = useState([]);
+  const [userRecipes, setUserRecipes] = useState<Recipe[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,16 +33,18 @@ const MyRecipesPage = () => {
 
   const filteredRecipes = useMemo(
     () =>
-      userRecipes?.filter((r) =>
-        r.recipe_name
-          .trim()
-          .toLowerCase()
-          .includes(filter.trim().toLowerCase()),
+      userRecipes.filter(
+        ({ recipe_name }) =>
+          recipe_name &&
+          recipe_name
+            .trim()
+            .toLowerCase()
+            .includes(filter.trim().toLowerCase()),
       ),
     [filter, userRecipes],
   );
 
-  const loadUserRecipes = async (userId: string) => {
+  const loadUserRecipes = useCallback(async (userId: string) => {
     try {
       setIsLoading(true);
       setError(null);
@@ -51,13 +55,13 @@ const MyRecipesPage = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    if (!currentUserId) return;
+    if (!isLoggedIn) return;
 
     loadUserRecipes(currentUserId);
-  }, [currentUserId]);
+  }, [isLoggedIn, currentUserId, loadUserRecipes]);
 
   if (isLoading) {
     return (

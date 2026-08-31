@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
-import { selectRecipes, selectLoading } from '@/app/redux/recipes/selectors.js';
+import { selectRecipes, selectLoading } from '@/app/redux/recipes/selectors';
 import { fetchRecipes } from '@/app/redux/recipes/operations';
 import { RecipesList, TagsFilter } from '@/features/recipes/components';
 import { PageTitle, RecipeCardSkeleton } from '@/components';
 import { useAppSelector, useAppDispatch } from '@/app/redux/hooks';
+import type { MainTagsValue } from '@/types';
 
 const RecipesPage = () => {
-  const [selectedTag, setSelectedTag] = useState('');
+  const [selectedTag, setSelectedTag] = useState<MainTagsValue>('all');
   const recipes = useAppSelector(selectRecipes);
   const isLoading = useAppSelector(selectLoading);
   const dispatch = useAppDispatch();
@@ -16,7 +17,7 @@ const RecipesPage = () => {
   }, [dispatch]);
 
   const filteredRecipes = useMemo(() => {
-    if (!selectedTag || selectedTag === 'all') return recipes;
+    if (selectedTag === 'all') return recipes;
 
     return recipes.filter((recipe) => recipe.tags?.includes(selectedTag));
   }, [selectedTag, recipes]);

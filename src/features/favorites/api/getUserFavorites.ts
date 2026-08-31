@@ -1,24 +1,25 @@
 import { supabase } from '@/supabase/supabaseClient';
+import { getErrorMessage, mapToRecipe } from '@/features/recipes/utils';
+import type { Recipe } from '@/types';
 
-export const getUserFavorites = async (currentUserId) => {
-  try {
-    const { data, error } = await supabase
-      .from('recipes')
-      .select(
-        `
+export const getUserFavorites = async (
+  currentUserId: string,
+): Promise<Recipe[]> => {
+  const { data, error } = await supabase
+    .from('recipes')
+    .select(
+      `
             *,
     favorites!inner()
   `,
-      )
-      .eq('favorites.user_id', currentUserId);
+    )
+    .eq('favorites.user_id', currentUserId);
 
-    if (error) throw error;
-
-    return data;
-  } catch (e) {
-    console.error('Error loading favorites:', e.message);
-    throw e;
+  if (error) {
+    throw new Error(getErrorMessage(error));
   }
+
+  return data.map((row) => mapToRecipe(row));
 };
 
 // Запрашиваем рецепты из таблицы "recipes".

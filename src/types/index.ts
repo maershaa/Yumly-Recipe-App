@@ -15,6 +15,18 @@ export type {
 } from './form-recipe';
 
 export type {
+  LogInFormState,
+  LogInFormTouched,
+  LogInFormErrors,
+} from './form-auth-logIn';
+
+export type {
+  RegistrationFormState,
+  RegistrationFormTouched,
+  RegistrationFormErrors,
+} from './form-auth-redistration';
+
+export type {
   CreateRecipePayload,
   UpdateRecipePayload,
 } from './recipe-payload';
