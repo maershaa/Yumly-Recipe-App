@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
-import { useCreateRecipe } from '@/features/recipes/api';
+import { createRecipe } from '@/features/recipes/api';
 import { selectUser } from '@/app/redux/auth/selectors';
 import { PageTitle, BackButton } from '@/components';
 import { RecipeForm } from '@/features/recipes/components';
@@ -21,8 +21,6 @@ import type { SubmitEvent } from 'react';
 const CreateRecipePage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { id: currentUserId } = useAppSelector(selectUser);
-
-  const createRecipe = useCreateRecipe(); // мой хук который достает функцию createRecipe которая готовит на основе формы обьект для отправки на бекенд
 
   const createInitialFormState = (): RecipeFormState => ({
     ///мы делаем функцию createInitialFormState а не обьект потому что После очистки формы создаются новые UUID в createIngredient и createStep
@@ -54,8 +52,7 @@ const CreateRecipePage = () => {
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!isFormValid) return;
-    if (isSubmitting) return;
+    if (!isFormValid || isSubmitting) return;
 
     try {
       setIsSubmitting(true);

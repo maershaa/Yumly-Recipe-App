@@ -55,7 +55,7 @@ const SmartRecommendations = () => {
       .slice(0, 3);
   }, [tag, recipes]);
 
-  if (!tag || !recipes.length) {
+  if (!tag || recipes.length === 0) {
     return (
       <SmartRecommendationsSection>
         <Header>

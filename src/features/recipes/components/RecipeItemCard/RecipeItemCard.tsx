@@ -28,7 +28,7 @@ const RecipeItemCard = ({ recipe }: RecipeItemCardProps) => {
 
   return (
     <RecipeItem onClick={() => onItemClick(id)}>
-      <img src={recipeImage} alt={recipe_name} loading="lazy" />
+      <img src={recipeImage} alt={recipe_name ?? ''} loading="lazy" />
       <Title>{recipe_name}</Title>
       <RecipeInfo>
         <span>Prep time: {displayCookingTime} </span>

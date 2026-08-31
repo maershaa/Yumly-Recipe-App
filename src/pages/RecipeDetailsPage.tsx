@@ -60,3 +60,17 @@ const RecipeDetailsPage = () => {
 };
 
 export default RecipeDetailsPage;
+
+// const {
+// recipe_name,
+// description,
+// cuisine,
+// difficulty,
+// servings,
+// tips,
+// image_url,
+// cooking_time,
+// tags = [],
+//   ingredients = [],
+//   instructions,
+// } = recipe;

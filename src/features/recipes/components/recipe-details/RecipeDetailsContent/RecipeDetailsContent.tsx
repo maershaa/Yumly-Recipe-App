@@ -11,28 +11,16 @@ const RecipeDetailsContent = ({
   recipe,
   setRecipe,
 }: RecipeDetailsContentProps) => {
-  const {
-    // recipe_name,
-    // description,
-    // cuisine,
-    // difficulty,
-    // servings,
-    tips,
-    // image_url,
-    // cooking_time,
-    // tags = [],
-    ingredients = [],
-    instructions,
-  } = recipe;
+  const { tips, ingredients, instructions } = recipe;
 
   return (
     <RecipeDetailsWrapper>
       <RecipeHeader recipe={recipe} setRecipe={setRecipe} />
 
       <MainContent
-        tips={tips}
-        ingredients={ingredients}
-        instructions={instructions}
+        tips={tips ?? ''}
+        ingredients={ingredients ?? []}
+        instructions={instructions ?? []}
       />
     </RecipeDetailsWrapper>
   );

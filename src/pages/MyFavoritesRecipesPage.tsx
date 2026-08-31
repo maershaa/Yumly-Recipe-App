@@ -13,6 +13,7 @@ import {
 import { RecipesList, InputFilter } from '@/features/recipes/components';
 import { useAppSelector } from '@/app/redux/hooks';
 import type { Recipe } from '@/types';
+import { getErrorMessage } from '@/features/recipes/utils';
 
 interface Error {
   code: string;
@@ -71,7 +72,10 @@ const MyFavoritesRecipesPage = () => {
     return (
       <div>
         <PageTitle title={'Favorites'} />
-        <ErrorMessage message={error} onRetry={() => loadUserFavorites()} />
+        <ErrorMessage
+          message={getErrorMessage(error)}
+          onRetry={() => loadUserFavorites()}
+        />
       </div>
     );
   }

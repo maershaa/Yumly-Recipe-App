@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 
 import { selectUser } from '@/app/redux/auth/selectors';
-import { useUpdateRecipe, getRecipeById } from '@/features/recipes/api';
+import { updateRecipe, getRecipeById } from '@/features/recipes/api';
 import { PageTitle, BackButton } from '@/components';
 import { RecipeForm } from '@/features/recipes/components';
 import {
@@ -54,8 +54,6 @@ const EditRecipePage = () => {
 
   const { isFormValid, errors: validationErrors } =
     validateRecipeForm(recipeForm); //Возвращает объект с значением isFormValid=true/false и обьхект ошибок  в полях формы или их отсутствием
-
-  const updateRecipe = useUpdateRecipe();
 
   useEffect(() => {
     const loadRecipeDetails = async () => {
@@ -119,6 +117,7 @@ const EditRecipePage = () => {
     evt.preventDefault();
     if (isSubmitting) return;
     if (!isFormValid) return;
+    if (!recipeId) return;
 
     setError(null);
 

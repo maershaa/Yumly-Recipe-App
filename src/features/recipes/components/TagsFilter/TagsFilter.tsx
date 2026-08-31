@@ -3,7 +3,7 @@ import { mainTags } from '@/features/recipes/constants';
 import type { MainTagsValue } from '@/types';
 
 interface TagsFilterProps {
-  setSelectedTag: (value: string) => void;
+  setSelectedTag: (value: MainTagsValue) => void;
   selectedTag: MainTagsValue;
 }
 const TagsFilter = ({ setSelectedTag, selectedTag }: TagsFilterProps) => {
@@ -16,10 +16,7 @@ const TagsFilter = ({ setSelectedTag, selectedTag }: TagsFilterProps) => {
       </li>
       {mainTags.slice(0, 7).map(({ value }) => (
         <li key={value} className={value === selectedTag ? 'active' : ''}>
-          <button
-            type="button"
-            onClick={() => setSelectedTag(value.toLowerCase())}
-          >
+          <button type="button" onClick={() => setSelectedTag(value)}>
             {value.toUpperCase()}
           </button>
         </li>

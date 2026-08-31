@@ -22,8 +22,10 @@ import type { Recipe } from '@/types';
 
 type SummarySectionProps = Pick<
   Recipe,
-  'id' | 'user_id' | 'recipe_name' | 'cooking_time' | 'description' | 'tags'
->;
+  'id' | 'user_id' | 'recipe_name' | 'description' | 'tags'
+> & {
+  cooking_time: string;
+};
 
 const SummarySection = ({
   id,

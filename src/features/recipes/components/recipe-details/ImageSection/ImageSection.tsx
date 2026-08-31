@@ -12,21 +12,17 @@ import { selectUser } from '@/app/redux/auth/selectors';
 import { useState } from 'react';
 import { useAppSelector } from '@/app/redux/hooks';
 import type { Recipe } from '@/types';
+import type { Dispatch, SetStateAction } from 'react';
 import { getErrorMessage } from '@/features/recipes/utils';
 
 type RecipeImageSectionInfo = Pick<
   Recipe,
-  | 'id'
-  | 'recipe_name'
-  | 'servings'
-  | 'cooking_time'
-  | 'image_url'
-  | 'likes'
-  | 'favorites'
+  'id' | 'recipe_name' | 'servings' | 'image_url' | 'likes' | 'favorites'
 >;
 
 type ImageSectionProps = RecipeImageSectionInfo & {
-  setRecipe: (prev: Recipe) => void;
+  cooking_time: string;
+  setRecipe: Dispatch<SetStateAction<Recipe | null>>;
 };
 
 const ImageSection = ({
@@ -60,27 +56,31 @@ const ImageSection = ({
       if (!isFavorite) {
         await addRecipeToFavorites(id, currentUserId);
         setRecipe((prev) => {
-          console.log('🚀 ~ handleToggleFavorite ~ prev:', prev);
+          if (!prev) return prev;
+
           return {
             ...prev,
-            favorites: [...prev.favorites, { user_id: currentUserId }],
-            likes: prev.likes + 1,
+            favorites: [...(prev.favorites ?? []), { user_id: currentUserId }],
+            likes: (prev.likes ?? 0) + 1,
           };
         });
       } else {
         await removeRecipeFromFavorites(id, currentUserId);
 
-        setRecipe((prev) => ({
-          ...prev,
-          favorites: [
-            ...prev.favorites.filter((el) => el.user_id !== currentUserId),
-          ],
-          likes: prev.likes - 1,
-        }));
+        setRecipe((prev) => {
+          if (!prev) return prev;
+
+          return {
+            ...prev,
+            favorites: (prev.favorites ?? []).filter(
+              (el) => el.user_id !== currentUserId,
+            ),
+            likes: (prev.likes ?? 0) - 1,
+          };
+        });
       }
     } catch (error) {
-      toast.error(error.message || 'Something went wrong');
-      console.error(getErrorMessage(error));
+      toast.error(getErrorMessage(error));
     } finally {
       setIsLoading(false);
     }
@@ -88,7 +88,7 @@ const ImageSection = ({
 
   return (
     <ImgWrapper>
-      <img src={recipeImage} alt={recipe_name} loading="lazy" />
+      <img src={recipeImage} alt={recipe_name ?? ''} loading="lazy" />
       <ToggleFavoriteBtn onClick={handleToggleFavorite} disabled={isLoading}>
         {isFavorite ? <MdFavorite /> : <MdFavoriteBorder />}
       </ToggleFavoriteBtn>
