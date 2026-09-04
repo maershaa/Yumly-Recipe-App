@@ -24,7 +24,8 @@ const RecipeItemCard = ({ recipe }: RecipeItemCardProps) => {
   };
 
   const recipeImage = image_url ? image_url : noImgPlaceholder;
-  const displayCookingTime = convertMinutes(cooking_time);
+  const displayCookingTime =
+    cooking_time !== null ? convertMinutes(cooking_time) : '-';
 
   return (
     <RecipeItem onClick={() => onItemClick(id)}>

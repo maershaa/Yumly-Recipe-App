@@ -29,7 +29,8 @@ const RecipeHeader = ({ recipe, setRecipe }: RecipeHeaderProps) => {
     // instructions,
   } = recipe;
 
-  const displayCookingTime = convertMinutes(cooking_time);
+  const displayCookingTime =
+    cooking_time !== null ? convertMinutes(cooking_time) : '-';
 
   return (
     <Header>
