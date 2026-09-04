@@ -1,11 +1,22 @@
-import { Outlet } from 'react-router-dom';
-import { Suspense } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
+import { Suspense, useEffect } from 'react';
 import { Toaster } from 'sonner';
 
 import { HeaderComponent, Footer, Container, Loader } from '@/components';
 import { LayoutWrapper } from './Layout.styled';
 
 const Layout = () => {
+  const { pathname } = useLocation();
+
+  // При переходе на другую страницу сбрасываем скролл вверх.
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'auto',
+    });
+  }, [pathname]);
+
   return (
     <LayoutWrapper>
       {/* блики на задний план приложения */}
