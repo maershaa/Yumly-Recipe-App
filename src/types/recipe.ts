@@ -27,5 +27,5 @@ export type Recipe = Omit<
   ingredients: Ingredient[] | null;
   instructions: Instruction[] | null;
   difficulty: Difficulty;
-  favorites?: FavoriteRecipe[]; //!пока не понимаю надо ли
+  favorites?: FavoriteRecipe[];
 };

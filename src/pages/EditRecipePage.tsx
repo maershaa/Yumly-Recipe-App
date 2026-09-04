@@ -47,7 +47,6 @@ const EditRecipePage = () => {
     ingredients: [],
     instructions: [],
   });
-  console.log('🚀 ~ EditRecipePage ~ recipeForm:', recipeForm);
 
   const { id: currentUserId } = useAppSelector(selectUser);
   const { recipeId } = useParams();

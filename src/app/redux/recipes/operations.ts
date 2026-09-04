@@ -19,8 +19,7 @@ const fetchRecipes = createAsyncThunk<Recipe[], void, { rejectValue: string }>(
         //отсортируй строки по колонке image_url
         nullsFirst: false, //NULL значения ставь НЕ в начало, а в конец
       });
-    console.log('🚀 ~ error:', error);
-    console.log('🚀 ~ data:', data);
+
     //.range(0, 30); //ограничивает результат 30-ю элементами
 
     if (error) {

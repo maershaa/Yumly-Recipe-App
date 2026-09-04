@@ -10,7 +10,6 @@ interface RecipeHeaderProps {
 }
 
 const RecipeHeader = ({ recipe, setRecipe }: RecipeHeaderProps) => {
-  console.log('🚀 ~ RecipeHeader ~ recipe:', recipe);
   const {
     user_id,
     id,

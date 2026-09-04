@@ -21,7 +21,7 @@ export const uploadRecipeImage = async (
   return urlData.publicUrl;
 };
 
-// !Если бы был платный тариф и я могла бы сдеать оптимизацию и изменение размера изображений
+// ?Если бы был платный тариф и я могла бы сдеать оптимизацию и изменение размера изображений
 // const { data: urlData } = supabase.storage
 //       .from('recipeImage')
 //       .getPublicUrl(filePath), {

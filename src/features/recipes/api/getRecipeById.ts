@@ -35,8 +35,8 @@ export const getRecipeById = async (recipeId: string): Promise<Recipe> => {
 //
 
 /* .select(
-        `*,       //! Забираем все поля рецепта
-   favorites (    //! Из связанной таблицы favorites берем только user_id и теперь доступ к нему будет через recipes.favorites
+        `*,       //? Забираем все поля рецепта
+   favorites (    //? Из связанной таблицы favorites берем только user_id и теперь доступ к нему будет через recipes.favorites
    user_id    )
   `,
       ) */
