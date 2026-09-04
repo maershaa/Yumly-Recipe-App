@@ -4,3 +4,4 @@ export { prepareRecipeForSave } from './prepareRecipeForSave';
 export { prepareRecipeForUpdate } from './prepareRecipeForUpdate';
 export { validateRecipeForm } from './validateRecipeForm';
 export { convertMinutes } from './convertMinutes';
+export { validateImageFile, buildImagePath } from './imageUpload';

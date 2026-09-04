@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { useAppSelector } from '@/app/redux/hooks';
 import type { Recipe } from '@/types';
 import type { Dispatch, SetStateAction } from 'react';
-import { getErrorMessage } from '@/features/recipes/utils';
+import { getErrorMessage } from '@/utils';
 
 type RecipeImageSectionInfo = Pick<
   Recipe,

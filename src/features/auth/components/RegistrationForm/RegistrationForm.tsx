@@ -1,103 +1,22 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'sonner';
-
 import { Form, RedirectComponent, FieldErrorMessage } from '@/components';
-import { registerNewUser } from '@/app/redux/auth/operations';
-import { validateRegistrationForm } from '@/features/auth/helpers';
-import { useAppDispatch } from '@/app/redux/hooks';
-
-import { getErrorMessage } from '@/features/recipes/utils';
-
-import type {
-  RegistrationFormState,
-  RegistrationFormTouched,
-  RegistrationFormErrors,
-} from '@/types';
-
-import type { SubmitEvent, ChangeEvent, FocusEvent } from 'react';
+import { useRegistrationForm } from './useRegistrationForm';
 
 const RegistrationForm = () => {
-  const initialForm = {
-    userName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  };
-
-  const INITIAL_TOUCHED_STATE = {
-    userName: false,
-    email: false,
-    password: false,
-    confirmPassword: false,
-  };
-
-  const [registrationForm, setRegistrationForm] =
-    useState<RegistrationFormState>(initialForm);
-  const [isTouched, setIsTouched] = useState<RegistrationFormTouched>(
-    INITIAL_TOUCHED_STATE,
-  );
-
-  const { isFormValid, errors: formErrors } =
-    validateRegistrationForm(registrationForm);
-
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  const handleFormChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = evt.target;
-    setRegistrationForm((prevValue) => ({ ...prevValue, [name]: value }));
-  };
-
   const {
-    userName: userNameError,
-    email: emailError,
-    password: passwordError,
-    confirmPassword: confirmPasswordError,
-  }: RegistrationFormErrors = formErrors;
-
-  const {
-    userName: isUserNameTouched,
-    email: isEmailTouched,
-    password: isPasswordTouched,
-    confirmPassword: isConfirmPasswordTouched,
-  } = isTouched;
-
-  const showUserNameError = userNameError && isUserNameTouched;
-  const showEmailError = emailError && isEmailTouched;
-  const showPasswordError = passwordError && isPasswordTouched;
-  const showConfirmPasswordError =
-    confirmPasswordError && isConfirmPasswordTouched;
-
-  const canSubmit = isFormValid && isConfirmPasswordTouched; //форма может автозаполнится но второй пароль внеси будь любезен сам
-
-  const handleSubmit = async (evt: SubmitEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-
-    if (!isFormValid) return;
-
-    const prepareFormToSubmit = {
-      userName: registrationForm.userName.trim(),
-      email: registrationForm.email.trim(),
-      password: registrationForm.password,
-    };
-
-    try {
-      await dispatch(registerNewUser(prepareFormToSubmit)).unwrap();
-      // dispatch()→ возвращает action
-      // dispatch().unwrap() → возвращает данные или бросает ошибку
-      setRegistrationForm(initialForm);
-      navigate('/auth/verify-email');
-    } catch (error) {
-      toast.error(getErrorMessage(error));
-    }
-  };
-
-  const handleInputBlur = (evt: FocusEvent<HTMLInputElement>) => {
-    const { name } = evt.target;
-    setIsTouched((prev) => ({ ...prev, [name]: true }));
-  };
-
+    registrationForm,
+    handleFormChange,
+    showUserNameError,
+    userNameError,
+    showEmailError,
+    emailError,
+    showPasswordError,
+    passwordError,
+    showConfirmPasswordError,
+    confirmPasswordError,
+    canSubmit,
+    handleSubmit,
+    handleInputBlur,
+  } = useRegistrationForm();
   return (
     <Form title={'Join Yumly & Start Cooking'} handleSubmit={handleSubmit}>
       <label>
@@ -160,7 +79,7 @@ const RegistrationForm = () => {
         <FieldErrorMessage errorMessage={confirmPasswordError} />
       )}
       <button type="submit" disabled={!canSubmit}>
-        Sign in
+        Create account
       </button>
 
       <RedirectComponent

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { supabase } from '@/supabase/supabaseClient';
-import { getErrorMessage } from '@/features/recipes/utils';
+import { getErrorMessage } from '@/utils';
 import type {
   User as SupabaseUser,
   Session as SupabaseSession,

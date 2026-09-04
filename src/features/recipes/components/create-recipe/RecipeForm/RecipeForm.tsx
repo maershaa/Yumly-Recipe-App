@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { FaUtensils } from 'react-icons/fa';
 
 import { Form, FormSectionWrapper } from './RecipeForm.styled';
@@ -14,20 +12,10 @@ import {
 } from '@/features/recipes/components/create-recipe';
 
 import { GeneralBtn } from '@/components';
+import { useRecipeForm } from './useRecipeForm';
 
-import { uploadRecipeImage } from '@/features/recipes/api';
-import { createIngredient, createStep } from '@/features/recipes/helpers';
-
-import type {
-  RecipeFormState,
-  RecipeFormErrors,
-  RecipeFormTabsId,
-  RecipeCategoryValue,
-  RecipeFormTouched,
-  FieldChangeEvent,
-  FieldBlurEvent,
-} from '@/types';
-import type { Dispatch, SetStateAction, SubmitEvent, ChangeEvent } from 'react';
+import type { RecipeFormState, RecipeFormErrors } from '@/types';
+import type { Dispatch, SetStateAction, SubmitEvent } from 'react';
 
 interface RecipeFormProps {
   recipeForm: RecipeFormState;
@@ -50,133 +38,22 @@ const RecipeForm = ({
   submitButtonText,
   validationErrors,
 }: RecipeFormProps) => {
-  const FORM_FIELDS = {
-    recipe_name: false,
-    description: false,
-    cuisine: false,
-    cooking_time: false,
-    servings: false,
-    image_url: false,
-    tips: false,
-  };
-
-  const [isTouched, setIsTouched] = useState<RecipeFormTouched>(FORM_FIELDS);
-  const [activeTab, setActiveTab] = useState<RecipeFormTabsId>('generalInfo');
-
-  const handleInfoChange = (e: FieldChangeEvent) => {
-    const { name, value } = e.target;
-
-    setRecipeForm((prevValue) => ({ ...prevValue, [name]: value }));
-  };
-
-  const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
-    const maxFileSizeInMb = 5;
-    const uploadedFile = event.target.files?.[0];
-
-    if (!uploadedFile) return;
-
-    if (
-      uploadedFile.size >
-      maxFileSizeInMb * 1024 * 1024
-    ) // * 1024 * 1024 - перевод размера из мегабайтов в байты
-    {
-      alert('Слишком большой файл. Выберите файл до 5 мб');
-      return;
-    }
-
-    const fileExtension = uploadedFile.name.split('.').pop(); //вырезаем разрешение изображения
-    const uniqueName = `${crypto.randomUUID()}.${fileExtension}`; //создаем рандомное имя картинке
-    const filePath = `${currentUserId}/${uniqueName}`; //создаем папку с id нашего пользователя в хранилище recipeImage и туда сохраняем картинку.
-
-    try {
-      const imageUrl = await uploadRecipeImage(filePath, uploadedFile);
-      setRecipeForm((prevValue) => ({
-        ...prevValue,
-        image_url: imageUrl,
-      }));
-    } catch (error) {
-      console.error('Ошибка при загрузке изображения:', error);
-    }
-  };
-
-  const handleIngredientChange = (id: string, e: FieldChangeEvent) => {
-    const { name, value } = e.target;
-
-    setRecipeForm((prevValue) => ({
-      ...prevValue,
-      ingredients: prevValue.ingredients.map((ingredient) =>
-        ingredient.id === id ? { ...ingredient, [name]: value } : ingredient,
-      ),
-    }));
-  };
-
-  const handleStepChange = (id: string, e: FieldChangeEvent) => {
-    const { value } = e.target;
-
-    setRecipeForm((prevValue) => ({
-      ...prevValue,
-      instructions: prevValue.instructions.map((step) =>
-        step.id === id ? { ...step, text: value } : step,
-      ),
-    }));
-  };
-
-  const addIngredient = () => {
-    setRecipeForm((prevValue) => ({
-      ...prevValue,
-      ingredients: [...prevValue.ingredients, createIngredient()],
-    }));
-  };
-
-  const addStep = () => {
-    setRecipeForm((prevValue) => ({
-      ...prevValue,
-      instructions: [...prevValue.instructions, createStep()],
-    }));
-  };
-
-  const removeIngredient = (id: string) => {
-    setRecipeForm((prevValue) => ({
-      ...prevValue,
-      ingredients: prevValue.ingredients.filter(
-        (ingredient) => ingredient.id !== id,
-      ),
-    }));
-  };
-
-  const removeStep = (id: string) => {
-    setRecipeForm((prevValue) => ({
-      ...prevValue,
-      instructions: prevValue.instructions.filter((step) => step.id !== id),
-    }));
-  };
-
-  const removeImage = () => {
-    setRecipeForm((prev) => ({
-      ...prev,
-      image_url: '',
-    }));
-  };
-
-  const handleInputBlur = (evt: FieldBlurEvent) => {
-    const name = evt.currentTarget.name;
-    setIsTouched((prev) => ({ ...prev, [name]: true }));
-  };
-
-  const handleToggleTags = ({
-    target: { value },
-  }: ChangeEvent<HTMLInputElement>) => {
-    const tagValue = value as RecipeCategoryValue;
-
-    // Если тег уже выбран — удаляем его из массива.
-    // Если нет — добавляем в конец массива.
-    setRecipeForm((prev) => ({
-      ...prev,
-      tags: prev.tags.includes(tagValue)
-        ? prev.tags.filter((tag) => tag !== tagValue)
-        : [...prev.tags, tagValue],
-    }));
-  };
+  const {
+    isTouched,
+    activeTab,
+    setActiveTab,
+    handleInfoChange,
+    handleImageUpload,
+    handleIngredientChange,
+    handleStepChange,
+    addIngredient,
+    addStep,
+    removeIngredient,
+    removeStep,
+    removeImage,
+    handleInputBlur,
+    handleToggleTags,
+  } = useRecipeForm(setRecipeForm, currentUserId);
 
   return (
     <Form onSubmit={handleSubmit}>

@@ -13,7 +13,7 @@ import {
 import { RecipesList, InputFilter } from '@/features/recipes/components';
 import { useAppSelector } from '@/app/redux/hooks';
 import type { Recipe } from '@/types';
-import { getErrorMessage } from '@/features/recipes/utils';
+import { getErrorMessage } from '@/utils';
 
 const MyFavoritesRecipesPage = () => {
   const [favorites, setFavorites] = useState<Recipe[]>([]);
@@ -44,7 +44,8 @@ const MyFavoritesRecipesPage = () => {
       const data = await getUserFavorites(currentUserId);
       setFavorites(data);
     } catch (error) {
-      setError(getErrorMessage(error));
+      console.error('Failed to load favorite recipes:', getErrorMessage(error));
+      setError('Failed to load your favorite recipes. Please try again.');
     } finally {
       setIsLoading(false);
     }

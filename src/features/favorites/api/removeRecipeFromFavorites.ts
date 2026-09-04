@@ -1,5 +1,5 @@
 import { supabase } from '@/supabase/supabaseClient';
-import { getErrorMessage } from '@/features/recipes/utils';
+import { getErrorMessage } from '@/utils';
 
 export const removeRecipeFromFavorites = async (
   recipeIdToDelete: number,

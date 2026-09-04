@@ -13,7 +13,7 @@ import {
   validateRecipeForm,
 } from '@/features/recipes/helpers';
 import { useAppSelector } from '@/app/redux/hooks';
-import { getErrorMessage } from '@/features/recipes/utils';
+import { getErrorMessage } from '@/utils';
 
 import type { RecipeFormState } from '@/types';
 import type { SubmitEvent } from 'react';
@@ -65,8 +65,8 @@ const CreateRecipePage = () => {
       resetForm();
       navigate('/my-recipes');
     } catch (error) {
+      console.error('Failed to create recipe:', getErrorMessage(error));
       toast.error('Failed to create the recipe. Please try again.');
-      console.error(getErrorMessage(error));
     } finally {
       setIsSubmitting(false);
     }

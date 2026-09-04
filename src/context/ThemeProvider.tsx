@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, JSX } from 'react';
 
-import { ThemeContext } from '../ThemeContext/ThemeContext';
+import { ThemeContext } from './ThemeContext';
 import { ThemeMode } from '@/types';
 
 interface ThemeProviderProps {

@@ -16,7 +16,7 @@ import {
 
 import { deleteRecipe } from '@/features/recipes/api';
 import { mainTags } from '@/features/recipes/constants';
-import { getErrorMessage } from '@/features/recipes/utils';
+import { getErrorMessage } from '@/utils';
 
 import type { Recipe } from '@/types';
 

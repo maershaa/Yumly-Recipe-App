@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 
 import { selectIsLoggedIn, selectUser } from '@/app/redux/auth/selectors';
 import { getUserRecipes } from '@/features/recipes/api';
-import { getErrorMessage } from '@/features/recipes/utils';
+import { getErrorMessage } from '@/utils';
 
 import {
   RecipesList,
@@ -51,7 +51,8 @@ const MyRecipesPage = () => {
       const data = await getUserRecipes(userId);
       setUserRecipes(data);
     } catch (error) {
-      setError(getErrorMessage(error));
+      console.error('Failed to load user recipes:', getErrorMessage(error));
+      setError('Failed to load your recipes. Please try again.');
     } finally {
       setIsLoading(false);
     }

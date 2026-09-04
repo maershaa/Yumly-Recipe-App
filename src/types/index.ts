@@ -18,13 +18,13 @@ export type {
   LogInFormState,
   LogInFormTouched,
   LogInFormErrors,
-} from './form-auth-logIn';
+} from './form-auth-log-in';
 
 export type {
   RegistrationFormState,
   RegistrationFormTouched,
   RegistrationFormErrors,
-} from './form-auth-redistration';
+} from './form-auth-registration';
 
 export type {
   CreateRecipePayload,

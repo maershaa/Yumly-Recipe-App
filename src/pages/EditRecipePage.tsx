@@ -14,7 +14,7 @@ import { recipeCategories } from '@/features/recipes/constants';
 import { useAppSelector } from '@/app/redux/hooks';
 
 import type { SubmitEvent } from 'react';
-import { getErrorMessage } from '@/features/recipes/utils';
+import { getErrorMessage } from '@/utils';
 
 import type {
   RecipeFormState,
@@ -30,7 +30,6 @@ import type {
 const EditRecipePage = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const [recipeForm, setRecipeForm] = useState<RecipeFormState>({
     recipe_name: '',
@@ -101,8 +100,8 @@ const EditRecipePage = () => {
           // created_at: data.created_at, //❌ нет такого поля в RecipeFormState. Только на бекенде есть.
         });
       } catch (error) {
-        console.error(getErrorMessage(error));
-        toast.error('Failed to load recipe.');
+        console.error('Failed to load recipe:', getErrorMessage(error));
+        toast.error('Failed to load the recipe. Please try again.');
         navigate('/recipes');
       }
     };
@@ -118,28 +117,22 @@ const EditRecipePage = () => {
     if (!isFormValid) return;
     if (!recipeId) return;
 
-    setError(null);
-
     try {
       setIsSubmitting(true);
       const recipeToSubmit = prepareRecipeForUpdate(recipeForm);
 
       await updateRecipe(recipeToSubmit, currentUserId, recipeId);
 
-      toast.success('Your recipe has been successfully editing.');
+      toast.success('Recipe updated successfully.');
 
       navigate(`/recipes/${recipeId}`);
     } catch (error) {
-      toast.error('Failed to edit the recipe. Please try again.');
-      setError(getErrorMessage(error));
+      console.error('Failed to update recipe:', getErrorMessage(error));
+      toast.error('Failed to update the recipe. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
-
-  if (error) {
-    //!  как обработать если ошибка? не хочкется же чтобы форма слетела.или как лучше.
-  }
 
   return (
     <div>

@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from '@/app/redux/hooks';
 import { logOutUser } from '@/app/redux/auth/operations';
 import { selectIsLoggedIn, selectUser } from '@/app/redux/auth/selectors';
 import { DesktopNavigation, MobileNavigation } from '@/components';
-import { getErrorMessage } from '@/features/recipes/utils';
+import { getErrorMessage } from '@/utils';
 
 const HeaderComponent = () => {
   const { name } = useAppSelector(selectUser);

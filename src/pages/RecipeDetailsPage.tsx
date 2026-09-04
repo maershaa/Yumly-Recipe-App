@@ -7,7 +7,7 @@ import type { Recipe } from '@/types';
 import { RecipeDetailsSkeleton } from '@/components';
 import { getRecipeById } from '@/features/recipes/api';
 import { RecipeDetailsContent } from '@/features/recipes/components';
-import { getErrorMessage } from '@/features/recipes/utils';
+import { getErrorMessage } from '@/utils';
 
 const RecipeDetailsPage = () => {
   const { recipeId } = useParams();
@@ -23,8 +23,10 @@ const RecipeDetailsPage = () => {
         const data: Recipe = await getRecipeById(id);
         setRecipe(data);
       } catch (error) {
-        toast.error(`Error: ${getErrorMessage(error)}`);
-        console.error(getErrorMessage(error));
+        console.error('Failed to load recipe:', getErrorMessage(error));
+        toast.error(
+          'Recipe not found. The link may be outdated, or the recipe may no longer exist.',
+        );
       } finally {
         setLoading(false);
       }

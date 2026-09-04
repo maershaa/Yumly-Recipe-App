@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { supabase } from '@/supabase/supabaseClient';
 import type { Recipe } from '@/types';
-import { getErrorMessage } from '@/features/recipes/utils';
+import { getErrorMessage } from '@/utils';
 
 // ! тут Recipe[] это ошибка. надо разобраться. отвте приходит такой data: {
 //   ingredients: Json | null;   // ← реальный тип, который вычислил TS
@@ -19,7 +19,6 @@ const fetchRecipes = createAsyncThunk<Recipe[], void, { rejectValue: string }>(
         //отсортируй строки по колонке image_url
         nullsFirst: false, //NULL значения ставь НЕ в начало, а в конец
       });
-
     //.range(0, 30); //ограничивает результат 30-ю элементами
 
     if (error) {

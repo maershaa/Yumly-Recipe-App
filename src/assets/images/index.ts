@@ -1,32 +1,32 @@
-import girlImg from './hero/hero_girl.png';
-import hero_girl_curly from './hero/hero_girl_curly.png';
-import hero_girl_curly_square from './hero/hero_girl_curly_square.png';
+import girlImg from './hero/hero_girl.webp';
+import hero_girl_curly from './hero/hero_girl_curly.webp';
+import hero_girl_curly_square from './hero/hero_girl_curly_square.webp';
 
-import addImgPlaceholder from './placeholders/AddImgPlaceholder.png';
-import noImgPlaceholder from './placeholders/noImgPlaceholder.png';
+import addImgPlaceholder from './placeholders/AddImgPlaceholder.webp';
+import noImgPlaceholder from './placeholders/noImgPlaceholder.webp';
 
-import chefPhoto1 from './avatars/chefPhoto1.avif';
-import chefPhoto2 from './avatars/chefPhoto2.avif';
-import chefPhoto3 from './avatars/chefPhoto3.avif';
-import chefPhoto4 from './avatars/chefPhoto4.avif';
+import chefPhoto1 from './avatars/chefPhoto1.webp';
+import chefPhoto2 from './avatars/chefPhoto2.webp';
+import chefPhoto3 from './avatars/chefPhoto3.webp';
+import chefPhoto4 from './avatars/chefPhoto4.webp';
 
 import cake from './benefits/cake.png';
 import chef_hat from './benefits/chef-hat.png';
 import rice from './benefits/rice.png';
 
-import AugusteEscoffier from './chefs/AugusteEscoffier.jpg';
+import AugusteEscoffier from './chefs/AugusteEscoffier.webp';
 import JuliaChild from './chefs/JuliaChild.webp';
-import GordonRamsay from './chefs/GordonRamsay.jpg';
-import MassimoBottura from './chefs/MassimoBottura.avif';
+import GordonRamsay from './chefs/GordonRamsay.webp';
+import MassimoBottura from './chefs/MassimoBottura.webp';
 import AnthonyBourdain from './chefs/AnthonyBourdain.webp';
-import WolfgangPuck from './chefs/WolfgangPuck.jpg';
-import JamieOliver from './chefs/JamieOliver.jpeg';
-import FerranAdria from './chefs/FerranAdria.jpg';
-import ThomasKeller from './chefs/ThomasKeller.jpg';
-import MarcoPierreWhite from './chefs/MarcoPierreWhite.avif';
-import InaGarten from './chefs/InaGarten.jpg';
+import WolfgangPuck from './chefs/WolfgangPuck.webp';
+import JamieOliver from './chefs/JamieOliver.webp';
+import FerranAdria from './chefs/FerranAdria.webp';
+import ThomasKeller from './chefs/ThomasKeller.webp';
+import MarcoPierreWhite from './chefs/MarcoPierreWhite.webp';
+import InaGarten from './chefs/InaGarten.webp';
 import PaulBocuse from './chefs/PaulBocuse.webp';
-import AliceWaters from './chefs/AliceWaters.jpg';
+import AliceWaters from './chefs/AliceWaters.webp';
 import ReneRedzepi from './chefs/ReneRedzepi.webp';
 import JoseAndres from './chefs/JoseAndres.webp';
 

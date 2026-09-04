@@ -1,5 +1,7 @@
 import { supabase } from '@/supabase/supabaseClient';
-import { getErrorMessage, mapToRecipe } from '@/features/recipes/utils';
+import { mapToRecipe } from '@/features/recipes/utils';
+import { getErrorMessage } from '@/utils';
+
 import type { Recipe } from '@/types';
 
 export const getUserFavorites = async (

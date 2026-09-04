@@ -1,6 +1,7 @@
 import { supabase } from '@/supabase/supabaseClient';
 import type { UpdateRecipePayload, Recipe } from '@/types';
-import { getErrorMessage, mapToRecipe } from '@/features/recipes/utils';
+import { mapToRecipe } from '@/features/recipes/utils';
+import { getErrorMessage } from '@/utils';
 import type { TablesUpdate } from '@/types/supabase';
 
 export const updateRecipe = async (
