@@ -1,7 +1,6 @@
 import { BenefitsSection, BenefitsList, BenefitCard } from './Benefits.styled';
 
 import { cake, chef_hat, rice } from '@/assets/images';
-// !сли мобильный телефон то обрезать количество картинок!!
 
 const Benefits = () => {
   return (

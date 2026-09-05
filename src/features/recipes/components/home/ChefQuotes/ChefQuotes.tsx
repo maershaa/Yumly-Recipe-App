@@ -7,8 +7,14 @@ import {
 } from './ChefQuotes.styled';
 
 import { chefsQuotes as quotes } from '@/features/recipes/constants';
+import { theme } from '@/assets/styles/theme';
+import { useMediaQuery } from '@/hooks';
 
 const ChefQuotes = () => {
+  const isTablet = useMediaQuery(`(min-width: ${theme.breakpoints.tablet})`);
+
+  const finalQuotes = isTablet ? quotes : quotes.slice(0, 3);
+
   return (
     <QuotesSection>
       <QuotesHeader>
@@ -26,7 +32,7 @@ const ChefQuotes = () => {
       </QuotesHeader>
       <ScrollContainer>
         <QuotesList>
-          {quotes.map(({ name, quote, avatar, status }, index) => (
+          {finalQuotes.map(({ name, quote, avatar, status }, index) => (
             <QuotesItem key={index}>
               <figure className="chef-quote-card">
                 <blockquote>

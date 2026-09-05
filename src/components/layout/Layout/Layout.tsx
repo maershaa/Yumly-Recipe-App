@@ -19,7 +19,6 @@ const Layout = () => {
 
   return (
     <LayoutWrapper>
-      {/* блики на задний план приложения */}
       <Container>
         <HeaderComponent />
       </Container>
@@ -36,12 +35,12 @@ const Layout = () => {
       <Toaster
         richColors
         position="top-right"
-        duration={4000} //длительность автозакрытия
+        duration={3000} //длительность автозакрытия
         expand={true} // <--- Включает отображение друг за другом
         visibleToasts={3} // <--- (Опционально) Сколько уведомлений показывать одновременно перед тем, как они начнут скрываться
         toastOptions={{
           style: {
-            fontSize: '1.4rem',
+            fontSize: '1.2rem',
             fontWeight: 600,
             lineHeight: 1.4,
           },
