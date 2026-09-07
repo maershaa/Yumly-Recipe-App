@@ -19,17 +19,7 @@ export const getRecipeById = async (recipeId: string): Promise<Recipe> => {
     throw new Error(getErrorMessage(error));
   }
 
-  // Отдельно считаем общее количество лайков
-  const { count, error: countError } = await supabase
-    .from('favorites')
-    .select('*', { count: 'exact', head: true }) //Посчитай точное количество строк, подходящих под запрос, но сами строки не возвращай
-    .eq('recipe_id', recipeId);
-
-  if (countError) {
-    throw new Error(getErrorMessage(countError));
-  }
-
-  return mapToRecipe({ ...data, likes: count });
+  return mapToRecipe(data);
 };
 
 // Обьяснение
