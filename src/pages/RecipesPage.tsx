@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { selectRecipes, selectLoading } from '@/app/redux/recipes/selectors';
 import { fetchRecipes } from '@/app/redux/recipes/operations';
 import { RecipesList, TagsFilter } from '@/features/recipes/components';
-import { PageTitle, RecipeCardSkeleton } from '@/components';
+import { PageTitle, RecipeCardSkeleton, GeneralBtn } from '@/components';
 import { useAppSelector, useAppDispatch } from '@/app/redux/hooks';
 import type { MainTagsValue } from '@/types';
 
@@ -21,6 +21,12 @@ const RecipesPage = () => {
 
     return recipes.filter((recipe) => recipe.tags?.includes(selectedTag));
   }, [selectedTag, recipes]);
+
+  const onLoadMoreBtnClick = () => {
+    // меняем значение у текущей страницы и если еще есть куда то
+    // делаем повторный запрос
+  };
+
   return (
     <div>
       <PageTitle title={'What to cook today?'} />
@@ -30,7 +36,17 @@ const RecipesPage = () => {
       {isLoading ? (
         <RecipeCardSkeleton count={13} />
       ) : (
-        <RecipesList recipes={filteredRecipes} />
+        <>
+          <RecipesList recipes={filteredRecipes} />
+          <GeneralBtn
+            type="button"
+            onClick={onLoadMoreBtnClick}
+            disabled={false}
+            variant={'loadMore'}
+          >
+            LoadMore
+          </GeneralBtn>
+        </>
       )}
     </div>
   );

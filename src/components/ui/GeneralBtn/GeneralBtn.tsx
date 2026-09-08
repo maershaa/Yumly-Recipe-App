@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { ButtonHTMLAttributes } from 'react';
 
 type ButtonTypes = 'button' | 'submit' | 'reset';
-type ButtonVariants = 'submit' | 'add' | 'delete';
+type ButtonVariants = 'submit' | 'add' | 'delete' | 'loadMore';
 
 interface GeneralBtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   type?: ButtonTypes;

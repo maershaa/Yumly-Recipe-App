@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 type ButtonProps = {
-  variant: 'primary' | 'submit' | 'add' | 'delete';
+  variant: 'submit' | 'add' | 'delete' | 'loadMore';
 };
 
 export const Button = styled.button<ButtonProps>`
@@ -69,6 +69,38 @@ export const Button = styled.button<ButtonProps>`
       color: ${theme.colors.background};
 
       box-shadow: 0 8px 24px rgba(248, 184, 98, 0.2);
+
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: ${theme.colors.hoverShadowSecondary};
+      }
+    `}
+
+
+//!Сделать красивую кнопку
+     ${({ variant, theme }) =>
+    variant === 'loadMore' &&
+    css`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 84px;
+      height: 84px;
+      margin: 32px auto 0;
+
+      border-radius: ${({ theme }) => theme.radii.rounded};
+      border: 2px solid ${({ theme }) => theme.colors.accent};
+      color: ${({ theme }) => theme.colors.textPrimary};
+      background-color: ${({ theme }) => theme.colors.accent};
+
+      transition: ${({ theme }) => theme.transitions.main};
+
+      &:hover {
+        background-color: ${({ theme }) => theme.colors.accent};
+        box-shadow: ${({ theme }) => theme.colors.hoverShadowAccent};
+        transform: translateY(-2px);
+      }
 
       &:hover:not(:disabled) {
         transform: translateY(-2px);
