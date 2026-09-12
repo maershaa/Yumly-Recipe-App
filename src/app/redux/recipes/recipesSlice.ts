@@ -5,14 +5,14 @@ import type { Recipe } from '@/types';
 
 interface RecipesState {
   items: Recipe[];
-  totalCount: number;
+  totalRecipesQty: number;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: RecipesState = {
   items: [],
-  totalCount: 0,
+  totalRecipesQty: 0,
   loading: false,
   error: null,
 };
@@ -28,13 +28,13 @@ const recipesSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchRecipes.rejected, (state, action) => {
-        state.error = action.payload ?? 'Unknown error';
         state.loading = false;
+        state.error = action.payload ?? 'Unknown error';
       })
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload;
-        state.totalCount = action.payload.length;
+        state.items = [...state.items, ...action.payload.recipes];
+        state.totalRecipesQty = action.payload.totalRecipesQty;
       });
   },
 });

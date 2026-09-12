@@ -1,20 +1,42 @@
 import { useEffect, useMemo, useState } from 'react';
-import { selectRecipes, selectLoading } from '@/app/redux/recipes/selectors';
+import { useSearchParams } from 'react-router';
+
+import {
+  selectRecipes,
+  selectLoading,
+  selectTotalRecipesQty,
+} from '@/app/redux/recipes/selectors';
 import { fetchRecipes } from '@/app/redux/recipes/operations';
-import { RecipesList, TagsFilter } from '@/features/recipes/components';
-import { PageTitle, RecipeCardSkeleton, GeneralBtn } from '@/components';
 import { useAppSelector, useAppDispatch } from '@/app/redux/hooks';
+
+import { RECIPES_PER_PAGE } from '@/features/recipes/constants';
+
+import { PageTitle, RecipeCardSkeleton, GeneralBtn } from '@/components';
+import { RecipesList, TagsFilter } from '@/features/recipes/components';
+
 import type { MainTagsValue } from '@/types';
 
 const RecipesPage = () => {
   const [selectedTag, setSelectedTag] = useState<MainTagsValue>('all');
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get('page')) || 1;
+
   const recipes = useAppSelector(selectRecipes);
+  const totalRecipesQty = useAppSelector(selectTotalRecipesQty);
   const isLoading = useAppSelector(selectLoading);
+
   const dispatch = useAppDispatch();
 
+  const totalPages = Math.ceil(totalRecipesQty / RECIPES_PER_PAGE);
+
+  const hasMoreRecipes = currentPage < totalPages;
+  const isInitialLoading = isLoading && recipes.length === 0;
+  const isLoadingMore = isLoading && recipes.length > 0;
+
   useEffect(() => {
-    dispatch(fetchRecipes());
-  }, [dispatch]);
+    dispatch(fetchRecipes({ currentPage }));
+  }, [dispatch, currentPage]);
 
   const filteredRecipes = useMemo(() => {
     if (selectedTag === 'all') return recipes;
@@ -22,9 +44,10 @@ const RecipesPage = () => {
     return recipes.filter((recipe) => recipe.tags?.includes(selectedTag));
   }, [selectedTag, recipes]);
 
-  const onLoadMoreBtnClick = () => {
-    // меняем значение у текущей страницы и если еще есть куда то
-    // делаем повторный запрос
+  const handleLoadMore = (): void => {
+    if (hasMoreRecipes) {
+      setSearchParams({ page: String(currentPage + 1) });
+    }
   };
 
   return (
@@ -33,20 +56,21 @@ const RecipesPage = () => {
 
       <TagsFilter selectedTag={selectedTag} setSelectedTag={setSelectedTag} />
 
-      {isLoading ? (
-        <RecipeCardSkeleton count={13} />
-      ) : (
-        <>
-          <RecipesList recipes={filteredRecipes} />
-          <GeneralBtn
-            type="button"
-            onClick={onLoadMoreBtnClick}
-            disabled={false}
-            variant={'loadMore'}
-          >
-            LoadMore
-          </GeneralBtn>
-        </>
+      {isInitialLoading && <RecipeCardSkeleton count={RECIPES_PER_PAGE} />}
+
+      <RecipesList recipes={filteredRecipes} />
+
+      {isLoadingMore && <RecipeCardSkeleton count={RECIPES_PER_PAGE} />}
+
+      {hasMoreRecipes && !isLoadingMore && (
+        <GeneralBtn
+          type="button"
+          onClick={handleLoadMore}
+          disabled={isLoading} //защищает от повторного клика во время запроса
+          variant={'loadMore'}
+        >
+          LoadMore
+        </GeneralBtn>
       )}
     </div>
   );

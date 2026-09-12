@@ -1,6 +1,5 @@
 import { Button } from './GeneralBtn.styled';
-import { ReactNode } from 'react';
-import { ButtonHTMLAttributes } from 'react';
+import { ReactNode, ButtonHTMLAttributes } from 'react';
 
 type ButtonTypes = 'button' | 'submit' | 'reset';
 type ButtonVariants = 'submit' | 'add' | 'delete' | 'loadMore';

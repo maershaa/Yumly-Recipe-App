@@ -3,3 +3,4 @@ export { units } from './units';
 export { chefsQuotes } from './chefsQuotes';
 export { mainTags } from './mainTags.jsx';
 export { recipeCategories } from './recipeCategories.jsx';
+export { RECIPES_PER_PAGE } from './pagination';
