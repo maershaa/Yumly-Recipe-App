@@ -33,7 +33,18 @@ const recipesSlice = createSlice({
       })
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = [...state.items, ...action.payload.recipes];
+
+        const currentPage = action.meta.arg.currentPage;
+
+        // заменяем предыдущие рецепты.
+        if (currentPage === 1) {
+          state.items = action.payload.recipes;
+        } else {
+          //добавляем новые рецепты к уже загруженным.
+          state.items.push(...action.payload.recipes);
+          // state.totalRecipesQty = action.payload.totalRecipesQty;
+        }
+
         state.totalRecipesQty = action.payload.totalRecipesQty;
       });
   },

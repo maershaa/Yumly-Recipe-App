@@ -3,20 +3,20 @@ import { mainTags } from '@/features/recipes/constants';
 import type { MainTagsValue } from '@/types';
 
 interface TagsFilterProps {
-  setSelectedTag: (value: MainTagsValue) => void;
   selectedTag: MainTagsValue;
+  onClick: (value: MainTagsValue) => void;
 }
-const TagsFilter = ({ setSelectedTag, selectedTag }: TagsFilterProps) => {
+const TagsFilter = ({ selectedTag, onClick }: TagsFilterProps) => {
   return (
     <TagsList>
       <li key={'all'} className={'all' === selectedTag ? 'active' : ''}>
-        <button type="button" onClick={() => setSelectedTag('all')}>
+        <button type="button" onClick={() => onClick('all')}>
           {'all'.toUpperCase()}
         </button>
       </li>
       {mainTags.slice(0, 7).map(({ value }) => (
         <li key={value} className={value === selectedTag ? 'active' : ''}>
-          <button type="button" onClick={() => setSelectedTag(value)}>
+          <button type="button" onClick={() => onClick(value)}>
             {value.toUpperCase()}
           </button>
         </li>

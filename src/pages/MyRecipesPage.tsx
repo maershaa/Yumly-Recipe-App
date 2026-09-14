@@ -127,10 +127,10 @@ const MyRecipesPage = () => {
 
       <InputFilter
         type="text"
-        name="filter"
+        name="searchQuery"
         placeholder="Start typing the recipe name..."
-        filterValue={filter}
-        setFilterValue={setFilter}
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
       />
 
       {filteredRecipes.length > 0 ? (
