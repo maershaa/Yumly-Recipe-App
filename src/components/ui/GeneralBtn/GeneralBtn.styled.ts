@@ -78,33 +78,34 @@ export const Button = styled.button<ButtonProps>`
 
 
 //!Сделать красивую кнопку
-     ${({ variant, theme }) =>
+${({ variant, theme }) =>
     variant === 'loadMore' &&
     css`
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      width: 84px;
-      height: 84px;
+      min-width: 180px;
       margin: 32px auto 0;
+      padding: 14px 28px;
 
-      border-radius: ${({ theme }) => theme.radii.rounded};
-      border: 2px solid ${({ theme }) => theme.colors.accent};
-      color: ${({ theme }) => theme.colors.textPrimary};
-      background-color: ${({ theme }) => theme.colors.accent};
+      border: 1px solid ${theme.colors.accent};
+      border-radius: ${theme.radii.pill};
 
-      transition: ${({ theme }) => theme.transitions.main};
+      background-color: ${theme.colors.surface};
+      color: ${theme.colors.accent};
 
-      &:hover {
-        background-color: ${({ theme }) => theme.colors.accent};
-        box-shadow: ${({ theme }) => theme.colors.hoverShadowAccent};
+      font-size: 1rem;
+      font-weight: 600;
+
+      transition: ${theme.transitions.main};
+
+      &:hover:not(:disabled) {
+        background-color: ${theme.colors.accent};
+        color: ${theme.colors.background};
+        box-shadow: ${theme.colors.hoverShadowAccent};
         transform: translateY(-2px);
       }
 
-      &:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: ${theme.colors.hoverShadowSecondary};
+      &:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: none;
       }
     `}
 `;
