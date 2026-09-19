@@ -9,18 +9,21 @@ interface TagsFilterProps {
 const TagsFilter = ({ selectedTag, onClick }: TagsFilterProps) => {
   return (
     <TagsList>
-      <li key={'all'} className={'all' === selectedTag ? 'active' : ''}>
+      <li className={selectedTag === 'all' ? 'active' : ''}>
         <button type="button" onClick={() => onClick('all')}>
-          {'all'.toUpperCase()}
+          ALL
         </button>
       </li>
-      {mainTags.slice(0, 7).map(({ value }) => (
-        <li key={value} className={value === selectedTag ? 'active' : ''}>
-          <button type="button" onClick={() => onClick(value)}>
-            {value.toUpperCase()}
-          </button>
-        </li>
-      ))}
+
+      {mainTags
+        // .slice(0, 7)
+        .map(({ value }) => (
+          <li key={value} className={value === selectedTag ? 'active' : ''}>
+            <button type="button" onClick={() => onClick(value)}>
+              {value.toUpperCase()}
+            </button>
+          </li>
+        ))}
     </TagsList>
   );
 };

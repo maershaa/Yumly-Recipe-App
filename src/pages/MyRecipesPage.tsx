@@ -30,15 +30,22 @@ import type { ChangeEvent } from 'react';
 const MyRecipesPage = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const { id: currentUserId } = useAppSelector(selectUser);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [userRecipes, setUserRecipes] = useState<Recipe[]>([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const [userRecipes, setUserRecipes] = useState<Recipe[]>([]);
+
+  const tag = (searchParams.get('tag') ?? 'all') as MainTagsValue;
 
   const searchQuery = searchParams.get('q') ?? '';
   const [searchInput, setSearchInput] = useState(searchQuery); // Значение, которое пользователь сейчас печатает
   const debouncedSearchQuery = useDebounce(searchInput, 300);
+
+  const [currentPage, setCurrentPage] = useState<string>(
+    searchParams.get('page') ?? '1',
+  );
 
   const navigate = useNavigate();
 
@@ -47,9 +54,11 @@ const MyRecipesPage = () => {
       try {
         setIsLoading(true);
         setError(null);
+
         const data = await getUserRecipes({
           currentUserId: userId,
           searchQuery,
+          tag,
         });
         setUserRecipes(data);
       } catch (error) {
@@ -59,7 +68,7 @@ const MyRecipesPage = () => {
         setIsLoading(false);
       }
     },
-    [searchQuery],
+    [searchQuery, tag],
   );
 
   useEffect(() => {
@@ -92,15 +101,31 @@ const MyRecipesPage = () => {
     // 1. авторизации пользователя;
     // 2. изменении пользователя;
     // 3. изменении searchQuery в URL.
+    // 4. при изменении tag.
     if (!isLoggedIn) return;
 
-    loadUserRecipes(currentUserId);
+    loadUserRecipes(currentUserId); // searchQuery и tag используются внутри loadUserRecipes
   }, [isLoggedIn, currentUserId, loadUserRecipes]);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
   };
 
+  const handleTagChange = (chosenTag: MainTagsValue) => {
+    // После изменения URL:
+    // 1. изменится selectedTag;
+    // 2. изменится loadUserRecipes;
+    // 3. effect загрузки запустит новый запрос.
+    //
+    setSearchParams((prevValue) => {
+      if (chosenTag === 'all') {
+        prevValue.delete('tag');
+      } else {
+        prevValue.set('tag', chosenTag);
+      }
+      return prevValue;
+    });
+  };
   if (error) {
     return (
       <div>
@@ -119,7 +144,12 @@ const MyRecipesPage = () => {
     );
   }
 
-  if (!isLoading && !userRecipes.length && searchQuery === '') {
+  if (
+    !isLoading &&
+    !userRecipes.length &&
+    searchQuery === '' &&
+    tag === 'all'
+  ) {
     return (
       <div>
         <PageHeader title="Recipes">
@@ -128,6 +158,16 @@ const MyRecipesPage = () => {
             btnText="Add new recipe"
           />
         </PageHeader>
+
+        <TagsFilter selectedTag={tag} onClick={handleTagChange} />
+
+        <InputFilter
+          type="text"
+          name="searchQuery"
+          placeholder="Start typing the recipe name..."
+          value={searchInput}
+          onChange={handleSearchChange}
+        />
 
         <RedirectComponent
           spanText="There are no recipes yet."
@@ -147,6 +187,8 @@ const MyRecipesPage = () => {
         />
       </PageHeader>
 
+      <TagsFilter selectedTag={tag} onClick={handleTagChange} />
+
       <InputFilter
         type="text"
         name="searchQuery"
@@ -161,9 +203,10 @@ const MyRecipesPage = () => {
         <RecipesList recipes={userRecipes} />
       )}
 
-      {!isLoading && userRecipes.length === 0 && searchQuery !== '' && (
-        <NoRecipesFound />
-      )}
+      {/* Если поиск или фильтр по тегу не дали результатов. */}
+      {!isLoading &&
+        userRecipes.length === 0 &&
+        (searchQuery !== '' || tag !== 'all') && <NoRecipesFound />}
 
       <Outlet />
     </div>
