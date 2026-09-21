@@ -1,27 +1,58 @@
 import { supabase } from '@/supabase/supabaseClient';
 import { mapToRecipe } from '@/features/recipes/utils';
 import { getErrorMessage } from '@/utils';
+import { RECIPES_PER_PAGE } from '@/features/recipes/constants';
 
 import type { Recipe } from '@/types';
 
-export const getUserFavorites = async (
-  currentUserId: string,
-): Promise<Recipe[]> => {
-  const { data, error } = await supabase
-    .from('recipes')
-    .select(
-      `
-            *,
-    favorites!inner()
+interface FetchFavoritesRecipesParams {
+  currentUserId: string;
+  currentPage: number;
+  tag?: string; // фильтр по тегу
+  searchQuery?: string; // фильтр по названию
+}
+
+interface FetchFavoritesRecipesResponse {
+  recipes: Recipe[];
+  totalRecipesQty: number;
+}
+
+export const getUserFavorites = async ({
+  currentUserId,
+  currentPage,
+  tag,
+  searchQuery,
+}: FetchFavoritesRecipesParams): Promise<FetchFavoritesRecipesResponse> => {
+  const from = (currentPage - 1) * RECIPES_PER_PAGE;
+  const to = from + (RECIPES_PER_PAGE - 1);
+
+  let query = supabase.from('recipes').select(
+    `*,
+    favorites!inner(*)
   `,
-    )
-    .eq('favorites.user_id', currentUserId);
+    { count: 'exact' },
+  );
+
+  if (tag && tag !== 'all') {
+    query = query.contains('tags', [tag]);
+  }
+
+  if (searchQuery?.trim()) {
+    query = query.ilike('recipe_name', `%${searchQuery}%`);
+  }
+
+  const { data, count, error } = await query
+    .eq('favorites.user_id', currentUserId)
+    .order('created_at', { ascending: false }) // Новые рецепты идут первыми.
+    .range(from, to);
 
   if (error) {
     throw new Error(getErrorMessage(error));
   }
 
-  return data.map((row) => mapToRecipe(row));
+  const recipes = data.map((row) => mapToRecipe(row));
+  const result = { recipes, totalRecipesQty: count ?? 0 };
+  return result;
 };
 
 // Запрашиваем рецепты из таблицы "recipes".
