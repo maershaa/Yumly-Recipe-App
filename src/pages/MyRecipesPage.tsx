@@ -18,6 +18,7 @@ import {
   RecipeCardSkeleton,
   ErrorMessage,
   NoRecipesFound,
+  GeneralBtn,
 } from '@/components';
 
 import { useDebounce } from '@/hooks';
@@ -38,14 +39,25 @@ const MyRecipesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const tag = (searchParams.get('tag') ?? 'all') as MainTagsValue;
-
   const searchQuery = searchParams.get('q') ?? '';
+  const currentPage = Number(searchParams.get('page') ?? 1);
+
   const [searchInput, setSearchInput] = useState(searchQuery); // Значение, которое пользователь сейчас печатает
   const debouncedSearchQuery = useDebounce(searchInput, 300);
 
-  const [currentPage, setCurrentPage] = useState<string>(
-    searchParams.get('page') ?? '1',
-  );
+  const [totalRecipesQty, setTotalRecipesQty] = useState(0);
+  const totalPages = Math.ceil(totalRecipesQty / RECIPES_PER_PAGE);
+
+  const hasMoreRecipes = currentPage < totalPages;
+
+  const isInitialLoading = isLoading && !userRecipes.length;
+  const isLoadingMore = isLoading && userRecipes.length > 0;
+
+  const hasNoRecipes =
+    !isLoading && !userRecipes.length && searchQuery === '' && tag === 'all';
+
+  const hasNoSearchResults =
+    !isLoading && !userRecipes.length && (searchQuery !== '' || tag !== 'all');
 
   const navigate = useNavigate();
 
@@ -59,8 +71,17 @@ const MyRecipesPage = () => {
           currentUserId: userId,
           searchQuery,
           tag,
+          currentPage: currentPage,
         });
-        setUserRecipes(data);
+
+        setUserRecipes((prevValue) => {
+          if (currentPage === 1) {
+            return data.recipes;
+          } else {
+            return [...prevValue, ...data.recipes];
+          }
+        });
+        setTotalRecipesQty(data.totalRecipesQty);
       } catch (error) {
         console.error('Failed to load user recipes:', getErrorMessage(error));
         setError('Failed to load your recipes. Please try again.');
@@ -68,7 +89,7 @@ const MyRecipesPage = () => {
         setIsLoading(false);
       }
     },
-    [searchQuery, tag],
+    [searchQuery, tag, currentPage],
   );
 
   useEffect(() => {
@@ -92,6 +113,8 @@ const MyRecipesPage = () => {
       } else {
         prevValue.delete('q');
       }
+      // Сбрасываем пагинацию при изменении поиска.
+      prevValue.delete('page');
       return prevValue;
     });
   }, [isLoggedIn, debouncedSearchQuery, searchQuery, setSearchParams]);
@@ -102,9 +125,10 @@ const MyRecipesPage = () => {
     // 2. изменении пользователя;
     // 3. изменении searchQuery в URL.
     // 4. при изменении tag.
+    // 5. при изменении currentPage
     if (!isLoggedIn) return;
 
-    loadUserRecipes(currentUserId); // searchQuery и tag используются внутри loadUserRecipes
+    loadUserRecipes(currentUserId); // searchQuery, currentPage и tag используются внутри loadUserRecipes
   }, [isLoggedIn, currentUserId, loadUserRecipes]);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -123,9 +147,19 @@ const MyRecipesPage = () => {
       } else {
         prevValue.set('tag', chosenTag);
       }
+      // Сбрасываем пагинацию при изменении фильтра.
+      prevValue.delete('page');
       return prevValue;
     });
   };
+
+  const onLoadMoreBtnClick = () => {
+    setSearchParams((prevValue) => {
+      prevValue.set('page', String(currentPage + 1));
+      return prevValue;
+    });
+  };
+
   if (error) {
     return (
       <div>
@@ -144,12 +178,36 @@ const MyRecipesPage = () => {
     );
   }
 
-  if (
-    !isLoading &&
-    !userRecipes.length &&
-    searchQuery === '' &&
-    tag === 'all'
-  ) {
+  if (isInitialLoading) {
+    return (
+      <div>
+        <PageHeader title="Recipes">
+          <CreateButton
+            onClick={() => navigate('new')}
+            btnText="Add new recipe"
+          />
+        </PageHeader>
+
+        <TagsFilter selectedTag={tag} onClick={handleTagChange} />
+
+        <InputFilter
+          type="text"
+          name="searchQuery"
+          placeholder="Start typing the recipe name..."
+          value={searchInput}
+          onChange={handleSearchChange}
+        />
+
+        <RedirectComponent
+          spanText="There are no recipes yet."
+          linkText="Add new recipe"
+          to="new"
+        />
+      </div>
+    );
+  }
+
+  if (hasNoRecipes) {
     return (
       <div>
         <PageHeader title="Recipes">
@@ -197,16 +255,25 @@ const MyRecipesPage = () => {
         onChange={handleSearchChange}
       />
 
-      {isLoading && <RecipeCardSkeleton count={RECIPES_PER_PAGE} />}
-
-      {!isLoading && userRecipes.length > 0 && (
+      {!isInitialLoading && userRecipes.length > 0 && (
         <RecipesList recipes={userRecipes} />
       )}
 
+      {isLoadingMore && <RecipeCardSkeleton count={RECIPES_PER_PAGE} />}
+
+      {hasMoreRecipes && (
+        <GeneralBtn
+          type={'button'}
+          onClick={onLoadMoreBtnClick}
+          disabled={!hasMoreRecipes}
+          variant={'loadMore'}
+        >
+          Load More
+        </GeneralBtn>
+      )}
+
       {/* Если поиск или фильтр по тегу не дали результатов. */}
-      {!isLoading &&
-        userRecipes.length === 0 &&
-        (searchQuery !== '' || tag !== 'all') && <NoRecipesFound />}
+      {hasNoSearchResults && <NoRecipesFound />}
 
       <Outlet />
     </div>

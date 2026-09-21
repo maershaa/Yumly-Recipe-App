@@ -2,38 +2,53 @@ import { supabase } from '@/supabase/supabaseClient';
 import { mapToRecipe } from '@/features/recipes/utils';
 import { getErrorMessage } from '@/utils';
 import type { Recipe, MainTagsValue } from '@/types';
+import { RECIPES_PER_PAGE } from '@/features/recipes/constants';
 
 type FetchUserRecipesParams = {
   currentUserId: string;
-  //currentPage: number;
+  currentPage: number;
   tag?: MainTagsValue; // фильтр по тегу
   searchQuery?: string; // фильтр по названию
+};
+
+type ReturnUserRecipesParams = {
+  recipes: Recipe[];
+  totalRecipesQty: number;
 };
 
 export const getUserRecipes = async ({
   currentUserId,
   searchQuery,
   tag,
-}: FetchUserRecipesParams): Promise<Recipe[]> => {
-  let query = supabase.from('recipes').select('*'); // Создаём базовый запрос на получение рецептов.
+  currentPage,
+}: FetchUserRecipesParams): Promise<ReturnUserRecipesParams> => {
+  const from = (currentPage - 1) * RECIPES_PER_PAGE;
+  const to = from + (RECIPES_PER_PAGE - 1);
 
-  // Если выбран конкретный тег, оставляем только рецепты, в массиве tags которых присутствует этот тег.
+  let query = supabase.from('recipes').select('*', { count: 'exact' }); // Создаём базовый запрос на получение рецептов.
+
+  // Фильтр по тегу.
   if (tag && tag !== 'all') {
     query = query.contains('tags', [tag]);
   }
 
-  // Если пользователь ввёл поисковый запрос, ищем совпадение в названии рецепта.
+  // Фильтр по названию рецепта.
   if (searchQuery?.trim()) {
     query = query.ilike('recipe_name', `%${searchQuery}%`);
   }
 
-  query = query.eq('user_id', currentUserId); // Показываем только рецепты текущего пользователя.
+  query = query
+    .eq('user_id', currentUserId) // Показываем только рецепты текущего пользователя
+    .order('created_at', { ascending: false }) // Новые рецепты идут первыми
+    .range(from, to);
 
-  const { data, error } = await query;
+  const { data, count, error } = await query;
 
   if (error) {
     throw new Error(getErrorMessage(error));
   }
 
-  return data.map((row) => mapToRecipe(row)); // так как тут data — массив то каждую строку прогоняем через mapToRecipe отдельно
+  const recipes = data.map((recipe) => mapToRecipe(recipe)); // так как тут data — массив то каждую строку прогоняем через mapToRecipe отдельно
+  const result = { recipes, totalRecipesQty: count ?? 0 };
+  return result;
 };
