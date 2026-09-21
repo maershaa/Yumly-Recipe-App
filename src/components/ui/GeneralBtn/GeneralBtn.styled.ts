@@ -77,7 +77,6 @@ export const Button = styled.button<ButtonProps>`
     `}
 
 
-//!Сделать красивую кнопку
 ${({ variant, theme }) =>
     variant === 'loadMore' &&
     css`

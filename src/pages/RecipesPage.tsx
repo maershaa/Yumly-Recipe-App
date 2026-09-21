@@ -1,21 +1,22 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router';
+import { useEffect } from 'react';
 
 import {
   selectRecipes,
   selectLoading,
+  selectError,
   selectTotalRecipesQty,
 } from '@/app/redux/recipes/selectors';
 import { fetchRecipes } from '@/app/redux/recipes/operations';
 import { useAppSelector, useAppDispatch } from '@/app/redux/hooks';
 
-import { useDebounce } from '@/hooks';
 import { useRecipeSearchParams } from '@/hooks';
 import { RECIPES_PER_PAGE } from '@/features/recipes/constants';
 
 import {
   PageTitle,
+  RedirectComponent,
   RecipeCardSkeleton,
+  ErrorMessage,
   GeneralBtn,
   NoRecipesFound,
 } from '@/components';
@@ -25,15 +26,13 @@ import {
   InputFilter,
 } from '@/features/recipes/components';
 
-import type { MainTagsValue } from '@/types';
-import type { ChangeEvent } from 'react';
-
 const RecipesPage = () => {
   const dispatch = useAppDispatch();
 
   const recipes = useAppSelector(selectRecipes);
   const totalRecipesQty = useAppSelector(selectTotalRecipesQty);
   const isLoading = useAppSelector(selectLoading);
+  const error = useAppSelector(selectError);
 
   const {
     currentPage,
@@ -44,15 +43,25 @@ const RecipesPage = () => {
     handleTagChange,
     handleLoadMoreBtnClick,
     hasMoreRecipes,
-    setTotalRecipesQty,
-  } = useRecipeSearchParams();
+  } = useRecipeSearchParams(totalRecipesQty);
 
-  const isInitialLoading = isLoading && currentPage === 1;
-  const isLoadingMore = isLoading && currentPage > 1;
+  const isInitialLoading = isLoading && (currentPage === 1 || !recipes.length);
+  const isLoadingMore = isLoading && !isInitialLoading;
+
+  const hasNoRecipes =
+    !isLoading &&
+    !error &&
+    !recipes.length &&
+    searchQuery === '' &&
+    selectedTag === 'all';
+
+  const hasNoSearchResults =
+    !isLoading &&
+    !error &&
+    !recipes.length &&
+    (searchQuery !== '' || selectedTag !== 'all');
 
   useEffect(() => {
-    setTotalRecipesQty(totalRecipesQty); //!это разумный вариант или костыль? как лучше?
-
     // Запрашиваем рецепты на основании данных из URL. Когда переход по ссылке скинутой другим пользователем, например.
     dispatch(
       fetchRecipes({
@@ -63,9 +72,68 @@ const RecipesPage = () => {
     );
   }, [dispatch, currentPage, selectedTag, searchQuery]);
 
+  if (error) {
+    return (
+      <div>
+        <PageTitle title="What to cook today?" />
+        <TagsFilter selectedTag={selectedTag} onClick={handleTagChange} />
+        <InputFilter
+          type="text"
+          name="searchQuery"
+          placeholder="Start typing the recipe name..."
+          value={searchInput}
+          onChange={handleSearchChange}
+        />
+        <ErrorMessage
+          message={error}
+          onRetry={() =>
+            dispatch(
+              fetchRecipes({
+                currentPage,
+                tag: selectedTag,
+                searchQuery,
+              }),
+            )
+          }
+        />
+      </div>
+    );
+  }
+
+  if (isInitialLoading) {
+    return (
+      <div>
+        <PageTitle title="What to cook today?" />
+        <TagsFilter selectedTag={selectedTag} onClick={handleTagChange} />
+        <InputFilter
+          type="text"
+          name="searchQuery"
+          placeholder="Start typing the recipe name..."
+          value={searchInput}
+          onChange={handleSearchChange}
+        />
+        <RecipeCardSkeleton count={RECIPES_PER_PAGE} />
+      </div>
+    );
+  }
+
+  if (hasNoRecipes)
+    //!доработать
+    return (
+      <div>
+        <PageTitle title="What to cook today?" />
+
+        <RedirectComponent
+          spanText="No recipes have been shared yet."
+          linkText="Be the first to add one"
+          to="/my-recipes/new"
+        />
+      </div>
+    );
+
   return (
     <div>
-      <PageTitle title={'What to cook today?'} />
+      <PageTitle title="What to cook today?" />
 
       <TagsFilter selectedTag={selectedTag} onClick={handleTagChange} />
 
@@ -77,18 +145,13 @@ const RecipesPage = () => {
         onChange={handleSearchChange}
       />
 
-      {/* 1. Первая загрузка */}
-      {isInitialLoading && <RecipeCardSkeleton count={RECIPES_PER_PAGE} />}
+      {/* Ничего не найдено (после завершения загрузки) */}
+      {hasNoSearchResults && <NoRecipesFound />}
 
-      {/* 2. Ничего не найдено (после завершения загрузки) */}
-      {!isLoading && recipes.length === 0 && <NoRecipesFound />}
+      {/* Список рецептов */}
+      {recipes.length > 0 && <RecipesList recipes={recipes} />}
 
-      {/* 3. Список рецептов */}
-      {recipes.length > 0 && !isInitialLoading && (
-        <RecipesList recipes={recipes} />
-      )}
-
-      {/* 4. Скелетон снизу при дозагрузке */}
+      {/* Скелетон снизу при дозагрузке */}
       {isLoadingMore && <RecipeCardSkeleton count={RECIPES_PER_PAGE} />}
 
       {hasMoreRecipes && !isLoadingMore && (
@@ -97,7 +160,7 @@ const RecipesPage = () => {
           onClick={handleLoadMoreBtnClick}
           disabled={isLoading || !hasMoreRecipes}
           //защищает от повторного клика во время запроса
-          variant={'loadMore'}
+          variant="loadMore"
         >
           Load more
         </GeneralBtn>

@@ -27,10 +27,13 @@ import { useAppSelector } from '@/app/redux/hooks';
 import type { Recipe } from '@/types';
 
 const MyRecipesPage = () => {
+  const navigate = useNavigate();
+
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const { id: currentUserId } = useAppSelector(selectUser);
 
   const [userRecipes, setUserRecipes] = useState<Recipe[]>([]);
+  const [totalRecipesQty, setTotalRecipesQty] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,26 +45,26 @@ const MyRecipesPage = () => {
     handleSearchChange,
     selectedTag,
     handleTagChange,
-    setTotalRecipesQty,
     handleLoadMoreBtnClick,
     hasMoreRecipes,
-  } = useRecipeSearchParams();
+  } = useRecipeSearchParams(totalRecipesQty);
 
-  const isInitialLoading = isLoading && currentPage === 1;
-  const isLoadingMore = isLoading && currentPage > 1;
+  const isInitialLoading =
+    isLoading && (currentPage === 1 || !userRecipes.length);
+  const isLoadingMore = isLoading && !isInitialLoading;
 
   const hasNoRecipes =
     !isLoading &&
+    !error &&
     !userRecipes.length &&
     searchQuery === '' &&
     selectedTag === 'all';
 
   const hasNoSearchResults =
     !isLoading &&
+    !error &&
     !userRecipes.length &&
     (searchQuery !== '' || selectedTag !== 'all');
-
-  const navigate = useNavigate();
 
   const loadUserRecipes = useCallback(
     async (userId: string) => {
@@ -73,7 +76,7 @@ const MyRecipesPage = () => {
           currentUserId: userId,
           searchQuery,
           tag: selectedTag,
-          currentPage: currentPage,
+          currentPage,
         });
 
         setUserRecipes((prevValue) => {
@@ -116,32 +119,48 @@ const MyRecipesPage = () => {
           />
         </PageHeader>
 
+        <TagsFilter selectedTag={selectedTag} onClick={handleTagChange} />
+
+        <InputFilter
+          type="text"
+          name="searchQuery"
+          placeholder="Start typing the recipe name..."
+          value={searchInput}
+          onChange={handleSearchChange}
+        />
+
         <ErrorMessage
           message={error}
           onRetry={() => loadUserRecipes(currentUserId)}
         />
+        <Outlet />
       </div>
     );
   }
 
-  // if (isInitialLoading) {
-  //   return (
-  //     <div>
-  //       <PageHeader title="Recipes">
-  //         <CreateButton
-  //           onClick={() => navigate('new')}
-  //           btnText="Add new recipe"
-  //         />
-  //       </PageHeader>
+  if (isInitialLoading) {
+    return (
+      <div>
+        <PageHeader title="Recipes">
+          <CreateButton
+            onClick={() => navigate('new')}
+            btnText="Add new recipe"
+          />
+        </PageHeader>
+        <TagsFilter selectedTag={selectedTag} onClick={handleTagChange} />
 
-  //       <RedirectComponent
-  //         spanText="There are no recipes yet."
-  //         linkText="Add new recipe"
-  //         to="new"
-  //       />
-  //     </div>
-  //   );
-  // }
+        <InputFilter
+          type="text"
+          name="searchQuery"
+          placeholder="Start typing the recipe name..."
+          value={searchInput}
+          onChange={handleSearchChange}
+        />
+        <RecipeCardSkeleton count={RECIPES_PER_PAGE} />
+        <Outlet />
+      </div>
+    );
+  }
 
   if (hasNoRecipes) {
     return (
@@ -158,6 +177,7 @@ const MyRecipesPage = () => {
           linkText="Add new recipe"
           to="new"
         />
+        <Outlet />
       </div>
     );
   }
@@ -181,26 +201,21 @@ const MyRecipesPage = () => {
         onChange={handleSearchChange}
       />
 
-      {/* 1. Первая загрузка */}
-      {isInitialLoading && <RecipeCardSkeleton count={RECIPES_PER_PAGE} />}
-
-      {/* 2. Ничего не найдено (после завершения загрузки) те  поиск или фильтр по тегу не дали результатов. */}
+      {/* Ничего не найдено (после завершения загрузки) те  поиск или фильтр по тегу не дали результатов. */}
       {hasNoSearchResults && <NoRecipesFound />}
 
-      {/* 3. Список рецептов */}
-      {userRecipes.length > 0 && !isInitialLoading && (
-        <RecipesList recipes={userRecipes} />
-      )}
+      {/* Список рецептов */}
+      {userRecipes.length > 0 && <RecipesList recipes={userRecipes} />}
 
-      {/* 4. Скелетон снизу при дозагрузке */}
+      {/* Скелетон снизу при дозагрузке */}
       {isLoadingMore && <RecipeCardSkeleton count={RECIPES_PER_PAGE} />}
 
-      {hasMoreRecipes && (
+      {hasMoreRecipes && !isLoadingMore && (
         <GeneralBtn
           type={'button'}
           onClick={handleLoadMoreBtnClick}
           disabled={isLoading || !hasMoreRecipes}
-          variant={'loadMore'}
+          variant="loadMore"
         >
           Load more
         </GeneralBtn>

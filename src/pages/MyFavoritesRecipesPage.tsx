@@ -25,6 +25,7 @@ import { RECIPES_PER_PAGE } from '@/features/recipes/constants';
 
 const MyFavoritesRecipesPage = () => {
   const [favorites, setFavorites] = useState<Recipe[]>([]);
+  const [totalRecipesQty, setTotalRecipesQty] = useState(0);
 
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const { id: currentUserId } = useAppSelector(selectUser);
@@ -39,18 +40,26 @@ const MyFavoritesRecipesPage = () => {
     handleSearchChange,
     selectedTag,
     handleTagChange,
-    setTotalRecipesQty,
     handleLoadMoreBtnClick,
     hasMoreRecipes,
-  } = useRecipeSearchParams();
+  } = useRecipeSearchParams(totalRecipesQty);
 
-  const isInitialLoading = isLoading && currentPage === 1;
-  const isLoadingMore = isLoading && currentPage > 1;
+  const isInitialLoading =
+    isLoading && (currentPage === 1 || !favorites.length);
+  const isLoadingMore = isLoading && !isInitialLoading;
 
   const hasNoFavoritesRecipes =
-    !favorites.length && !searchQuery && selectedTag === 'all'; // У пользователя вообще нет избранных рецептов
+    !isLoading &&
+    !error &&
+    !favorites.length &&
+    searchQuery === '' &&
+    selectedTag === 'all'; // У пользователя вообще нет избранных рецептов
+
   const hasNoSearchResults =
-    !favorites.length && (searchQuery !== '' || selectedTag !== 'all'); // Фильтры применены, но подходящих рецептов не найдено.
+    !isLoading &&
+    !error &&
+    !favorites.length &&
+    (searchQuery !== '' || selectedTag !== 'all'); // Фильтры применены, но подходящих рецептов не найдено.
 
   const loadUserFavorites = useCallback(async () => {
     try {
@@ -77,33 +86,47 @@ const MyFavoritesRecipesPage = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [
-    currentUserId,
-    currentPage,
-    searchQuery,
-    selectedTag,
-    setTotalRecipesQty,
-  ]);
+  }, [currentUserId, currentPage, searchQuery, selectedTag]);
 
   useEffect(() => {
     if (!isLoggedIn) return;
     loadUserFavorites();
   }, [isLoggedIn, currentUserId, loadUserFavorites]);
 
-  if (isInitialLoading) {
+  if (error) {
     return (
       <div>
-        <PageTitle title={'Favorites'} />
-        <RecipeCardSkeleton count={RECIPES_PER_PAGE} />
+        <PageTitle title="Favorites" />
+        <TagsFilter selectedTag={selectedTag} onClick={handleTagChange} />
+
+        <InputFilter
+          type="text"
+          name="searchQuery"
+          placeholder="Start typing the recipe name..."
+          value={searchInput}
+          onChange={handleSearchChange}
+        />
+
+        <ErrorMessage message={error} onRetry={() => loadUserFavorites()} />
       </div>
     );
   }
 
-  if (error) {
+  if (isInitialLoading) {
     return (
       <div>
-        <PageTitle title={'Favorites'} />
-        <ErrorMessage message={error} onRetry={() => loadUserFavorites()} />
+        <PageTitle title="Favorites" />
+        <TagsFilter selectedTag={selectedTag} onClick={handleTagChange} />
+
+        <InputFilter
+          type="text"
+          name="searchQuery"
+          placeholder="Start typing the recipe name..."
+          value={searchInput}
+          onChange={handleSearchChange}
+        />
+
+        <RecipeCardSkeleton count={RECIPES_PER_PAGE} />
       </div>
     );
   }
@@ -111,8 +134,7 @@ const MyFavoritesRecipesPage = () => {
   if (hasNoFavoritesRecipes)
     return (
       <div>
-        <PageTitle title={'Favorites'} />
-
+        <PageTitle title="Favorites" />
         <RedirectComponent
           spanText="You don't have any favorite recipes yet."
           linkText="Choose your first favorite recipe"
@@ -123,8 +145,7 @@ const MyFavoritesRecipesPage = () => {
 
   return (
     <div>
-      <PageTitle title={'Favorites'} />
-
+      <PageTitle title="Favorites" />
       <TagsFilter selectedTag={selectedTag} onClick={handleTagChange} />
 
       <InputFilter
@@ -135,26 +156,21 @@ const MyFavoritesRecipesPage = () => {
         onChange={handleSearchChange}
       />
 
-      {/* 1. Первая загрузка */}
-      {isInitialLoading && <RecipeCardSkeleton count={RECIPES_PER_PAGE} />}
-
-      {/* 2. Ничего не найдено (после завершения загрузки) */}
+      {/* Ничего не найдено (после завершения загрузки) */}
       {hasNoSearchResults && <NoRecipesFound />}
 
-      {/* 3. Список рецептов */}
-      {favorites.length > 0 && !isInitialLoading && (
-        <RecipesList recipes={favorites} />
-      )}
+      {/* Список рецептов */}
+      {favorites.length > 0 && <RecipesList recipes={favorites} />}
 
-      {/* 4. Скелетон снизу при дозагрузке */}
+      {/* Скелетон снизу при дозагрузке */}
       {isLoadingMore && <RecipeCardSkeleton count={RECIPES_PER_PAGE} />}
 
-      {hasMoreRecipes && (
+      {hasMoreRecipes && !isLoadingMore && (
         <GeneralBtn
           type="button"
           onClick={handleLoadMoreBtnClick}
           disabled={isLoading || !hasMoreRecipes}
-          variant={'loadMore'}
+          variant="loadMore"
         >
           Load more
         </GeneralBtn>

@@ -7,24 +7,26 @@ import type { ChangeEvent } from 'react';
 
 import { RECIPES_PER_PAGE } from '@/features/recipes/constants';
 
-export const useRecipeSearchParams = () => {
-  // URL является источником истины для page, tag и q.
-  // Поэтому при изменении этих параметров React Router перерисует страницу
-  // и ниже мы получим актуальные значения из searchParams.
+export const useRecipeSearchParams = (totalRecipesQty: number) => {
+  // URL является источником истины для page, tag и q. // Когда URL меняется, searchParams получает новые значения.
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const currentPage = Number(searchParams.get('page')) || 1; //  Получаем текущую страницу непосредственно из URL. Если параметра page нет, считаем, что пользователь находится на первой странице.
+  // Текущая страница. Если page отсутствует в URL, используем первую страницу. const currentPage = Number(searchParams.get('page')) || 1;
+  const currentPage = Number(searchParams.get('page')) || 1; //
 
   // Если tag отсутствует в URL, используем значение "all".
   const tagParam = searchParams.get('tag');
   const selectedTag = (tagParam ?? 'all') as MainTagsValue;
 
-  const searchQuery = searchParams.get('q') ?? ''; // Поиск хранится в URL, поэтому ссылкой с параметром ?q=pasta
+  // Поисковый запрос хранится в URL.
+  const searchQuery = searchParams.get('q') ?? '';
 
-  const [searchInput, setSearchInput] = useState(searchQuery); // Значение, которое пользователь сейчас печатает
+  // searchInput — текущее значение input. Оно обновляется сразу при каждом вводе пользователя.
+  const [searchInput, setSearchInput] = useState(searchQuery);
+
+  // Ждём 300 мс после последнего ввода перед обновлением URL.
   const debouncedSearchQuery = useDebounce(searchInput, 300);
 
-  const [totalRecipesQty, setTotalRecipesQty] = useState(0);
   const totalPages = Math.ceil(totalRecipesQty / RECIPES_PER_PAGE);
 
   const hasMoreRecipes = currentPage < totalPages;
@@ -39,18 +41,22 @@ export const useRecipeSearchParams = () => {
     // Если значение в input уже соответствует URL то ничего делать не нужно.
     if (debouncedSearchQuery === searchQuery) return;
 
-    // Пользователь закончил ввод. Обновляем URL и начинаем поиск с первой страницы, потому что результат нового поиска должен начинаться сначала.
+    // После завершения ввода обновляем URL. Новый поиск всегда начинается с первой страницы.
     setSearchParams((prevValue) => {
       if (debouncedSearchQuery) {
         prevValue.set('q', debouncedSearchQuery);
       } else {
         prevValue.delete('q');
       }
-      prevValue.set('page', String(1)); //При новом поиске обязательно возвращаемся на первую страницу
+      prevValue.set('page', '1'); //При новом поиске обязательно возвращаемся на первую страницу
 
       return prevValue;
     });
-  }, [debouncedSearchQuery, searchQuery, setSearchParams]);
+  }, [debouncedSearchQuery]);
+
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value);
+  };
 
   const handleTagChange = (tag: MainTagsValue) => {
     setSearchParams((prevValue) => {
@@ -65,10 +71,6 @@ export const useRecipeSearchParams = () => {
 
       return prevValue;
     });
-  };
-
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value);
   };
 
   const handleLoadMoreBtnClick = () => {
@@ -87,7 +89,6 @@ export const useRecipeSearchParams = () => {
     handleSearchChange,
     selectedTag,
     handleTagChange,
-    setTotalRecipesQty,
     handleLoadMoreBtnClick,
     hasMoreRecipes,
   };
