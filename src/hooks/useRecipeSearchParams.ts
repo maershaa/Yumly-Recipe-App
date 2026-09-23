@@ -1,6 +1,6 @@
 import { useDebounce } from '@/hooks';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 
 import type { MainTagsValue } from '@/types';
 import type { ChangeEvent } from 'react';
