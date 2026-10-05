@@ -42,7 +42,6 @@ const recipesSlice = createSlice({
         } else {
           //добавляем новые рецепты к уже загруженным.
           state.items.push(...action.payload.recipes);
-          // state.totalRecipesQty = action.payload.totalRecipesQty;
         }
 
         state.totalRecipesQty = action.payload.totalRecipesQty;

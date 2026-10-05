@@ -3,15 +3,19 @@ import {
   SmartRecommendationsSection,
   Header,
 } from './SmartRecommendations.styled';
-import { useEffect, useMemo } from 'react';
-import { selectRecipes } from '@/app/redux/recipes/selectors';
+import { useEffect } from 'react';
+import {
+  selectRecipes,
+  selectLoading,
+  selectError,
+} from '@/app/redux/recipes/selectors';
 import { fetchRecipes } from '@/app/redux/recipes/operations';
 import { useAppSelector, useAppDispatch } from '@/app/redux/hooks';
 
 const getDayPart = () => {
   const hour = new Date().getHours();
 
-  if (hour > 6 && hour <= 12) {
+  if (hour <= 12) {
     return {
       title: 'Good morning! What’s for breakfast?',
       emoji: '🍳',
@@ -35,27 +39,16 @@ const getDayPart = () => {
 const SmartRecommendations = () => {
   const dispatch = useAppDispatch();
   const recipes = useAppSelector(selectRecipes);
+  const loading = useAppSelector(selectLoading);
+  const error = useAppSelector(selectError);
 
   const { tag, title, emoji } = getDayPart();
 
   useEffect(() => {
-    dispatch(fetchRecipes({ currentPage: 1 }));
-  }, [dispatch]);
+    dispatch(fetchRecipes({ currentPage: 1, tag }));
+  }, [dispatch, tag]);
 
-  const recipesToRender = useMemo(() => {
-    if (!tag) return [];
-
-    return recipes
-      .filter(
-        //проверка на дубликаты +  чтобы нужный тег был
-        (recipe, index, arr) =>
-          arr.findIndex((r) => r.recipe_name === recipe.recipe_name) ===
-            index && recipe.tags?.includes(tag),
-      )
-      .slice(0, 3);
-  }, [tag, recipes]);
-
-  if (!tag || recipes.length === 0) {
+  if (loading && recipes.length === 0) {
     return (
       <SmartRecommendationsSection>
         <Header>
@@ -65,6 +58,11 @@ const SmartRecommendations = () => {
       </SmartRecommendationsSection>
     );
   }
+
+  if (error || recipes.length === 0) {
+    return null;
+  }
+
   return (
     <SmartRecommendationsSection>
       <Header>
@@ -80,7 +78,7 @@ const SmartRecommendations = () => {
         </p>
       </Header>
 
-      <RecipesList recipes={recipesToRender} />
+      <RecipesList recipes={recipes.slice(0, 3)} />
     </SmartRecommendationsSection>
   );
 };
