@@ -3,7 +3,7 @@ import {
   SmartRecommendationsSection,
   Header,
 } from './SmartRecommendations.styled';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { selectRecipes } from '@/app/redux/recipes/selectors';
 import { fetchRecipes } from '@/app/redux/recipes/operations';
 import { useAppSelector, useAppDispatch } from '@/app/redux/hooks';
@@ -39,7 +39,7 @@ const SmartRecommendations = () => {
   const { tag, title, emoji } = getDayPart();
 
   useEffect(() => {
-    dispatch(fetchRecipes());
+    dispatch(fetchRecipes({ currentPage: 1 }));
   }, [dispatch]);
 
   const recipesToRender = useMemo(() => {

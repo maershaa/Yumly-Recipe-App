@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { lazy, useEffect } from 'react';
 import { PrivateRoute, PublicRoute } from '@/components';
 
-import { useAppSelector, useAppDispatch } from '@/app/redux/hooks';
+import { useAppDispatch } from '@/app/redux/hooks';
 
 import { refreshUser } from '@/app/redux/auth/operations';
 

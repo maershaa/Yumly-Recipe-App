@@ -70,7 +70,6 @@ export const useLogInForm = () => {
       setLoginForm(initialForm);
 
       navigate('/my-recipes');
-      dispatch(refreshUser());
       toast.success('You are successfully logged in');
     } catch (error) {
       const message = getErrorMessage(error);
