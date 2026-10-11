@@ -1,15 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-import { uploadRecipeImage } from '@/features/recipes/api';
 import {
   createIngredient,
   createStep,
   validateImageFile,
-  buildImagePath,
 } from '@/features/recipes/helpers';
 import { INITIAL_TOUCHED_STATE } from './RecipeForm.constants';
-import { getErrorMessage } from '@/utils';
 
 import type { RecipeFormState } from '@/types';
 import type { Dispatch, SetStateAction, ChangeEvent } from 'react';
@@ -23,12 +20,26 @@ import type {
 
 export const useRecipeForm = (
   setRecipeForm: Dispatch<SetStateAction<RecipeFormState>>,
-  currentUserId: string,
+  setSelectedImageFile: React.Dispatch<React.SetStateAction<File | null>>,
+  setImagePreviewUrl: React.Dispatch<React.SetStateAction<string>>,
+  imagePreviewUrl: string,
 ) => {
   const [isTouched, setIsTouched] = useState<RecipeFormTouched>(
     INITIAL_TOUCHED_STATE,
   );
   const [activeTab, setActiveTab] = useState<RecipeFormTabsId>('generalInfo');
+
+  useEffect(() => {
+    //  1. При выборе файла URL.createObjectURL(selectedFile) создаёт временный URL для отображения изображения.
+    // 2. Когда выбирается другое изображение, React запускает функцию очистки предыдущего эффекта и освобождает старый URL.
+    // 3. Когда компонент размонтируется, например пользователь уходит со страницы, URL последнего изображения тоже освобождается.
+    // Это важно, потому что временные URL не следует оставлять без необходимости: URL.revokeObjectURL() сообщает браузеру, что этот ресурс больше не используется.
+    return () => {
+      if (imagePreviewUrl.startsWith('blob:')) {
+        URL.revokeObjectURL(imagePreviewUrl); //Освобождаем только временные URL (они начинаются с blob), созданные браузером для локальных файлов. Обычные URL изображений из Supabase не являются object URL.
+      }
+    };
+  }, [imagePreviewUrl]);
 
   const handleInfoChange = (e: FieldChangeEvent) => {
     const { name, value } = e.target;
@@ -36,30 +47,37 @@ export const useRecipeForm = (
     setRecipeForm((prevValue) => ({ ...prevValue, [name]: value }));
   };
 
-  const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
-    const uploadedFile = event.target.files?.[0];
-    if (!uploadedFile) return;
+  const handleImageSelect = (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+    if (!selectedFile) return;
 
-    const fileError = validateImageFile(uploadedFile);
+    const fileError = validateImageFile(selectedFile);
     if (fileError) {
       toast.info(fileError);
+      event.target.value = ''; // Сбрасываем значение input, чтобы можно было повторно выбрать тот же файл.
+
       return;
     }
 
-    const filePath = buildImagePath(currentUserId, uploadedFile);
+    setSelectedImageFile(selectedFile);
+    setImagePreviewUrl(URL.createObjectURL(selectedFile));
+  };
 
-    try {
-      const imageUrl = await uploadRecipeImage(filePath, uploadedFile);
-      setRecipeForm((prevValue) => ({
-        ...prevValue,
-        image_url: imageUrl,
-      }));
-    } catch (error) {
-      toast.error(
-        'Something went wrong while loading the image. Please try again.',
-      );
-      console.error('Failed to load image:', getErrorMessage(error));
-    }
+  const removeImage = () => {
+    // Убираем новый файл, если пользователь выбирал его для загрузки.
+    setSelectedImageFile(null);
+
+    // Убираем изображение из превью.
+    // Если старый URL был blob:, useEffect освободит его.
+    setImagePreviewUrl('');
+
+    // Очищаем URL сохранённого изображения.
+    // Это важно при редактировании: пустой image_url означает,
+    // что пользователь намеренно удалил изображение.
+    setRecipeForm((prev) => ({
+      ...prev,
+      image_url: '',
+    }));
   };
 
   const handleIngredientChange = (id: string, e: FieldChangeEvent) => {
@@ -114,13 +132,6 @@ export const useRecipeForm = (
     }));
   };
 
-  const removeImage = () => {
-    setRecipeForm((prev) => ({
-      ...prev,
-      image_url: '',
-    }));
-  };
-
   const handleInputBlur = (evt: FieldBlurEvent) => {
     const name = evt.currentTarget.name;
     setIsTouched((prev) => ({ ...prev, [name]: true }));
@@ -146,7 +157,7 @@ export const useRecipeForm = (
     activeTab,
     setActiveTab,
     handleInfoChange,
-    handleImageUpload,
+    handleImageSelect,
     handleIngredientChange,
     handleStepChange,
     addIngredient,

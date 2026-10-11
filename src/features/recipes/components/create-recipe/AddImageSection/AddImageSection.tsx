@@ -3,13 +3,11 @@ import { GeneralBtn, FieldErrorMessage } from '@/components';
 import type { RecipeFormState } from '@/types';
 import type { ChangeEvent, FocusEvent } from 'react';
 
-type RecipeAddImageSectionInfo = Pick<
-  RecipeFormState,
-  'recipe_name' | 'image_url'
->;
+type RecipeAddImageSectionInfo = Pick<RecipeFormState, 'recipe_name'>;
 
 type AddImageSectionProps = RecipeAddImageSectionInfo & {
-  handleImageUpload: (event: ChangeEvent<HTMLInputElement>) => void;
+  imagePreviewUrl: string;
+  handleImageSelect: (event: ChangeEvent<HTMLInputElement>) => void;
   removeImage: () => void;
   isImgError: string;
   handleInputBlur: (evt: FocusEvent<HTMLInputElement>) => void;
@@ -18,8 +16,8 @@ type AddImageSectionProps = RecipeAddImageSectionInfo & {
 
 const AddImageSection = ({
   recipe_name,
-  image_url,
-  handleImageUpload,
+  imagePreviewUrl,
+  handleImageSelect,
   removeImage,
   isImgError,
   handleInputBlur,
@@ -27,26 +25,22 @@ const AddImageSection = ({
 }: AddImageSectionProps) => {
   return (
     <>
-      {!image_url ? (
+      {!imagePreviewUrl ? (
         <ImgWrapper>
           <label>
             <input
               type="file"
               accept=".jpg, .png, .jpeg"
               multiple={false} //если ты разрешаешь загрузку нескольких фото => true
-              onChange={handleImageUpload}
+              onChange={handleImageSelect}
               onBlur={handleInputBlur}
-              name="image_url"
+              name="imagePreviewUrl"
             />
           </label>
         </ImgWrapper>
       ) : (
         <ReplaceImageWrapper>
-          <img
-            src={image_url}
-            alt={recipe_name || 'Recipe image'}
-            loading="lazy"
-          />
+          <img src={imagePreviewUrl} alt={recipe_name || 'Recipe image'} />
           <GeneralBtn type="button" variant="delete" onClick={removeImage}>
             Replace image
           </GeneralBtn>

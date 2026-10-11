@@ -6,6 +6,7 @@ export type Cuisines =
   | 'French'
   | 'German'
   | 'Greek'
+  | 'Austrian'
   | 'Indian'
   | 'Italian'
   | 'Japanese'

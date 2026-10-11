@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 
 import { selectUser } from '@/app/redux/auth/selectors';
+import { uploadRecipeImage } from '@/features/recipes/api';
 import { updateRecipe, getRecipeById } from '@/features/recipes/api';
 import { PageTitle, BackButton } from '@/components';
 import { RecipeForm } from '@/features/recipes/components';
@@ -11,6 +12,8 @@ import {
   prepareRecipeForUpdate,
 } from '@/features/recipes/helpers';
 import { recipeCategories } from '@/features/recipes/constants';
+import { buildImagePath } from '@/features/recipes/helpers';
+
 import { useAppSelector } from '@/app/redux/hooks';
 
 import type { SubmitEvent } from 'react';
@@ -50,8 +53,14 @@ const EditRecipePage = () => {
   const { id: currentUserId } = useAppSelector(selectUser);
   const { recipeId } = useParams();
 
-  const { isFormValid, errors: validationErrors } =
-    validateRecipeForm(recipeForm); //Возвращает объект с значением isFormValid=true/false и обьхект ошибок  в полях формы или их отсутствием
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null); //сам файл изображения, который нужно загрузить в Supabase при отправке формы
+
+  const [imagePreviewUrl, setImagePreviewUrl] = useState(''); // URL изображения для отображения превью. Это может быть URL существующего изображения из Supabase или временный blob: URL выбранного локального файла.
+
+  const { isFormValid, errors: validationErrors } = validateRecipeForm(
+    recipeForm,
+    Boolean(selectedImageFile || recipeForm.image_url), // При редактировании изображение считается выбранным, если есть новый файл или URL изображения, которое уже сохранено у рецепта.
+  ); //Возвращает объект с значением isFormValid=true/false и обьхект ошибок  в полях формы или их отсутствием
 
   useEffect(() => {
     const loadRecipeDetails = async () => {
@@ -72,8 +81,7 @@ const EditRecipePage = () => {
           ingredients: (data.ingredients ?? []).map(
             (el: Ingredient): FormIngredient => {
               return {
-                id: crypto.randomUUID(), // Временный id для работы формы. Используется React как key, а также для поиска,
-                // изменения и удаления элементов. На бэкенд этот id не отправляется.
+                id: crypto.randomUUID(), // Временный ID нужен для React key и для поиска элемента при редактировании или удалении. В базу данных он не отправляется.
                 name: el.name.trim(),
                 amount: String(el.amount),
                 unit: el.unit,
@@ -84,14 +92,14 @@ const EditRecipePage = () => {
           instructions: (data.instructions ?? []).map(
             (el: Instruction, index: number): FormInstruction => {
               return {
-                id: crypto.randomUUID(), // Временный id для работы формы. Используется React как key, а также для поиска,
-                // изменения и удаления элементов. На бэкенд этот id не отправляется.
+                id: crypto.randomUUID(), // Временный ID нужен для React key и для поиска шага при редактировании или удалении. В базу данных он не отправляется.
                 text: el.text.trim(),
               };
             },
           ),
 
-          // В состоянии формы храним только теги, которые пользователь может изменить через чекбоксы. Автоматически вычисляемые теги (difficulty, cuisine) сюда не включаем
+          // Оставляем только пользовательские категории, доступные в чекбоксах.
+          // Автоматически рассчитываемые теги (например, сложность и кухня) будут заново сформированы при сохранении рецепта.
           tags: (data.tags ?? []).filter((tag): tag is RecipeCategoryValue =>
             recipeCategories.some((category) => category.value === tag),
           ),
@@ -99,6 +107,10 @@ const EditRecipePage = () => {
           // likes: data.likes, // ❌ нет такого поля в RecipeFormState. Только на бекенде есть.
           // created_at: data.created_at, //❌ нет такого поля в RecipeFormState. Только на бекенде есть.
         });
+
+        // Показываем сохранённое изображение при открытии страницы редактирования.
+        // Если пользователь выберет новый файл, превью заменится на изображение этого файла.
+        setImagePreviewUrl(data.image_url ?? '');
       } catch (error) {
         console.error('Failed to load recipe:', getErrorMessage(error));
         toast.error('Failed to load the recipe. Please try again.');
@@ -119,7 +131,23 @@ const EditRecipePage = () => {
 
     try {
       setIsSubmitting(true);
-      const recipeToSubmit = prepareRecipeForUpdate(recipeForm);
+
+      // По умолчанию используем URL текущего изображения.
+      // Если пользователь не выбрал новый файл, старое изображение сохраняется.
+      let imageUrl = recipeForm.image_url;
+
+      if (selectedImageFile) {
+        // Формируем уникальный путь в Supabase Storage.
+        // buildImagePath создаёт только строку пути — загрузку не выполняет.
+        const filePath = buildImagePath(currentUserId, selectedImageFile);
+
+        // Загружаем новый файл по подготовленному пути.
+        // В ответ получаем публичный URL, который будет сохранён в записи рецепта.
+        imageUrl = await uploadRecipeImage(filePath, selectedImageFile);
+      }
+
+      // Подготавливаем данные для обновления: очищаем строки, преобразуем числа, пересчитываем сложность и теги, добавляем актуальный URL изображения.
+      const recipeToSubmit = prepareRecipeForUpdate(recipeForm, imageUrl);
 
       await updateRecipe(recipeToSubmit, currentUserId, recipeId);
 
@@ -143,6 +171,10 @@ const EditRecipePage = () => {
         recipeForm={recipeForm}
         setRecipeForm={setRecipeForm}
         handleSubmit={handleSubmit}
+        selectedImageFile={selectedImageFile}
+        setSelectedImageFile={setSelectedImageFile}
+        imagePreviewUrl={imagePreviewUrl}
+        setImagePreviewUrl={setImagePreviewUrl}
         currentUserId={currentUserId}
         isSubmitting={isSubmitting}
         isFormValid={isFormValid}

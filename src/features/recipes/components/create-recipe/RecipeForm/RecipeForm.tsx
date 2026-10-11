@@ -21,6 +21,10 @@ interface RecipeFormProps {
   recipeForm: RecipeFormState;
   setRecipeForm: Dispatch<SetStateAction<RecipeFormState>>;
   handleSubmit: (e: SubmitEvent<HTMLFormElement>) => void;
+  selectedImageFile: File | null;
+  setSelectedImageFile: React.Dispatch<React.SetStateAction<File | null>>;
+  imagePreviewUrl: string;
+  setImagePreviewUrl: React.Dispatch<React.SetStateAction<string>>;
   currentUserId: string;
   isSubmitting: boolean;
   isFormValid: boolean;
@@ -32,7 +36,9 @@ const RecipeForm = ({
   recipeForm,
   setRecipeForm,
   handleSubmit,
-  currentUserId,
+  setSelectedImageFile,
+  imagePreviewUrl,
+  setImagePreviewUrl,
   isSubmitting,
   isFormValid,
   submitButtonText,
@@ -43,7 +49,7 @@ const RecipeForm = ({
     activeTab,
     setActiveTab,
     handleInfoChange,
-    handleImageUpload,
+    handleImageSelect,
     handleIngredientChange,
     handleStepChange,
     addIngredient,
@@ -53,7 +59,12 @@ const RecipeForm = ({
     removeImage,
     handleInputBlur,
     handleToggleTags,
-  } = useRecipeForm(setRecipeForm, currentUserId);
+  } = useRecipeForm(
+    setRecipeForm,
+    setSelectedImageFile,
+    setImagePreviewUrl,
+    imagePreviewUrl,
+  );
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -81,8 +92,8 @@ const RecipeForm = ({
           <FormSectionWrapper>
             <AddImageSection
               recipe_name={recipeForm.recipe_name}
-              image_url={recipeForm.image_url}
-              handleImageUpload={handleImageUpload}
+              imagePreviewUrl={imagePreviewUrl}
+              handleImageSelect={handleImageSelect}
               removeImage={removeImage}
               isImgError={validationErrors.image_url}
               handleInputBlur={handleInputBlur}

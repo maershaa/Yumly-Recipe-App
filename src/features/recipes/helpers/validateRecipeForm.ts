@@ -12,77 +12,46 @@ import type {
   ============================
 
   1. FIELD VALIDATION
-  --------------------
-  Для каждого поля создаётся отдельная функция проверки:
+  -------------------
+  Для каждого поля есть отдельная функция проверки.
+  Каждая функция получает значение поля и возвращает true или false,
+  в зависимости от того, соответствует ли значение заданным правилам.
 
-  - validateRecipeName
-  - validateCuisine
-  - validateCookingTime
-  - validateIngredients
-  - validateInstructions
-  - etc.
+  trim() используется там, где необходимо игнорировать пробелы
+  в начале и конце строки.
 
-  Каждая функция:
-  - принимает значение поля
-  - очищает (trim)
-  - проверяет правило (length, number, required)
-  - возвращает true / false
+  2. FORM VALIDATION
+  ------------------
+  validateRecipeForm вызывает все проверки полей и объединяет результаты.
 
+  Возвращает:
+  - isFormValid — true, если все поля прошли валидацию;
+  - errors — объект с сообщениями об ошибках для отображения в UI.
+    Если поле прошло проверку, его сообщение об ошибке — пустая строка.
 
-  2. FORM VALIDATION (validateRecipeForm)
-  ---------------------------------------
-  Общая функция, которая вызывает все проверки полей.
+  3. IMAGE VALIDATION
+  -------------------
+  Проверяем наличие изображения, а не только form.image_url.
 
-  Возвращает объект:
+  При выборе нового файла он хранится отдельно в selectedImageFile.
+  Временный URL для превью также не записывается в form.image_url.
 
-  {
-    isFormValid: boolean,
-    errors: {
-      recipe_name: 'error message' | '',
-      description: 'error message' | '',
-      ...
-    }
-  }
+  Поэтому hasImage должен учитывать:
+  - выбран ли новый файл;
+  - есть ли уже сохранённый URL изображения при редактировании рецепта.
 
-  - isFormValid = итоговая валидность формы
-  - errors = текстовые ошибки для UI
+  Сам файл загружается в Supabase только при отправке формы.
 
+  4. TOUCHED STATE
+  ----------------
+  Отдельное состояние touched позволяет показывать ошибку поля
+  только после взаимодействия пользователя с этим полем.
 
-  3. TOUCHED STATE (UX CONTROL)
-  ------------------------------
-  Используется для управления отображением ошибок:
+  Например:
+  isTouched.recipe_name === true && errors.recipe_name !== ''
 
-  const FORM_FIELDS = {
-    recipe_name: false,
-    description: false,
-    cuisine: false,
-    cooking_time: false,
-    servings: false,
-    image_url: false,
-    tips: false,
-  };
-
-  const [isTouched, setIsTouched] = useState(FORM_FIELDS);
-
-  handleInputBlur:
-  - срабатывает при потере фокуса (onBlur)
-  - отмечает поле как "touched"
-
-  const handleInputBlur = (e) => {
-    const name = e.currentTarget.name;
-
-    setIsTouched(prev => ({
-      ...prev,
-      [name]: true
-    }));
-  };
-
-
-  4. RENDER LOGIC (WHEN TO SHOW ERROR)
-  -------------------------------------
-  Ошибка показывается только если:
-
-  isTouched.field === true && errors.field !== ''
+  Валидация определяет, корректны ли данные.
+  Touched state определяет, когда показывать ошибку пользователю.
 */
 
 interface ValidationErrorsType {
@@ -113,13 +82,16 @@ const validateDescription = (description: string): boolean =>
 
 const validateServings = (servings: string): boolean => Number(servings) > 0;
 
-const validateImage_url = (image_url: string): boolean =>
-  image_url.trim() !== '';
+// Проверяем, есть ли изображение для рецепта.
+// hasImage учитывает новый выбранный файл при создании рецепта и новый файл или существующий URL при редактировании.
+// Сам файл загружается в Supabase только после отправки формы.
+const validateImage = (hasImage: boolean): boolean => hasImage;
 
 const validateTips = (tips: string): boolean => tips.trim().length >= 10;
 
 export const validateRecipeForm = (
   form: RecipeFormState,
+  hasImage: boolean,
 ): ValidationErrorsType => {
   const recipeNameValid = validateRecipeName(form.recipe_name);
   const cuisineValid = validateCuisine(form.cuisine);
@@ -128,7 +100,10 @@ export const validateRecipeForm = (
   const instructionsValid = validateInstructions(form.instructions);
   const descriptionValid = validateDescription(form.description);
   const servingsValid = validateServings(form.servings);
-  const imageValid = validateImage_url(form.image_url);
+
+  // Проверяем наличие изображения независимо от того, хранится ли оно как новый файл или уже сохранено в Supabase.
+  const imageValid = validateImage(hasImage);
+
   const tipsValid = validateTips(form.tips);
 
   const isFormValid =

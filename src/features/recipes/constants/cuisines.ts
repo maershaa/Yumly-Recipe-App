@@ -7,6 +7,7 @@ export const cuisines: Cuisines[] = [
   'Chinese',
   'French',
   'German',
+  'Austrian',
   'Greek',
   'Indian',
   'Italian',

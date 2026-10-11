@@ -7,11 +7,11 @@ import type { RecipeFormState, CreateRecipePayload, Cuisines } from '@/types';
 
 export const prepareRecipeForSave = (
   formData: RecipeFormState,
+  imageUrl: string,
 ): CreateRecipePayload => {
   const difficultyValue = calculateDifficulty(Number(formData.cooking_time));
 
   return {
-    ...formData, //надо ли?
     recipe_name: formData.recipe_name.trim(),
     description: formData.description.trim(),
     cuisine: formData.cuisine as Cuisines,
@@ -43,5 +43,7 @@ export const prepareRecipeForSave = (
       difficultyValue,
       formData.cuisine.trim(),
     ),
+
+    image_url: imageUrl,
   };
 };

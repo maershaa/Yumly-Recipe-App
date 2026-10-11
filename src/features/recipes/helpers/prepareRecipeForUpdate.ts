@@ -7,6 +7,7 @@ import { RecipeFormState, UpdateRecipePayload, Cuisines } from '@/types';
 
 export const prepareRecipeForUpdate = (
   formData: RecipeFormState,
+  imageUrl: string,
 ): UpdateRecipePayload => {
   const difficultyValue = calculateDifficulty(Number(formData.cooking_time));
 
@@ -19,7 +20,6 @@ export const prepareRecipeForUpdate = (
     servings: Number(formData.servings) || 1,
     cooking_time: Number(formData.cooking_time),
 
-    image_url: formData.image_url,
     ingredients: formData.ingredients.map((el) => {
       return {
         name: el.name.trim(),
@@ -45,5 +45,8 @@ export const prepareRecipeForUpdate = (
       difficultyValue,
       formData.cuisine.trim(),
     ),
+
+    // image_url: formData.image_url,
+    image_url: imageUrl,
   };
 };
