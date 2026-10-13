@@ -8,7 +8,7 @@ export const IngredientRow = styled.div`
     90px — селект (фиксированная небольшая ширина).
     auto — кнопка удаления (по размеру иконки).
   */
-  grid-template-columns: 1fr 80px 90px auto;
+  grid-template-columns: 1fr 80px 80px auto;
   align-items: center;
   width: 100%;
   gap: 10px;
@@ -20,7 +20,7 @@ export const IngredientRow = styled.div`
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    grid-template-columns: 1fr 110px 50px auto;
+    grid-template-columns: 1fr 110px 80px auto;
     gap: 10px;
   }
 

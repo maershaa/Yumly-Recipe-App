@@ -46,7 +46,8 @@ export const TagsWrapper = styled.div`
     gap: 20px;
 
     margin-bottom: 10px;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
+    font-weight: 500;
 
     transition: ${({ theme }) => theme.transitions.main};
   }

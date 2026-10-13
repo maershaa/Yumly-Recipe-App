@@ -65,7 +65,7 @@ export const FormSectionWrapper = styled.div`
   select,
   textarea {
     width: 100%;
-    padding: 12px 16px;
+    padding: 12px;
     font-size: 1rem;
     background-color: transparent;
     border: 1px solid ${({ theme }) => theme.colors.border};

@@ -20,7 +20,7 @@ export const MainContentGrid = styled.div`
       gap: 20px;
 
       padding: 18px;
-      max-width: 600px;
+      /* max-width: 600px; */
 
       border: 1px solid ${({ theme }) => theme.colors.border};
       background-color: ${({ theme }) => theme.colors.accentBgSuccess};
@@ -159,7 +159,8 @@ export const StepsList = styled.ul`
   li {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
+
     justify-content: flex-start;
 
     gap: 10px;
