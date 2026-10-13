@@ -49,7 +49,7 @@ const Ingredients = ({
           </select>
           <GeneralBtn
             type="button"
-            variant="delete"
+            $variant="delete"
             onClick={() => removeIngredient(id)}
             disabled={ingredients.length <= 3}
           >
@@ -60,7 +60,7 @@ const Ingredients = ({
       {isIngredientsError && (
         <FieldErrorMessage errorMessage={isIngredientsError} />
       )}
-      <GeneralBtn type="button" variant="add" onClick={addIngredient}>
+      <GeneralBtn type="button" $variant="add" onClick={addIngredient}>
         <FaPlus />
         Add Ingredient
       </GeneralBtn>

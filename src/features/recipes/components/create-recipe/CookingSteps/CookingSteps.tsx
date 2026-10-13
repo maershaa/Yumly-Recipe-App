@@ -34,7 +34,7 @@ const CookingSteps = ({
           />
           <GeneralBtn
             type="button"
-            variant="delete"
+            $variant="delete"
             onClick={() => removeStep(id)}
             disabled={instructions.length <= 3}
           >
@@ -43,7 +43,7 @@ const CookingSteps = ({
         </StepRow>
       ))}
       {isStepsError && <FieldErrorMessage errorMessage={isStepsError} />}
-      <GeneralBtn type="button" variant="add" onClick={addStep}>
+      <GeneralBtn type="button" $variant="add" onClick={addStep}>
         <FaPlus />
         Add Step
       </GeneralBtn>

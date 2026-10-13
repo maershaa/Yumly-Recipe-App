@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 type ButtonProps = {
-  variant: 'submit' | 'add' | 'delete' | 'loadMore';
+  $variant: 'submit' | 'add' | 'delete' | 'loadMore';
 };
 
 export const Button = styled.button<ButtonProps>`
@@ -19,8 +19,8 @@ export const Button = styled.button<ButtonProps>`
     cursor: not-allowed;
   }
 
-  ${({ variant, theme }) =>
-    variant === 'add' &&
+  ${({ $variant, theme }) =>
+    $variant === 'add' &&
     css`
       width: 100%;
       padding: 16px;
@@ -35,8 +35,8 @@ export const Button = styled.button<ButtonProps>`
       }
     `}
 
-  ${({ variant, theme }) =>
-    variant === 'delete' &&
+  ${({ $variant, theme }) =>
+    $variant === 'delete' &&
     css`
       width: 44px;
       height: 44px;
@@ -52,8 +52,8 @@ export const Button = styled.button<ButtonProps>`
       }
     `}
 
- ${({ variant, theme }) =>
-    variant === 'submit' &&
+ ${({ $variant, theme }) =>
+    $variant === 'submit' &&
     css`
       width: 100%;
       max-width: 400px;
@@ -77,8 +77,8 @@ export const Button = styled.button<ButtonProps>`
     `}
 
 
-${({ variant, theme }) =>
-    variant === 'loadMore' &&
+${({ $variant, theme }) =>
+    $variant === 'loadMore' &&
     css`
       min-width: 180px;
       margin: 32px auto 0;

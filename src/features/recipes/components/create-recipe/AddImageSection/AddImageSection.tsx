@@ -41,7 +41,7 @@ const AddImageSection = ({
       ) : (
         <ReplaceImageWrapper>
           <img src={imagePreviewUrl} alt={recipe_name || 'Recipe image'} />
-          <GeneralBtn type="button" variant="delete" onClick={removeImage}>
+          <GeneralBtn type="button" $variant="delete" onClick={removeImage}>
             Replace image
           </GeneralBtn>
         </ReplaceImageWrapper>

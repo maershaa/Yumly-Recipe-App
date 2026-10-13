@@ -8,7 +8,7 @@ interface GeneralBtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   type?: ButtonTypes;
   onClick?: () => void;
   disabled?: boolean;
-  variant: ButtonVariants;
+  $variant: ButtonVariants;
   children: ReactNode;
 }
 
@@ -16,11 +16,16 @@ const GeneralBtn = ({
   type = 'button',
   onClick,
   disabled = false,
-  variant,
+  $variant,
   children,
 }: GeneralBtnProps) => {
   return (
-    <Button type={type} onClick={onClick} disabled={disabled} variant={variant}>
+    <Button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      $variant={$variant}
+    >
       {children}
     </Button>
   );

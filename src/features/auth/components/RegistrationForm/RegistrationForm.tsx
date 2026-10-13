@@ -29,6 +29,7 @@ const RegistrationForm = () => {
           value={registrationForm.userName}
           required
           className={showUserNameError ? 'invalid' : ''}
+          autoComplete="username"
         />
       </label>
       {showUserNameError && <FieldErrorMessage errorMessage={userNameError} />}
@@ -44,6 +45,7 @@ const RegistrationForm = () => {
           value={registrationForm.email}
           required
           className={showEmailError ? 'invalid' : ''}
+          autoComplete="email"
         />
       </label>
       {showEmailError && <FieldErrorMessage errorMessage={emailError} />}
@@ -59,6 +61,7 @@ const RegistrationForm = () => {
           required
           minLength={6}
           className={showPasswordError ? 'invalid' : ''}
+          autoComplete="new-password"
         />
       </label>
       {showPasswordError && <FieldErrorMessage errorMessage={passwordError} />}
@@ -73,6 +76,7 @@ const RegistrationForm = () => {
           required
           minLength={6}
           className={showConfirmPasswordError ? 'invalid' : ''}
+          autoComplete="new-password"
         />
       </label>
       {showConfirmPasswordError && (

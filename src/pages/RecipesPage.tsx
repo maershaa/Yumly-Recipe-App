@@ -160,7 +160,7 @@ const RecipesPage = () => {
           onClick={handleLoadMoreBtnClick}
           disabled={isLoading || !hasMoreRecipes}
           //защищает от повторного клика во время запроса
-          variant="loadMore"
+          $variant="loadMore"
         >
           Load more
         </GeneralBtn>

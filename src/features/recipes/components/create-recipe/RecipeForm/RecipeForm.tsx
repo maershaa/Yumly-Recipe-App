@@ -143,7 +143,7 @@ const RecipeForm = ({
 
       <GeneralBtn
         type="submit"
-        variant="submit"
+        $variant="submit"
         disabled={!isFormValid || isSubmitting}
       >
         <FaUtensils />

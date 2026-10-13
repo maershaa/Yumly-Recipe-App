@@ -170,7 +170,7 @@ const MyFavoritesRecipesPage = () => {
           type="button"
           onClick={handleLoadMoreBtnClick}
           disabled={isLoading || !hasMoreRecipes}
-          variant="loadMore"
+          $variant="loadMore"
         >
           Load more
         </GeneralBtn>

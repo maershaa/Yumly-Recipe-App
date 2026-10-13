@@ -27,6 +27,7 @@ const LogInForm = () => {
           value={loginForm.email}
           required
           className={showEmailError ? 'invalid' : ''}
+          autoComplete="email"
         />
       </label>
       {showEmailError && <FieldErrorMessage errorMessage={emailError} />}
@@ -42,6 +43,7 @@ const LogInForm = () => {
           required
           minLength={6}
           className={showPasswordError ? 'invalid' : ''}
+          autoComplete="current-password" //Текущий пароль для учетной записи, указанной в поле "Имя пользователя" (например, при входе в систему).
         />
       </label>
       {showPasswordError && <FieldErrorMessage errorMessage={passwordError} />}
