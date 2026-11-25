@@ -19,13 +19,13 @@ const UserProfilePage = () => {
   });
 
   const [user, setUser] = useState<{
-    userRecipesQty: number | null;
-    userFavoritesRecipesQty: number | null;
-    userRecipesTotalLikes: number | null;
+    userRecipesQty: number | 0;
+    userFavoritesRecipesQty: number | 0;
+    userRecipesTotalLikes: number | 0;
   }>({
-    userRecipesQty: null,
-    userFavoritesRecipesQty: null,
-    userRecipesTotalLikes: null,
+    userRecipesQty: 0,
+    userFavoritesRecipesQty: 0,
+    userRecipesTotalLikes: 0,
   });
 
   const loadUserInfo = async () => {
@@ -38,9 +38,9 @@ const UserProfilePage = () => {
     }, 0);
 
     const value = {
-      userRecipesQty: totalUserRecipes,
-      userFavoritesRecipesQty: favoriteRecipesQty,
-      userRecipesTotalLikes: likesQty,
+      userRecipesQty: totalUserRecipes || 0,
+      userFavoritesRecipesQty: favoriteRecipesQty || 0,
+      userRecipesTotalLikes: likesQty || 0,
     };
 
     setUser(value);
