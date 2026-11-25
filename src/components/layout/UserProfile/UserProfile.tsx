@@ -10,12 +10,13 @@ interface UserProfileProps {
 }
 
 const UserProfile = ({ name, onClick }: UserProfileProps) => {
+  const firstNameLetter = name.trim().at(0)?.toUpperCase();
+
   return (
     <UserMenu>
       <Link to={name} className="userInfoBlock">
         <UserAvatarWrapper>
-          <span className="avatarLetter">{name[0]?.toUpperCase()}</span>{' '}
-          {/* //!at()? */}
+          <span className="avatarLetter">{firstNameLetter}</span>
           <StyledTooltip text={name} />
         </UserAvatarWrapper>
         <span className="fullName">{name}</span>

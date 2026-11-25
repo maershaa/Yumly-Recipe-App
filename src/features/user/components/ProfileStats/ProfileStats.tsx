@@ -19,21 +19,21 @@ export const ProfileStats = ({
   return (
     <ProfileStatsSection>
       <StatsElement>
-        <Link to={'my-recipes'} className="info">
+        <Link to={'/my-recipes'} className="info">
           <LuClipboardList />
           <h3>My Recipes</h3>
           <h2>{userRecipesQty}</h2>
+          <MdNavigateNext className="nextSvg" />
         </Link>
-        <MdNavigateNext className="nextSvg" />
       </StatsElement>
 
       <StatsElement>
-        <Link to={'my-recipes/favorites'} className="info">
+        <Link to={'/my-recipes/favorites'} className="info">
           <MdFavorite />
           <h3>Favorites</h3>
           <h2>{userFavoritesRecipesQty}</h2>
+          <MdNavigateNext className="nextSvg" />
         </Link>
-        <MdNavigateNext className="nextSvg" />
       </StatsElement>
 
       <StatsElement>
