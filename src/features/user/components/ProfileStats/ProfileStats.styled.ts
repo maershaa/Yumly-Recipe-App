@@ -11,7 +11,6 @@ export const ProfileStatsSection = styled.section`
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: row;
     gap: 20px;
-    /* justify-content: space-around; */
   }
 
   .nextSvg {

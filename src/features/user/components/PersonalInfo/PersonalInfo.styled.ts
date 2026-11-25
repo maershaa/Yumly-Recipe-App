@@ -6,33 +6,82 @@ export const PersonalInfoSection = styled.section`
   display: flex;
   flex-direction: column;
   gap: 32px;
-  align-items: stretch;
+`;
 
-  header {
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-    align-items: center;
-    justify-content: left;
+export const SectionHeader = styled.header`
+  display: flex;
+
+  gap: 12px;
+
+  align-items: center;
+  justify-content: flex-start;
+
+  .sectionIcon {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0; //  запрещаем иконке сжиматься, если текст длинный */
   }
 
-  div {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    align-items: start;
+  .sectionTitle {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.2;
 
-    padding: 24px;
-    background-color: ${({ theme }) => theme.colors.surface};
-    border: 1px solid ${({ theme }) => theme.colors.border};
-    border-radius: ${({ theme }) => theme.radii.lg};
+    color: ${({ theme }) => theme.colors.textPrimary};
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.mobileLarge}) {
+      font-size: 2rem;
+    }
+  }
+`;
+
+export const InfoCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: start;
+
+  padding: 24px;
+  background-color: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radii.lg};
+
+  .infoRow {
+    margin: 0 0 5px 0;
+    @media (min-width: ${({ theme }) => theme.breakpoints.mobileLarge}) {
+      margin: 12px 0;
+    }
   }
 
-  p {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    align-items: baseline;
-    justify-content: flex-start;
+  .infoLabel {
+    margin: 0 0 5px 0;
+
+    overflow-wrap: anywhere; //разрешает браузеру переносить длинное слово в любом месте, если оно не помещается в контейнер
+
+    font-size: 1.2rem;
+    font-weight: 500;
+
+    color: ${({ theme }) => theme.colors.textPrimary};
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.mobileLarge}) {
+      margin: 0;
+      width: 150px;
+      float: left; // это способ создать две колонки. или можно использовать Grid
+    }
+  }
+
+  .infoValue {
+    margin: 0 0 15px 0;
+
+    overflow-wrap: anywhere; //разрешает браузеру переносить длинное слово в любом месте, если оно не помещается в контейнер
+
+    font-size: 1.2rem;
+    font-weight: 500;
+
+    color: ${({ theme }) => theme.colors.textSecondary};
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.mobileLarge}) {
+      margin: 0 0 0 150px; //отступ на размер ширины левой колонки
+    }
   }
 `;

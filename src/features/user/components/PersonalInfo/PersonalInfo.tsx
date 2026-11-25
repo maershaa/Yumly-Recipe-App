@@ -1,5 +1,9 @@
 import { FaRegUser } from 'react-icons/fa6';
-import { PersonalInfoSection } from './PersonalInfo.styled';
+import {
+  PersonalInfoSection,
+  SectionHeader,
+  InfoCard,
+} from './PersonalInfo.styled';
 
 interface PersonalInfoProps {
   name: string;
@@ -14,21 +18,26 @@ export const PersonalInfo = ({
 }: PersonalInfoProps) => {
   return (
     <PersonalInfoSection>
-      <header>
-        <FaRegUser />
-        <h2>Personal Information</h2>
-      </header>
-      <div>
-        <p>
-          Name <span>{name}</span>!
-        </p>
-        <p>
-          Email <span>{email}</span>
-        </p>
-        <p>
-          Member Since <span>{registerDate}</span>
-        </p>
-      </div>
+      <SectionHeader>
+        <FaRegUser className="sectionIcon" aria-hidden="true" />
+        <h2 className="sectionTitle">Personal Information</h2>
+      </SectionHeader>
+      <InfoCard>
+        <dl className="infoRow">
+          <dt className="infoLabel">Name</dt>
+          <dd className="infoValue">{name}</dd>
+        </dl>
+
+        <dl className="infoRow">
+          <dt className="infoLabel">Email</dt>
+          <dd className="infoValue">{email}</dd>
+        </dl>
+
+        <dl className="infoRow">
+          <dt className="infoLabel">Member Since</dt>
+          <dd className="infoValue">{registerDate}</dd>
+        </dl>
+      </InfoCard>
     </PersonalInfoSection>
   );
 };
