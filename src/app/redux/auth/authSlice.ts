@@ -17,7 +17,12 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: { id: '', name: '', email: '' },
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    created_at: '',
+  },
   token: null, // на самом деле он тут не нужен так как supabase.auth.getSession() - сам достанет токен. это чисто для примера что обычно нужно.
 
   isLoggedIn: false,
@@ -60,10 +65,12 @@ const authSlice = createSlice({
 
         state.loading = false;
 
+        console.log('🚀 ~ action.payload:', action.payload);
         state.user = {
           id: action.payload.user.id,
           name: typeof userName === 'string' ? userName : '',
           email: action.payload.user.email ?? '',
+          created_at: action.payload.user.created_at ?? '',
         };
 
         state.token = action.payload.session.access_token;
@@ -82,7 +89,12 @@ const authSlice = createSlice({
       .addCase(logOutUser.fulfilled, (state) => {
         state.loading = false;
 
-        state.user = { id: '', name: '', email: '' };
+        state.user = {
+          id: '',
+          name: '',
+          email: '',
+          created_at: '',
+        };
 
         state.token = null;
         state.isLoggedIn = false;
@@ -110,6 +122,7 @@ const authSlice = createSlice({
           id: action.payload.user.id,
           name: typeof userName === 'string' ? userName : '',
           email: action.payload.user.email ?? '',
+          created_at: action.payload.user.created_at ?? '',
         };
 
         state.token = action.payload.access_token;
