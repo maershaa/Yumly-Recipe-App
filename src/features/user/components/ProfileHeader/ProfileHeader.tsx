@@ -15,7 +15,9 @@ export const ProfileHeader = ({ name }: ProfileHeaderProps) => {
   return (
     <ProfileHeaderContainer>
       <ProfileHeaderMain>
-        <ProfileAvatar>{firstNameLetter}</ProfileAvatar>{' '}
+        <ProfileAvatar aria-hidden="true">{firstNameLetter}</ProfileAvatar>
+        {/* aria-hidden="true" сообщает скринридерам: не нужно озвучивать содержимое
+        этого элемента */}
         <ProfileGreeting>
           <h1 className="greetingTitle">
             Hello, <span>{name}!</span>

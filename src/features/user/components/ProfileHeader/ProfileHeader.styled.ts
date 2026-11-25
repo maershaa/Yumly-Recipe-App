@@ -73,7 +73,7 @@ export const ProfileHeaderMain = styled.div`
 `;
 
 export const ProfileAvatar = styled.div`
-  flex-shrink: 0;
+  flex-shrink: 0; //запрещает элементу уменьшаться при нехватке свободного места
 
   display: flex;
   align-items: center;
@@ -118,7 +118,7 @@ export const ProfileGreeting = styled.div`
     font-weight: 700;
     line-height: 1.3;
 
-    overflow-wrap: anywhere;
+    overflow-wrap: anywhere; //разрешает браузеру переносить длинное слово в любом месте, если оно не помещается в контейнер
 
     @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
       font-size: 2rem;
