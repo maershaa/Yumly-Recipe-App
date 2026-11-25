@@ -1,4 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+
 import { toast } from 'sonner';
 
 import { AiOutlineClockCircle } from 'react-icons/ai';
@@ -37,7 +38,8 @@ const SummarySection = ({
 }: SummarySectionProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { id: currentUserId } = useAppSelector(selectUser);
+  const { id: currentUserId, name: currentUserName } =
+    useAppSelector(selectUser);
 
   const isRecipeOwner = currentUserId === user_id; //только если залогиненный пользователь и автор рецепта один и тот же человек вернет true
 
@@ -99,6 +101,9 @@ const SummarySection = ({
           </li>
         ))}
       </ul>
+      <p className="authorName">
+        @<Link to={`/${currentUserName}`}>{currentUserName}</Link>
+      </p>
     </SummaryWrapper>
   );
 };

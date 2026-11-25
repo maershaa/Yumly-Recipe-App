@@ -106,6 +106,15 @@ export const SummaryWrapper = styled.div`
       }
     }
   }
+
+  .authorName {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: auto;
+
+    text-align: right;
+  }
 `;
 
 export const RecipeHeaderBar = styled.div`
