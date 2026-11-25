@@ -23,6 +23,8 @@ const MyFavoritesRecipesPage = lazy(
 const CreateRecipePage = lazy(() => import('@/pages/CreateRecipePage'));
 const EditRecipePage = lazy(() => import('@/pages/EditRecipePage'));
 
+const UserProfilePage = lazy(() => import('@/pages/UserProfilePage'));
+
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
 function App() {
@@ -36,6 +38,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
+
+          {/* Private Routes Group */}
+          <Route path=":userName" element={<PrivateRoute />}>
+            <Route index element={<UserProfilePage />} />
+          </Route>
 
           {/* Public recipes */}
           <Route path="recipes">

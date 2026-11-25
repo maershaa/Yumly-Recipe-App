@@ -30,6 +30,8 @@ export const UserMenu = styled.div`
     flex-direction: row;
     align-items: center;
     gap: 12px;
+
+    cursor: pointer;
   }
 
   .fullName {

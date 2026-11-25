@@ -7,6 +7,7 @@ import {
   CallToAction,
 } from '@/features/recipes/components/home';
 
+import UserProfilePage from './UserProfilePage';
 const HomePage = () => {
   return (
     <div>
@@ -17,6 +18,8 @@ const HomePage = () => {
       <ChefQuotes />
 
       <CallToAction />
+
+      <UserProfilePage />
     </div>
   );
 };

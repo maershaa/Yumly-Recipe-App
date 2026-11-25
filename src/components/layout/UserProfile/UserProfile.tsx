@@ -3,7 +3,7 @@ import {
   UserAvatarWrapper,
   StyledTooltip,
 } from './UserProfile.styled';
-
+import { Link } from 'react-router-dom';
 interface UserProfileProps {
   name: string;
   onClick: () => void;
@@ -12,13 +12,14 @@ interface UserProfileProps {
 const UserProfile = ({ name, onClick }: UserProfileProps) => {
   return (
     <UserMenu>
-      <div className="userInfoBlock">
+      <Link to={name} className="userInfoBlock">
         <UserAvatarWrapper>
-          <span className="avatarLetter">{name[0]?.toUpperCase()}</span>
+          <span className="avatarLetter">{name[0]?.toUpperCase()}</span>{' '}
+          {/* //!at()? */}
           <StyledTooltip text={name} />
         </UserAvatarWrapper>
         <span className="fullName">{name}</span>
-      </div>
+      </Link>
 
       <button className="logoutBtn" type="button" onClick={onClick}>
         Logout
