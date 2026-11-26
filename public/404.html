@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting...</title>
+    <script>
+      /*
+        GitHub Pages — статический хостинг и не знает о маршрутах React Router.
+
+        При прямом открытии динамического URL (например, /Yumly-Recipe-App/Lerka2)
+        сервер не находит соответствующий файл и возвращает эту страницу 404.
+
+        Чтобы React Router смог обработать URL:
+        1. Сохраняем исходный путь, query-параметры и hash.
+        2. Кодируем их и передаём в параметре `p`.
+        3. Перенаправляем на корень приложения GitHub Pages.
+        4. Скрипт в index.html восстановит исходный URL до запуска React.
+      */
+
+      const path = window.location.pathname;
+      const search = window.location.search;
+      const hash = window.location.hash;
+
+      // Сохраняем полный URL, по которому пользователь пытался перейти.
+      const redirectUrl =
+        '/Yumly-Recipe-App/?p=' + encodeURIComponent(path + search + hash);
+
+      // Перенаправляем на корень приложения, передавая исходный URL.
+      window.location.replace(redirectUrl);
+    </script>
+  </head>
+  <body></body>
+</html>

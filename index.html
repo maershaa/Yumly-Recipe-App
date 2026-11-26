@@ -14,6 +14,27 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yumly</title>
+
+    <!--
+      GitHub Pages не поддерживает SPA-маршрутизацию напрямую.
+      При открытии динамического URL (например, /Lerka2) сервер возвращает 404.html,
+      который перенаправляет пользователя на главную страницу, сохраняя исходный путь
+      в параметре `p`.
+
+      Здесь восстанавливаем исходный URL до запуска React,
+      чтобы BrowserRouter мог определить нужный маршрут.
+    -->
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const redirectPath = params.get('p');
+
+      // Возвращаем исходный URL, убирая служебный параметр `p`.
+      // replaceState изменяет адрес без перезагрузки страницы.
+      if (redirectPath) {
+        window.history.replaceState(null, '', redirectPath);
+      }
+    </script>
+    <!-- конец части кода, которая вставлена для корректной маршрутизации на GitHub Pages -->
   </head>
   <body>
     <div id="root"></div>
