@@ -10,11 +10,9 @@ export const PersonalInfoSection = styled.section`
 
 export const SectionHeader = styled.header`
   display: flex;
-
-  gap: 12px;
-
   align-items: center;
   justify-content: flex-start;
+  gap: 12px;
 
   .sectionIcon {
     width: 30px;
