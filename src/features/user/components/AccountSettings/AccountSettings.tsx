@@ -10,6 +10,7 @@ import {
   InfoCard,
 } from './AccountSettings.styled';
 import { ThemeButton } from '@/components/ui';
+
 export const AccountSettings = () => {
   const context = useContext(ThemeContext);
   if (!context)

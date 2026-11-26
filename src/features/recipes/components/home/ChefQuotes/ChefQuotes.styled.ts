@@ -162,6 +162,12 @@ export const QuotesItem = styled.li`
     border: 2px solid ${({ theme }) => theme.colors.hoverBorderAccent};
   }
 
+  .chef-info {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+
   .chef-name {
     font-weight: 700;
     font-style: normal;
