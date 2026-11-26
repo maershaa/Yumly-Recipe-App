@@ -18,8 +18,6 @@ const HomePage = () => {
       <ChefQuotes />
 
       <CallToAction />
-
-      <UserProfilePage />
     </div>
   );
 };
